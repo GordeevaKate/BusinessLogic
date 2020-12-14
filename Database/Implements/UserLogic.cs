@@ -59,13 +59,13 @@ namespace Database.Implements
             {
                 return context.Users
                  .Where(rec => model == null
-                   || rec.Id == model.Id
-                   || rec.Login == model.Login || rec.Password == model.Password)
+                   || (rec.Login == model.Login &&rec.Password == model.Password))
                .Select(rec => new UserViewModel
                {
                    Id = rec.Id,
                    Login = rec.Login,
                    Password = rec.Password,
+                   Status=rec.Status
                })
                 .ToList();
             }
