@@ -71,53 +71,5 @@ namespace WebClient.Controllers
                 ViewBag.Reiss = _doctor.Read(null);
             return View(plvm);
         }
-
-
-
-
-        public IActionResult CreateReis()
-        {
-            ViewBag.Reiss = _doctor.Read(null);
-            return View();
-        }
-        [HttpPost]
-        public ActionResult CreateReis(CreateReisModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Reiss = _doctor.Read(null);
-                return View(model);
-            }
-
-    /*        var visitDoctors = new List<VisitDoctorBindingModel>();
-
-            foreach (var doctor in model.VisitDoctors)
-            {
-                if (doctor.Value > 0)
-                {
-                    visitDoctors.Add(new VisitDoctorBindingModel
-                    {
-                        DoctorId = doctor.Key,
-                        Count = doctor.Value
-                    });
-                }
-            }
-            if (visitDoctors.Count == 0)
-            {
-                ViewBag.Products = _doctorLogic.Read(null);
-                ModelState.AddModelError("", "Ни один doctor не выбран");
-                return View(model);
-            }
-            _visitLogic.CreateOrUpdate(new VisitBindingModel
-            {
-                ClientId = Program.Client.Id,
-                DateOfBuying = DateTime.Now,
-                Status = VisitStatus.Принят,
-                FinalCost = CalculateSum(visitDoctors),
-                Duration = CalculateDuration(visitDoctors),
-                VisitDoctors = visitDoctors
-            });*/
-            return RedirectToAction("");
-        }
     }
 }
