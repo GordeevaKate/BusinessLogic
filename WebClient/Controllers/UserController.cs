@@ -51,7 +51,6 @@ namespace WebClient.Controllers
                        UserId=clientView.Id
                     }).FirstOrDefault();
                     Program.Agent = agentView;
-                               Program.Agent = agentView;
                 }
                 else//бухгалтер!!!!!
                 {

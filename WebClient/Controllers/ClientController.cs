@@ -28,14 +28,16 @@ namespace WebClient.Controllers
         }
         public IActionResult Dogovor(int? id)
         {
+            Program.ClientId = (int)id;
             if (id == null)
             {
                 return NotFound();
             }
             ViewBag.Dogovors = _dogovor.Read(new DogovorBindingModel
             {
-                ClientId = (int)id
-            })?[0];
+                ClientId = (int)id,
+                AgentId= (int)Program.Agent.Id
+            });
 
             return View();
         }

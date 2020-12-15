@@ -29,7 +29,8 @@ namespace WebClient
             services.AddTransient<IAgentLogic, AgentLogic>();
             services.AddTransient<IReisLogic, ReisLogic>();
            services.AddTransient<IRaionLogic, RaionLogic>();
-    //        services.AddTransient<ReportLogic>();
+            services.AddTransient<IDogovorLogic, DogovorLogic>();
+            //        services.AddTransient<ReportLogic>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

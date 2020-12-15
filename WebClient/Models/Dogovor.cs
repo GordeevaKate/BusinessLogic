@@ -7,5 +7,6 @@ namespace WebClient.Models
 {
     public class Dogovor
     {
+        public int Id { get; set; }
     }
 }
