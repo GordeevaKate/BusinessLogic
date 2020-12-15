@@ -5,19 +5,18 @@
 <div class="text-center text-info">
     <h1>Перевозки</h1>
 </div>
-<hr />
-<p> <strong> <a class="btn btn-info btn-sm" asp-area="" asp-controller="Reis" asp-action="CreateReis">Создать новый</a></strong></p>
-<hr />
+<p>
+    @Html.ActionLink("Добавить перевозку", "Create")
+</p>
 <form method="get">
     <div class="form-inline">
-        <label class="control-label">Район: </label>
-        @Html.DropDownList("raion", Model.Raion as SelectList,
+        <label class="control-label">Команда: </label>
+        @Html.DropDownList("team", Model.Reis as SelectList,
                     htmlAttributes: new { @class = "form-control" })
-        <label class="control-label">От </label>
-        @Html.EditorFor(model => model.Cena1)
 
-        <label class="control-label">До </label>
-        @Html.EditorFor(model => model.Cena2)
+        <label class="control-label">Позиция игрока: </label>
+        @Html.DropDownList("position", Model.Reis as SelectList,
+                htmlAttributes: new { @class = "form-control" })
 
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
@@ -38,10 +37,6 @@
             <td>@reis.Name</td>
             <td>@reis.Cena</td>
             <td>@reis.Time</td>
-            <td>
-
-                @Html.ActionLink("Удалить", "Delete", new { id = reis.Id })
-            </td>
         </tr>
     }
 </table>
