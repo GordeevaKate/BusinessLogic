@@ -1,0 +1,37 @@
+﻿@model HospitalWebClient.Models.CreateVisitModel
+
+@{
+    ViewData["Title"] = "Создать посещение";
+}
+
+<div class="text-center text-info">
+    <h1>@ViewData["Title"]</h1>
+</div>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true, "", new { @style = "color: red" })
+    <p>Состав:</p>
+    <table class="table">
+        <tr>
+            <td>Доктор</td>
+            <td>Специализация</td>
+            <td>Длительность</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        @foreach (HospitalBusinessLogic.ViewModel.DoctorViewModel doctor in ViewBag.VisitDoctors)
+        {
+            <tr>
+                <td>@doctor.DoctorName</td>
+                <td>@doctor.Specialication</td>
+                <td>@doctor.Duration</td>
+                <td><input type="number" name="Model.VisitDoctors[@doctor.Id]" value="0" /></td>
+                <td>@doctor.Cost</td>
+            </tr>
+        }
+    </table>
+
+    <button type="submit" class="btn btn-info btn-sm">Создать</button>
+}

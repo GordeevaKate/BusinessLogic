@@ -7,24 +7,22 @@ using WebClient.Models;
 using System.Text.RegularExpressions;
 using КурсоваяBusinessLogic.Interfaces;
 using КурсоваяBusinessLogic.BindingModel;
-using System.Web.Mvc;
 
 namespace WebClient.Controllers
 {
-    public class UserController
+    public class UserController : Controller
     {
         private readonly IUserLogic _client;
-        private readonly int passwordMinLength = 6;
-        private readonly int passwordMaxLength = 20;
-        private readonly int loginMinLength = 1;
-        private readonly int loginMaxLength = 50;
-        public UserController(IUserLogic client)
+        private readonly IAgentLogic _agent;
+        public UserController(IUserLogic client, IAgentLogic agent)
         {
             _client = client;
+            _agent = agent;
         }
         public ActionResult Profile()
         {
             ViewBag.User = Program.User;
+            ViewBag.Agent = Program.Agent;
             return View();
         }
         public IActionResult Login()
@@ -44,7 +42,24 @@ namespace WebClient.Controllers
                 ModelState.AddModelError("", "Вы ввели неверный пароль, либо пользователь не найден");
                 return View(client);
             }
+            else
+            {
+                if (clientView.Status == 0)
+                {
+                    var agentView = _agent.Read(new AgentBindingModel
+                    {
+                       UserId=clientView.Id
+                    }).FirstOrDefault();
+                    Program.Agent = agentView;
+                               Program.Agent = agentView;
+                }
+                else//бухгалтер!!!!!
+                {
+
+                }
+            }
             Program.User = clientView;
+            
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Logout()
@@ -52,6 +67,9 @@ namespace WebClient.Controllers
             Program.User = null;
             return RedirectToAction("Index", "Home");
         }
-
+        public IActionResult Registration()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Перевозки";
+}
+@model SpisokModel
+<div class="text-center text-info">
+    <h1>Перевозки</h1>
+</div>
+@using (Html.BeginForm())
+{
+    <p>
+        Выберите даты для отображения отчета по посещениям и оплатам
+    </p>
+    <p>
+        От: @Html.EditorFor(model => model.Cena1)
+    </p>
+    <p>
+        До: @Html.EditorFor(model => model.Raion)
+    </p>
+    <p>
+        @Html.EditorFor(model => model.Cena2) Отправить отчёт по посещениям и оплатам на почту
+    </p>
+    <p>
+        <button type="submit" class="btn btn-info btn-sm">Получить</button>
+    </p>
+}
+<hr />
+<table class="table">
+    <tr>
+        <td>Пункт отправления</td>
+        <td>Пункт прибытия</td>
+        <td>Название</td>
+        <td>Цена</td>
+        <td>Длительность</td>
+    </tr>
+    @foreach (var reis in ViewBag.reiss)
+    {
+        <tr>
+            <td>@reis.OfId</td>
+            <td>@reis.ToId</td>
+            <td>@reis.Name</td>
+            <td>@reis.Cena</td>
+            <td>@reis.Time</td>
+        </tr>
+    }
+</table>

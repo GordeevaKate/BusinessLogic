@@ -12,12 +12,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\BusinessLogic\Database\Database.csproj" />
-    <ProjectReference Include="..\..\..\..\source\repos\BusinessLogic\КурсоваяПис\КурсоваяПис.csproj" />
+  <ItemGroup>    <ProjectReference Include="..\HospitalBusinessLogic\HospitalBusinessLogic.csproj" />
+    <ProjectReference Include="..\HospitalDatabaseImplement\HospitalDatabaseImplement.csproj" />
+
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Agent\" />
-  </ItemGroup>
 </Project>

@@ -1,0 +1,104 @@
+﻿@model ReportModel
+@{
+    ViewData["Title"] = "Посещение";
+}
+
+<div class="text-center text-info">
+    <h1>Плсещения</h1>
+</div>
+<hr />
+<p> <strong> <a class="btn btn-info btn-sm" asp-area="" asp-controller="visit" asp-action="CreateVisit">Оформить</a></strong></p>
+<hr />
+@using (Html.BeginForm())
+{
+    <p>
+        Выберите даты для отображения отчета по посещениям и оплатам
+    </p>
+    <p>
+        От: @Html.EditorFor(model => model.From)
+    </p>
+    <p>
+        До: @Html.EditorFor(model => model.To)
+    </p>
+    <p>
+        @Html.EditorFor(model => model.SendMail) Отправить отчёт по посещениям и оплатам на почту
+    </p>
+    <p>
+        <button type="submit" class="btn btn-info btn-sm">Получить</button>
+    </p>
+}
+<hr />
+@foreach (var visit in ViewBag.visits)
+{
+    <p><strong>Номер: @visit.Id </strong></p>
+    <p>Дата покупки: @visit.DateOfBuying</p>
+    <p>Статус: @visit.Status</p>
+    <p>Цена: @visit.FinalCost</p>
+    <p>Общая длительность: @visit.Duration</p>
+    <p>Состав:</p>
+    <table class="table">
+        <tr>
+            <td>Доктор</td>
+            <td>Специальность</td>
+            <td>Длительность</td>
+            <td>Количество</td>
+            <td>Цена</td>
+        </tr>
+        @foreach (var doctor in visit.VisitDoctors)
+        {
+            <tr>
+                <td>@doctor.DoctorName</td>
+                <td>@doctor.Specialication</td>
+                <td>@doctor.Duration</td>
+                <td>@doctor.Count</td>
+                <td>@doctor.Cost</td>
+            </tr>
+        }
+    </table>
+    if (visit.Status != HospitalBusinessLogic.Enums.VisitStatus.Принят && ViewBag.Payments != null)
+    {
+        <p>Платежи:</p>
+        <table class="table">
+            <tr>
+                <td>Дата</td>
+                <td>Сумма</td>
+            </tr>
+            @foreach (var payment in ViewBag.Payments)
+            {
+                if (payment.VisitId == visit.Id)
+                {
+                    <tr>
+                        <td>@payment.DatePayment</td>
+                        <td>@payment.Sum</td>
+                    </tr>
+                }
+            }
+        </table>
+    }
+    <hr />
+    if (visit.Status == HospitalBusinessLogic.Enums.VisitStatus.Оплачен)
+    {
+        <p>Полностью оплачено</p>
+        <hr />
+    }
+    else
+    {
+        if (visit.Status == HospitalBusinessLogic.Enums.VisitStatus.Оплачен_не_полностью)
+        {
+            <p>К оплате: @visit.LeftSum</p>
+            <hr />
+
+        }
+        <p>
+            <a href="/Visit/Payment/@visit.Id">Оплатить</a>
+        </p>
+    }
+    <p>
+        <a href="/Visit/SendWordReport/@visit.Id">Отправить список докторов в формате .docx</a>
+    </p>
+    <p>
+        <a href="/Visit/SendExcelReport/@visit.Id">Отправить список докторов в формате .xslx</a>
+    </p>
+    <hr />
+
+}
