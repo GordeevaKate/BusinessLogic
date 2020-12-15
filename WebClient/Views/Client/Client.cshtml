@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Клиенты";
+}
+@model SpisokModel
+<div class="text-center text-info">
+    <h1>Клиенты</h1>
+</div>
+<table class="table">
+    <tr>
+        <td>Паспорт</td>
+        <td>ФИО</td>
+        <td>Номер телефона</td>
+        <td>Email</td>
+    </tr>
+    @foreach (var reis in ViewBag.client)
+    {
+        <tr>
+            <td>@reis.Pasport</td>
+            <td>@reis.ClientFIO</td>
+            <td>@reis.PhoneNumber</td>
+            <td>@reis.Email</td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-action="Dogovor" asp-route-id="@reis.Id">Договора</a>|
+            </td>
+        </tr>
+    }
+</table>
