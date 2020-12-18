@@ -1,10 +1,20 @@
-﻿@{
+﻿@model ClientViewModel
+@{
     ViewData["Title"] = "Клиенты";
 }
-@model SpisokModel
 <div class="text-center text-info">
     <h1>Клиенты</h1>
 </div>
+@Html.ValidationMessageFor(model => model.Passport)
+<form asp-action="Client">
+    <div class="form-inline">
+        <label class="control-label">Паспорт: </label>
+        <input asp-for="Passport" class="form-control" />
+        <label class="control-label">Номер договора </label>
+        <input asp-for="DogovorId" class="form-control" min="0" />
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
 <table class="table">
     <tr>
         <td>Паспорт</td>
@@ -25,3 +35,4 @@
         </tr>
     }
 </table>
+@Html.ActionLink("Report", "Report")

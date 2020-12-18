@@ -18,6 +18,6 @@ namespace КурсоваяBusinessLogic.BindingModel
         public double Summa { get; set; }
         [DataMember]
         public DateTime data { get; set; }
-        public Dictionary<int, (double,string,double, double)> Reiss;
+        public Dictionary<int, (int,int,string,double, double)> Dogovor_Reiss;
      }
 }

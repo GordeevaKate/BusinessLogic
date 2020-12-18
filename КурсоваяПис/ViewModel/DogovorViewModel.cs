@@ -19,6 +19,6 @@ namespace КурсоваяBusinessLogic.ViewModel
         [DataMember]
         [DisplayName("Дата")]
         public DateTime data { get; set; }
-        public Dictionary<int, (double, string, double, double)> Reiss;
+        public Dictionary<int, (int, int, double, string, double, double)> Dogovor_Reiss;
     }
 }

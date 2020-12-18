@@ -1,14 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Клиенты";
 }
-@model Dogovor
 
 <div class="text-left">
-    <h4>Договора клиента Program.ClientId</h4>
+    <h4>Договора клиента @ViewBag.Client.ClientFIO</h4>
 </div>
-<td>
-    <a class="btn btn-primary btn-sm" asp-action="Dogovor" asp-route-id="@">Добавить</a>|
-</td>
+<p>
+    <a class="btn btn-primary d-block mx-auto" asp-action="CreateDogovor">Создание договора</a>
+</p>
 <table class="table">
     <tr>
         <td>Номер</td>
@@ -22,7 +21,7 @@
             <td>@dogovor.Summa</td>
             <td>@dogovor.data</td>
             <td>
-                <a class="btn btn-primary btn-sm" asp-action="Dogovor" asp-route-id="@dogovor.Id">Редактировать</a>|
+                <a class="btn btn-primary btn-sm" asp-action="ChangeDogovor" asp-route-id="@dogovor.Id">Изменить</a>|
             </td>
         </tr>
     }

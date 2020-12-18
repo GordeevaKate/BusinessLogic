@@ -60,8 +60,8 @@ namespace Database.Implements
             {
                 return context.Clients
                  .Where(rec => model == null
-                
-                   || rec.UserId == model.UserId)
+                ||(rec.Id==model.Id)
+                   ||(model.Pasport==rec.Pasport))
                .Select(rec => new ClientViewModel
                 {
                     Id = rec.Id,

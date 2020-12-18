@@ -25,5 +25,6 @@ namespace КурсоваяBusinessLogic.ViewModel
         [DataMember]
         [DisplayName("Номер телефона")]
         public string PhoneNumber { get; set; }
+
     }
 }
