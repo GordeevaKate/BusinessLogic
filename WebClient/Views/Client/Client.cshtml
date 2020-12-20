@@ -22,15 +22,15 @@
         <td>Номер телефона</td>
         <td>Email</td>
     </tr>
-    @foreach (var reis in ViewBag.client)
+    @foreach (var client in ViewBag.client)
     {
         <tr>
-            <td>@reis.Pasport</td>
-            <td>@reis.ClientFIO</td>
-            <td>@reis.PhoneNumber</td>
-            <td>@reis.Email</td>
+            <td>@client.Pasport</td>
+            <td>@client.ClientFIO</td>
+            <td>@client.PhoneNumber</td>
+            <td>@client.Email</td>
             <td>
-                <a class="btn btn-primary btn-sm" asp-action="Dogovor" asp-route-id="@reis.Id">Договора</a>|
+                <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-id="@client.Id">Договора</a>|
             </td>
         </tr>
     }

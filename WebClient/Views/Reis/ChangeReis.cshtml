@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Перевозки";
+}
+@model DogovorReisViewModel
+<div class="text-center text-info">
+    <h1>Перевозки к договору @ViewBag.DogovorId</h1>
+</div>
+
+<div>
+    <a class="text-dark" asp-controller="Dogovor" asp-action="ChangeDogovor" asp-route-id="@ViewBag.DogovorId">Вернуться назад</a>
+</div>
+<form method="get">
+    <div class="form-inline">
+        <p>
+            <label class="control-label">Изменение цены </label>
+            @Html.EditorFor(model => model.Nadbavka)
+            @Html.ValidationMessageFor(model => model.Nadbavka)
+            <input type="submit" class="superbutton" dogovorId="1" value="Фильтр" class="btn btn-default" />
+        </p>
+        <p>
+            <label class="control-label">Комментарий </label>
+            @Html.EditorFor(model => model.Comm)
+            @Html.ValidationMessageFor(model => model.Comm)
+        </p>
+        <p>
+            <label class="control-label">Объем груза </label>
+            @Html.EditorFor(model => model.Obem)
+            <font size="5" color="red" face="Arial">
+                @Html.ValidationMessageFor(model => model.Obem)
+            </font>
+        </p>
+        <p>
+            <label class="control-label">Вес груза</label>
+            @Html.EditorFor(model => model.Ves)
+            <font size="5" color="red" face="Arial">
+                @Html.ValidationMessageFor(model => model.Ves)
+            </font>
+        </p>
+        <p>
+            <label class="control-label">Id Рейса</label>
+            @Html.EditorFor(model => model.Reis)
+            <font size="5" color="red" face="Arial">
+                @Html.ValidationMessageFor(model => model.Reis)
+            </font>
+        </p>
+        <input type="submit" value="Фильтр" class="btn btn-default" onclick="drawStacked()" />
+        <table class="table">
+            <tr>
+                <td>Id</td>
+                <td>Пункт отправления</td>
+                <td>Пункт прибытия</td>
+                <td>Название</td>
+                <td>Цена</td>
+                <td>Длительность</td>
+            </tr>
+            @foreach (var reis in ViewBag.reiss)
+            {
+        <tr>
+            <td>@reis.Id</td>
+            <td>@reis.OfId</td>
+            <td>@reis.ToId</td>
+            <td>@reis.Name</td>
+            <td>@reis.Cena</td>
+            <td>@reis.Time</td>
+            <td><a class="btn btn-primary btn-sm btn-block" asp-action="AddReis" asp-route-id="@ViewBag.DogovorId"  asp-route-reisId="@reis.Id">Выбор рейса</a></td>
+        </tr>
+            }
+        </table>
+    </div>
+</form>

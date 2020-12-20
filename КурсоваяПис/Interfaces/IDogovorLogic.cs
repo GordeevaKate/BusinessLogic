@@ -3,6 +3,7 @@ using КурсоваяBusinessLogic.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using КурсоваяПис.BindingModel;
 
 namespace КурсоваяBusinessLogic.Interfaces
 {
@@ -11,5 +12,6 @@ namespace КурсоваяBusinessLogic.Interfaces
             List<DogovorViewModel> Read(DogovorBindingModel model);
             void CreateOrUpdate(DogovorBindingModel model);
             void Delete(DogovorBindingModel model);
-        }
+        void AddReis(Dogovor_ReisBM model);
+    }
 }

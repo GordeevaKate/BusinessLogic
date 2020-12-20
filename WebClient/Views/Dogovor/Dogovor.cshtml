@@ -5,8 +5,11 @@
 <div class="text-left">
     <h4>Договора клиента @ViewBag.Client.ClientFIO</h4>
 </div>
+<div>
+    <a class="text-dark" asp-action="Client">Вернуться назад</a>
+</div>
 <p>
-    <a class="btn btn-primary d-block mx-auto" asp-action="CreateDogovor">Создание договора</a>
+    <a class="btn btn-primary d-block mx-auto" asp-controller="Client" asp-action="CreateDogovor">Создание договора</a>
 </p>
 <table class="table">
     <tr>

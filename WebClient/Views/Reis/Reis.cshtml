@@ -7,23 +7,12 @@ function drawStacked() {
       var data = new google.visualization.DataTable();
       data.addColumn('string', 'Score');
     data.addColumn('number', 'Количевство Грузоперевозок');
-   foreach(var r in @ViewBag.reiss) {
+   foreach (var reis in ViewBag.reiss)
+    {
         data.addRows([
             ['CPass ', 3]
         ]);
-    }
-      data.addRows([
-      ['CPass ', 6],
-      ['CFail ', 3],
-      ['WPass ', 0],
-      ['WFail ', 0],
-      ['HPass ', 5],
-      ['HFail ', 2],
-      ['APass ', 0],
-      ['AFail ', 0]
-
-      ]);
-
+    } 
       var options = {
           title: 'Грузоперевозки по районам',
         isStacked: true,
@@ -63,7 +52,7 @@ function drawStacked() {
     <font size="5" color="red" face="Arial">
         @Html.ValidationMessageFor(model => model.Cena2)
     </font>
-        <input type="submit" value="Фильтр" class="btn btn-default" />
+        <input type="submit" value="Фильтр" class="btn btn-default" onclick="drawStacked()" />
 </div>
 </form>
 <table class="table">
@@ -89,7 +78,7 @@ function drawStacked() {
         </tr>
     }
 </table>
-@Html.ActionLink("Diagram", "Diagram")
+@Html.ActionLink("Diagram", "Diagram" )
 
 
 <div id="chart_div"></div>

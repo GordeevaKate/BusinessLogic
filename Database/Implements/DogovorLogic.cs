@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Database.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using КурсоваяBusinessLogic.BindingModel;
 using КурсоваяBusinessLogic.Interfaces;
 using КурсоваяBusinessLogic.ViewModel;
+using КурсоваяПис.BindingModel;
 
 namespace Database.Implements
 {
@@ -14,7 +16,77 @@ namespace Database.Implements
     {
         public void CreateOrUpdate(DogovorBindingModel model)
         {
-            throw new NotImplementedException();
+
+            using (var context = new KursachDatabase())
+            {
+                Dogovor element = context.Dogovors.FirstOrDefault(rec =>  rec.Id != model.Id);
+
+                if (model.Id.HasValue)
+                {
+                    element = context.Dogovors.FirstOrDefault(rec => rec.Id == model.Id);
+                    if (element == null)
+                    {
+                        throw new Exception("Склад не найден");
+                    }
+                }
+                else
+                {
+                    element = new Dogovor();
+                    context.Dogovors.Add(element);
+                }
+                element.ClientId = model.ClientId;
+                element.Summa = model.Summa;
+                element.data = model.data;
+                context.SaveChanges();
+            }
+        }
+        public void AddReis(Dogovor_ReisBM model)
+        {
+            using (var context = new KursachDatabase())
+            {
+                var werehouseCosmetics = context.Dogovor_Reiss.FirstOrDefault(rec =>
+                 rec.DogovorId == model.DogovorId && rec.ReisId == model.ReisId);
+
+                if (model.Obem<=0)
+                {
+                    throw new Exception("Недостаточно места в складе");
+                }
+                if (model.Obem <= 0)
+                {
+                    throw new Exception("Недостаточно места в складе");
+                }
+                if (model.ves <= 0)
+                {
+                    throw new Exception("Недостаточно места в складе");
+                }
+                if (model.Obem <= 0)
+                {
+                    throw new Exception("Недостаточно места в складе");
+                }
+                if (werehouseCosmetics == null)
+                {
+                    context.Dogovor_Reiss.Add(new Dogovor_Reis
+                    {
+                        DogovorId = model.DogovorId,
+                        ReisId = model.ReisId,
+                        Obem=model.Obem,
+                        ves=model.ves,
+                        Comm=model.Comm,
+                        Nadbavka=model.Nadbavka
+                    });
+                }
+                else
+                {
+                    werehouseCosmetics.Obem = model.Obem;
+                    werehouseCosmetics.ves = model.ves;
+                    werehouseCosmetics.Comm = model.Comm;
+                    werehouseCosmetics.Nadbavka = model.Nadbavka;
+                }
+
+                Reis element = context.Reiss.FirstOrDefault(rec =>
+                    rec.Id == model.ReisId);
+                context.SaveChanges();
+            }
         }
 
         public void Delete(DogovorBindingModel model)
@@ -39,7 +111,7 @@ namespace Database.Implements
                    Dogovor_Reiss = context.Dogovor_Reiss
                             .Include(recCC => recCC.Reiss)
                             .Where(recCC => recCC.DogovorId == rec.Id)
-                            .ToDictionary(recCC => recCC.DogovorId, recCC => ((int)recCC.Id, recCC.ReisId, recCC.Nadbavka, recCC.Comm, recCC.Obem, recCC.ves))
+                            .ToDictionary(recCC => recCC.Id, recCC => ((int)recCC.DogovorId, recCC.ReisId, recCC.Nadbavka, recCC.Comm, recCC.Obem, recCC.ves))
                })
                 .ToList();
             }

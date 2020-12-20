@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,23 +15,19 @@ namespace WebClient.Controllers
 {
     public class ClientController : Controller
     {
+        private readonly IReisLogic _reis;
         private readonly IClientLogic _client;
-            private readonly IDogovorLogic _dogovor;
-        public ClientController(IClientLogic client, IDogovorLogic dogovor)
+        private readonly IDogovorLogic _dogovor;
+        public ClientController(IClientLogic client, IReisLogic reis, IDogovorLogic dogovor)
         {
-            _client = client;
+            _reis = reis;
+               _client = client;
             _dogovor = dogovor;
         }
-        public bool Validation(int i)
-        {
-            if (i == 0)
-            {
-                ModelState.AddModelError("Passport", "Клиента не существует");
-                ViewBag.Client = _client.Read(null);
-                return false;
-            }
-            return true;
-        }
+      
+
+        
+        
         public IActionResult Client(ClientViewModel model)
         {
             bool t=true;
@@ -58,25 +55,19 @@ namespace WebClient.Controllers
             ViewBag.Client = _client.Read(null);
             return View();
         }
-        public IActionResult Dogovor(int? id)
-        {
-            ViewBag.Client = _client.Read(new ClientBindingModel { Id = (int)id }).FirstOrDefault();
-            if (id == null)
+        public bool Validation(int i){//проверка введеных данных на странице клиент
+            if (i == 0)
             {
-                return NotFound();
+                ModelState.AddModelError("Passport", "Клиента не существует");
+                ViewBag.Client = _client.Read(null);
+                return false;
             }
-            ViewBag.Dogovors = _dogovor.Read(new DogovorBindingModel
-            {
-                ClientId = (int)id,
-                AgentId= (int)Program.Agent.Id
-            });
-
-            return View();
+            return true;
         }
+      
 
 
-
-        public IActionResult Report()
+        public IActionResult Report()//кнопка отчет на странице клиент
         {
             List<string> list = new List<string> { "Паспорт", "ФИО", "Номер телефона", "Email" };
             SaveToPdf.CreateDoc(new PdfInfo
@@ -86,28 +77,10 @@ namespace WebClient.Controllers
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
                 Components = _client.Read(null)
             });
-            return View();
+            return RedirectToAction("Client");
         }
 
-        public IActionResult CreateDogovor(int id=-1)
-        {
-           ViewBag.Itog = 0;
-            ViewBag.ReisDogovor = _dogovor.Read(new DogovorBindingModel
-            {
-                ClientId = (int)id,
-                AgentId = (int)Program.Agent.Id
-            });
-            return View();
-        }
-        public IActionResult ChangeDogovor(int? id)
-        {
-            ViewBag.Id = id;
-            ViewBag.Itog = 0;
-            ViewBag.ReisDogovor = _dogovor.Read(new DogovorBindingModel
-            {
-                Id=id
-            });
-            return View();
-        }
+   
+       
     }
 }

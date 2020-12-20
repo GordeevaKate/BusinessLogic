@@ -3,10 +3,12 @@
 <h3>Изменение договора @ViewBag.Id</h3>
 <hr />
 <div>
-    <a class="text-dark" asp-action="Dogovor">Вернуться назад</a>
+    <a class="text-dark" asp-action="Dogovor" asp-route-id="@ViewBag.Id">Вернуться назад</a>
 </div>
 <hr />
-
+<p>
+<a class="btn btn-primary" asp-controller="Reis" asp-action="ChangeReis" asp-route-dogovorId="@ViewBag.Id">Пополнить склад</a>
+</p>
 <div class="row">
     <input type="datetime-local" name="calendar"
            max="2020-01-01" min="2021.01.01">
@@ -20,19 +22,19 @@
         </tr>
         @foreach (var reis in ViewBag.ReisDogovor)
         {
-            @foreach (var r in reis.Dogovor_Reiss)
-            {
-                <tr>
-                <td>@r.Value.Item3</td>
-                <td>@r.Value.Item4</td>
-                <td>@r.Value.Item5</td>
-                <td>@r.Value.Item6</td>      
-                <td>
-                   <a class="btn btn-primary btn-sm" asp-action="ChangeReis" asp-route-id="@r.Value.Item3">Изменить</a>
-                   @Html.ActionLink("Удалить", "Delete", new { id = r.Value.Item3 })
-                </td>
-                </tr>
-             }
-        }
+@foreach (var r in reis.Dogovor_Reiss)
+{
+<tr>
+    <td>@r.Value.Item3</td>
+    <td>@r.Value.Item4</td>
+    <td>@r.Value.Item5</td>
+    <td>@r.Value.Item6</td>
+    <td>
+        <a class="btn btn-primary btn-sm" asp-controller="Reis" asp-action="ChangeReis" asp-route-id="@r.Value.Item3">Изменить</a>
+        @Html.ActionLink("Удалить", "Delete", new { id = r.Value.Item3 })
+    </td>
+</tr>
+}
+}
     </table>
 </div>

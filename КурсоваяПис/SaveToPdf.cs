@@ -21,7 +21,7 @@ namespace КурсоваяBusinessLogic.Report
             paragraph.Style = "NormalTitle";
             paragraph.Style = "Normal";
             var table = document.LastSection.AddTable();
-            List<string> columns = new List<string> { "6cm", "6cm", "6cm" };
+            List<string> columns = new List<string> { "3cm", "4cm", "6cm", "4cm" };
 
             foreach (var elem in columns)
             {
@@ -69,7 +69,7 @@ namespace КурсоваяBusinessLogic.Report
         private static void CreateRow(PdfRowParameters rowParameters)
         {
             Row row = rowParameters.Table.AddRow();
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 FillCell(new PdfCellParameters
                 {
