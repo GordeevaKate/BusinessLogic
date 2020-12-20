@@ -29,10 +29,10 @@
     {
 <tr>
     <td>@reis.Name</td>
-    <td>@(@r.Value.Item3 + @reis.Cena)</td>
-    <td>@r.Value.Item4</td>
+    <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item5)</td>
     <td>@r.Value.Item5</td>
     <td>@r.Value.Item6</td>
+    <td>@r.Value.Item4</td>
     <td>
         @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
     </td>
