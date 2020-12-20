@@ -5,6 +5,9 @@
 <div class="text-center text-info">
     <h1>Клиенты</h1>
 </div>
+<p>
+    <a class="btn btn-primary d-block mx-auto" asp-action="AddClient" >Добавление клиента</a>
+</p>
 @Html.ValidationMessageFor(model => model.Passport)
 <form asp-action="Client">
     <div class="form-inline">

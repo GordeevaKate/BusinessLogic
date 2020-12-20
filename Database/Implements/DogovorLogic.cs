@@ -33,13 +33,11 @@ namespace Database.Implements
                 {
                     element = new Dogovor();
                     context.Dogovors.Add(element);
-               //     element.Dogovor_Reiss = new List<Dogovor_Reis> Dogovor_Reiss { get; set; };
-                }
-                element.ClientId = model.ClientId;
-                element.AgentId = model.AgentId;
+                    element.ClientId = model.ClientId;
+                    element.AgentId = model.AgentId;
+                    element.data = model.data;
+                   }
                 element.Summa = model.Summa;
-                element.data = model.data;
-          //      element.Dogovor_Reiss =   new List<Dogovor_Reis> Dogovor_Reiss { get; set; };
                 context.SaveChanges();
             }
         }

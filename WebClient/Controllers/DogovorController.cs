@@ -24,17 +24,19 @@ namespace WebClient.Controllers
             _dogovor.DeleteReisDogovor(new Dogovor_ReisBM { Id = id });
             return RedirectToAction("ChangeDogovor", new { id = dogovotId });
         }
-        public IActionResult ChangeDogovor(int? id, int clientid)
+        public IActionResult ChangeDogovor(int? id)
         {
+
             if (id != null)
             {
                 ViewBag.Id = id;
-                ViewBag.ClientId = clientid;
+                ViewBag.ClientId = Program.ClientId;
                 ViewBag.Reis = _reis.Read(null);
                 var Dogovor = _dogovor.Read(new DogovorBindingModel
                 {
                     Id = id
                 });
+                ViewBag.Data = Dogovor[0].data;
                 double Itog = 0;
                 foreach (var dogovor in Dogovor)
                     foreach (var reis_dogovor in dogovor.Dogovor_Reiss)
@@ -47,16 +49,16 @@ namespace WebClient.Controllers
                 {
                     Id = id
                 });
-                _dogovor.CreateOrUpdate(new DogovorBindingModel { Id=id,data = DateTime.Now, Summa = Itog ,ClientId=clientid, AgentId=Program.Agent.Id});
+                _dogovor.CreateOrUpdate(new DogovorBindingModel { Id=id,data = DateTime.Now, Summa = Itog ,ClientId= Program.ClientId, AgentId = (int)Program.Agent.Id});
                 return View();
             }
             else
             {
                 DateTime datetime = DateTime.Now;
-                _dogovor.CreateOrUpdate(new DogovorBindingModel { data = datetime, Summa=0 ,ClientId=  clientid, AgentId= (int)Program.Agent.Id });
+                _dogovor.CreateOrUpdate(new DogovorBindingModel { data = datetime, Summa=0 ,ClientId= Program.ClientId, AgentId = (int)Program.Agent.Id });
                 var Dogovor = _dogovor.Read(new DogovorBindingModel
                 {
-                    data= datetime, AgentId= (int)Program.Agent.Id, ClientId= clientid
+                    data= datetime, AgentId= (int)Program.Agent.Id, ClientId= Program.ClientId
                 });
                 return RedirectToAction( "ChangeReis", "Reis", new { dogovorId = Dogovor[Dogovor.Count-1].Id });
             }
@@ -87,6 +89,7 @@ namespace WebClient.Controllers
 
         public IActionResult Dogovor(int? id)
         {
+            Program.ClientId = (int)id;
             ViewBag.ClientId = id;
             ViewBag.Client = _client.Read(new ClientBindingModel { Id = (int)id }).FirstOrDefault();
             if (id == null)

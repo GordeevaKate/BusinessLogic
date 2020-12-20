@@ -103,9 +103,9 @@ namespace WebClient.Controllers
             ViewBag.Reiss = _reis.Read(null);
             return View();
         }
-        public IActionResult AddReis(int? reisId, int? dogovorId)
+        public IActionResult AddReis(int? reisId, int? dogovorId,int clientId)
         {
-
+            ViewBag.ClientId = clientId;
             if (TempData["ErrorLackInWerehouse"] != null)
             {
                 ModelState.AddModelError("", TempData["ErrorLackInWerehouse"].ToString());

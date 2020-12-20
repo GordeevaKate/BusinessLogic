@@ -14,6 +14,7 @@ namespace WebClient
     {
         public static UserViewModel User = null;
         public static AgentViewModel Agent = null;
+        public static int ClientId = 0;
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

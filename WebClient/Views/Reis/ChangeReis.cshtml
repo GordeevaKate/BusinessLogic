@@ -10,42 +10,7 @@
 <div>
     <a class="text-dark" asp-controller="Dogovor" asp-action="ChangeDogovor" asp-route-id="@ViewBag.DogovorId">Вернуться назад</a>
 </div>
-<form method="get">
-    <div class="form-inline">
-        <p>
-            <label class="control-label">Изменение цены </label>
-            @Html.EditorFor(model => model.Nadbavka)
-            @Html.ValidationMessageFor(model => model.Nadbavka)
-            <input type="submit" class="superbutton" dogovorId="1" value="Фильтр" class="btn btn-default" />
-        </p>
-        <p>
-            <label class="control-label">Комментарий </label>
-            @Html.EditorFor(model => model.Comm)
-            @Html.ValidationMessageFor(model => model.Comm)
-        </p>
-        <p>
-            <label class="control-label">Объем груза </label>
-            @Html.EditorFor(model => model.Obem)
-            <font size="5" color="red" face="Arial">
-                @Html.ValidationMessageFor(model => model.Obem)
-            </font>
-        </p>
-        <p>
-            <label class="control-label">Вес груза</label>
-            @Html.EditorFor(model => model.Ves)
-            <font size="5" color="red" face="Arial">
-                @Html.ValidationMessageFor(model => model.Ves)
-            </font>
-        </p>
-        <p>
-            <label class="control-label">Id Рейса</label>
-            @Html.EditorFor(model => model.Reis)
-            <font size="5" color="red" face="Arial">
-                @Html.ValidationMessageFor(model => model.Reis)
-            </font>
-        </p>
-        <input type="submit" value="Фильтр" class="btn btn-default" onclick="drawStacked()" />
-        <table class="table">
+ <table class="table">
             <tr>
                 <td>Id</td>
                 <td>Пункт отправления</td>
@@ -67,5 +32,4 @@
         </tr>
             }
         </table>
-    </div>
-</form>
+
