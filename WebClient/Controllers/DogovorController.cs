@@ -42,7 +42,7 @@ namespace WebClient.Controllers
                     foreach (var reis_dogovor in dogovor.Dogovor_Reiss)
                     {
                         var reis = _reis.Read(new ReisBindingModel { Id = reis_dogovor.Value.Item2 });
-                        Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena;
+                        Itog = Itog + reis_dogovor.Value.Item3 * reis[0].Cena;
                     }
                 ViewBag.Itog = Itog;
                 ViewBag.ReisDogovor = _dogovor.Read(new DogovorBindingModel
