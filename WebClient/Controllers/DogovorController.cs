@@ -42,6 +42,11 @@ namespace WebClient.Controllers
                     foreach (var reis_dogovor in dogovor.Dogovor_Reiss)
                     {
                         var reis = _reis.Read(new ReisBindingModel { Id = reis_dogovor.Value.Item2 });
+                        if ( reis_dogovor.Value.Item6/ reis_dogovor.Value.Item5 >250)
+                        {
+                            Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena * reis_dogovor.Value.Item6;
+                        
+                         }else
                         Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena * reis_dogovor.Value.Item5;
                     }
                 ViewBag.Itog = Itog;
