@@ -103,7 +103,7 @@ namespace WebClient.Controllers
             ViewBag.Reiss = _reis.Read(null);
             return View();
         }
-        public IActionResult AddReis(int? reisId, int? dogovorId = 3)
+        public IActionResult AddReis(int? reisId, int? dogovorId)
         {
 
             if (TempData["ErrorLackInWerehouse"] != null)

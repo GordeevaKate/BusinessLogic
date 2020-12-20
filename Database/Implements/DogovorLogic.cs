@@ -33,14 +33,35 @@ namespace Database.Implements
                 {
                     element = new Dogovor();
                     context.Dogovors.Add(element);
+               //     element.Dogovor_Reiss = new List<Dogovor_Reis> Dogovor_Reiss { get; set; };
                 }
                 element.ClientId = model.ClientId;
+                element.AgentId = model.AgentId;
                 element.Summa = model.Summa;
                 element.data = model.data;
+          //      element.Dogovor_Reiss =   new List<Dogovor_Reis> Dogovor_Reiss { get; set; };
                 context.SaveChanges();
             }
         }
-        public void AddReis(Dogovor_ReisBM model)
+        
+             public void DeleteReisDogovor(Dogovor_ReisBM model)
+        {
+            using (var context = new KursachDatabase())
+            {
+                Dogovor_Reis element = context.Dogovor_Reiss.FirstOrDefault(rec => rec.Id == model.Id);
+
+                if (element != null)
+                {
+                    context.Dogovor_Reiss.Remove(element);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Элемент не найден");
+                }
+            }
+        }
+            public void AddReis(Dogovor_ReisBM model)
         {
             using (var context = new KursachDatabase())
             {
@@ -99,8 +120,8 @@ namespace Database.Implements
             using (var context = new KursachDatabase())
             {
                 return context.Dogovors
-                 .Where(rec => model == null||( rec.Id==model.Id && model.AgentId == 0)||(rec.Id==model.Id && model.AgentId == rec.AgentId)
-                   || (rec.ClientId == model.ClientId && rec.AgentId == model.AgentId)
+                 .Where(rec => model == null || (rec.Id == model.Id && model.AgentId == 0) || (rec.Id == model.Id && model.AgentId == rec.AgentId)
+                   || (rec.ClientId == model.ClientId && rec.AgentId == model.AgentId)||(rec.data==model.data)
                       ).ToList()
                .Select(rec => new DogovorViewModel
                {

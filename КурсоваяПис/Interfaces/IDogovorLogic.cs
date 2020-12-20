@@ -13,5 +13,6 @@ namespace КурсоваяBusinessLogic.Interfaces
             void CreateOrUpdate(DogovorBindingModel model);
             void Delete(DogovorBindingModel model);
         void AddReis(Dogovor_ReisBM model);
+        void DeleteReisDogovor(Dogovor_ReisBM model);
     }
 }

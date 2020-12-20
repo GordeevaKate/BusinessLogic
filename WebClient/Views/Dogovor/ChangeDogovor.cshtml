@@ -3,38 +3,39 @@
 <h3>Изменение договора @ViewBag.Id</h3>
 <hr />
 <div>
-    <a class="text-dark" asp-action="Dogovor" asp-route-id="@ViewBag.Id">Вернуться назад</a>
+    <a class="text-dark" asp-action="Dogovor" asp-route-id="@ViewBag.ClientId" >Вернуться назад</a>
 </div>
 <hr />
 <p>
-<a class="btn btn-primary" asp-controller="Reis" asp-action="ChangeReis" asp-route-dogovorId="@ViewBag.Id">Пополнить склад</a>
+    <input type="date" value="@ViewBag.Data">
+    <a class="btn btn-primary" asp-controller="Reis" asp-action="ChangeReis" asp-route-dogovorId="@ViewBag.Id" asp-route-clientid="@ViewBag.ClientId">Пополнить склад</a>
 </p>
 <div class="row">
-    <input type="datetime-local" name="calendar"
-           max="2020-01-01" min="2021.01.01">
+    <input type="datetime-local" name="calendar" value=@ViewBag.Data>
     <label class="control-label"> Сумма Договора: @ViewBag.Itog</label>
     <table class="table">
         <tr>
-            <td>Надбавка</td>
-            <td>Комментарий</td>
+            <td>Название</td>
+            <td>Цена</td>
             <td>Объем груза</td>
             <td>Вес груза</td>
+            <td>Комментарий</td>
         </tr>
-        @foreach (var reis in ViewBag.ReisDogovor)
-        {
-@foreach (var r in reis.Dogovor_Reiss)
-{
-<tr>
-    <td>@r.Value.Item3</td>
-    <td>@r.Value.Item4</td>
-    <td>@r.Value.Item5</td>
-    <td>@r.Value.Item6</td>
-    <td>
-        <a class="btn btn-primary btn-sm" asp-controller="Reis" asp-action="ChangeReis" asp-route-id="@r.Value.Item3">Изменить</a>
-        @Html.ActionLink("Удалить", "Delete", new { id = r.Value.Item3 })
-    </td>
-</tr>
-}
-}
+        @foreach (var reis in ViewBag.Reis)
+    @foreach (var reisd in ViewBag.ReisDogovor)
+    {
+    @foreach (var r in reisd.Dogovor_Reiss)
+    {
+        if (r.Value.Item2==reis.Id) {
+    <tr>
+        <td>@reis.Name</td>
+        <td>@(@r.Value.Item3 + @reis.Cena)</td>
+        <td>@r.Value.Item4</td>
+        <td>@r.Value.Item5</td>
+        <td>@r.Value.Item6</td>
+        <td>
+            @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
+        </td>
+    </tr>} }}
     </table>
 </div>
