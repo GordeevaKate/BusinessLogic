@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "КурсоваяПис", "�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsApp", "FormsApp\FormsApp.csproj", "{B73FB6FF-21EF-478F-A7A2-803434E661E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseImplement", "Database\DatabaseImplement.csproj", "{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "WebClient\WebClient.csproj", "{C9B5D883-DC9C-424E-844A-E77E3A0EBD9A}"
 EndProject

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using КурсоваяBusinessLogic.Enums;
 
-namespace Database.Models
+namespace DatabaseImplement.Models
 {
     public class User
     {

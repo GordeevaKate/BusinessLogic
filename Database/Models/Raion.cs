@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Database.Models
+namespace DatabaseImplement.Models
 {
     public class Raion
     {

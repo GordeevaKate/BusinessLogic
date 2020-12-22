@@ -6,7 +6,7 @@ using КурсоваяBusinessLogic.BindingModel;
 using КурсоваяBusinessLogic.Interfaces;
 using КурсоваяBusinessLogic.ViewModel;
 
-namespace Database.Implements
+namespace DatabaseImplement.Implements
 {
     public class AgentLogic : IAgentLogic
     {

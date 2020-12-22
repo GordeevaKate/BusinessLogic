@@ -1,5 +1,5 @@
 ﻿
-using Database.Models;
+using DatabaseImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using КурсоваяBusinessLogic.Interfaces;
 using КурсоваяBusinessLogic.BindingModel;
 using КурсоваяBusinessLogic.ViewModel;
 
-namespace Database.Implements
+namespace DatabaseImplement.Implements
 {
     public class UserLogic : IUserLogic
     {

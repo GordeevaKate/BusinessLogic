@@ -15,7 +15,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\Database\DatabaseImplement.csproj" />
     <ProjectReference Include="..\КурсоваяПис\КурсоваяПис.csproj" />
   </ItemGroup>
 

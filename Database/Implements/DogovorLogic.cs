@@ -1,4 +1,4 @@
-﻿using Database.Models;
+﻿using DatabaseImplement.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using КурсоваяBusinessLogic.Interfaces;
 using КурсоваяBusinessLogic.ViewModel;
 using КурсоваяПис.BindingModel;
 
-namespace Database.Implements
+namespace DatabaseImplement.Implements
 {
     public class DogovorLogic:IDogovorLogic
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Database.Models;
+using DatabaseImplement.Models;
 
-namespace Database
+namespace DatabaseImplement
 {
     public class KursachDatabase : DbContext
     {

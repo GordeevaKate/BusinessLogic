@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ÊóğñîâàÿBusinessLogic.Interfaces;
-using Database.Implements;
+using DatabaseImplement.Implements;
 
 namespace WebClient
 {
