@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
 using BusinessLogic.Interfaces;
-using BusinessLogic.BindingModel;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebClient.Areas.Agent.Controllers
 {
