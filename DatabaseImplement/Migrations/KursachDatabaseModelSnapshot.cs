@@ -19,7 +19,7 @@ namespace DatabaseImplement.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Database.Models.Agent", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Agent", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Agents");
                 });
 
-            modelBuilder.Entity("Database.Models.Client", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +75,7 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("Database.Models.Dogovor", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Dogovor", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -99,9 +99,9 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Dogovors");
                 });
 
-            modelBuilder.Entity("Database.Models.Dogovor_Reis", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Dogovor_Reis", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -113,7 +113,10 @@ namespace DatabaseImplement.Migrations
                     b.Property<int>("DogovorId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Nadbavka")
+                    b.Property<double>("NadbavkaCena")
+                        .HasColumnType("float");
+
+                    b.Property<double>("NadbavkaTime")
                         .HasColumnType("float");
 
                     b.Property<double>("Obem")
@@ -134,7 +137,7 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Dogovor_Reiss");
                 });
 
-            modelBuilder.Entity("Database.Models.Raion", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Raion", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +153,7 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Raions");
                 });
 
-            modelBuilder.Entity("Database.Models.Reis", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Reis", b =>
                 {
                     b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,7 +181,7 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Reiss");
                 });
 
-            modelBuilder.Entity("Database.Models.User", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,15 +204,15 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Database.Models.Dogovor_Reis", b =>
+            modelBuilder.Entity("DatabaseImplement.Models.Dogovor_Reis", b =>
                 {
-                    b.HasOne("Database.Models.Dogovor", null)
+                    b.HasOne("DatabaseImplement.Models.Dogovor", null)
                         .WithMany("Dogovor_Reiss")
                         .HasForeignKey("DogovorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Database.Models.Reis", "Reiss")
+                    b.HasOne("DatabaseImplement.Models.Reis", "Reiss")
                         .WithMany("Dogovor_Reiss")
                         .HasForeignKey("ReisId")
                         .OnDelete(DeleteBehavior.Cascade)

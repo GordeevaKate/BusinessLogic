@@ -109,7 +109,8 @@ namespace DatabaseImplement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReisId = table.Column<int>(nullable: false),
                     DogovorId = table.Column<int>(nullable: false),
-                    Nadbavka = table.Column<double>(nullable: false),
+                    NadbavkaCena = table.Column<double>(nullable: false),
+                    NadbavkaTime = table.Column<double>(nullable: false),
                     Comm = table.Column<string>(nullable: false),
                     Obem = table.Column<double>(nullable: false),
                     ves = table.Column<double>(nullable: false)

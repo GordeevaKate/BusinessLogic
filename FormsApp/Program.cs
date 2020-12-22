@@ -1,4 +1,4 @@
-﻿using Database.Implements;
+﻿using DatabaseImplement.Implements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
 using Unity.Lifetime;
-using КурсоваяBusinessLogic.Interfaces;
+using BusinessLogic.Interfaces;
 
 namespace FormsApp
 {

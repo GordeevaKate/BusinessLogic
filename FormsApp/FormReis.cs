@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Unity;
-using КурсоваяBusinessLogic.BindingModel;
-using КурсоваяBusinessLogic.Interfaces;
+using BusinessLogic.BindingModel;
+using BusinessLogic.Interfaces;
 
 namespace FormsApp
 {
