@@ -47,13 +47,14 @@ namespace WebClient.Controllers
                        UserId=clientView.Id
                     }).FirstOrDefault();
                     Program.Agent = agentView;
+                    Program.User = clientView;
+                    return RedirectToAction("Profile", "Agent", new { area = "Agent" });
                 }
                 else//бухгалтер!!!!!
                 {
 
                 }
             }
-            Program.User = clientView;
             
             return RedirectToAction("Index", "Home");
         }

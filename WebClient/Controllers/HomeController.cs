@@ -31,7 +31,12 @@ namespace WebClient.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        public IActionResult Logout()
+        {
+            Program.User = null;
+            Program.Agent = null;
+            return RedirectToAction("Index", "Home");
+        }
 
 
 
