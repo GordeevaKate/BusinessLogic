@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormsApp", "FormsApp\FormsA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseImplement", "DatabaseImplement\DatabaseImplement.csproj", "{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1", "WebClient\1.csproj", "{C9B5D883-DC9C-424E-844A-E77E3A0EBD9A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClient", "WebClient\WebClient.csproj", "{0D90C265-C4C4-4EFC-BD5D-1CD7ADA709D9}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C9B5D883-DC9C-424E-844A-E77E3A0EBD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C9B5D883-DC9C-424E-844A-E77E3A0EBD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C9B5D883-DC9C-424E-844A-E77E3A0EBD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C9B5D883-DC9C-424E-844A-E77E3A0EBD9A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D90C265-C4C4-4EFC-BD5D-1CD7ADA709D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0D90C265-C4C4-4EFC-BD5D-1CD7ADA709D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D90C265-C4C4-4EFC-BD5D-1CD7ADA709D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
