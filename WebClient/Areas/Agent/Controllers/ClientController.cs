@@ -75,7 +75,7 @@ namespace WebClient.Areas.Agent.Controllers
                     {
                         foreach (var reis in dogovor.Dogovor_Reiss)
                         {
-                            obem += reis.Value.Item5;
+                            obem += reis.Value.Item6;
                         }
                     }
                     if (obem >= Convert.ToDouble(model.Obem))
@@ -113,12 +113,21 @@ namespace WebClient.Areas.Agent.Controllers
             });
             return RedirectToAction("Client");
         }
+        public IActionResult AddClient()
+        {
+            return View();
+        }
         [HttpPost]
         public ViewResult AddClient(RegistrationModel client)
         {
             if (String.IsNullOrEmpty(client.Pasport))
             {
-                ModelState.AddModelError("", "Введите логин");
+                ModelState.AddModelError("", "Введите номер паспорта");
+                return View(client);
+            }
+            if (client.Pasport.Length != 10)
+            {
+                ModelState.AddModelError("", "Введите номер паспорта");
                 return View(client);
             }
             if (!Regex.IsMatch(client.Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
@@ -129,11 +138,6 @@ namespace WebClient.Areas.Agent.Controllers
             if (String.IsNullOrEmpty(client.ClientFIO))
             {
                 ModelState.AddModelError("", "Введите ФИО");
-                return View(client);
-            }
-            if (String.IsNullOrEmpty(client.Pasport))
-            {
-                ModelState.AddModelError("", "Введите пароль");
                 return View(client);
             }
             if (String.IsNullOrEmpty(client.PhoneNumber))
@@ -150,7 +154,7 @@ namespace WebClient.Areas.Agent.Controllers
                 UserId = 0
             });
             ModelState.AddModelError("", "Вы успешно зарегистрированы");
-            return View("Registration", client);
+            return View("AddClient", client);
         }
 
 

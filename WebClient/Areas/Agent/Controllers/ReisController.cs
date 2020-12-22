@@ -32,6 +32,7 @@ namespace WebClient.Areas.Agent.Controllers
 
         public IActionResult Reis(int raion, SpisokModel model)
         {
+        
 
             ViewBag.Reiss = _reis.Read(null);
             var Raion = raions.Read(null);
@@ -101,9 +102,9 @@ namespace WebClient.Areas.Agent.Controllers
         public IActionResult AddReis(int? reisId, int? dogovorId, int clientId)
         {
             ViewBag.ClientId = clientId;
-            if (TempData["ErrorLackInWerehouse"] != null)
+            if (TempData["ErrorLack"] != null)
             {
-                ModelState.AddModelError("", TempData["ErrorLackInWerehouse"].ToString());
+                ModelState.AddModelError("", TempData["ErrorLack"].ToString());
             }
             var Cosmetic = _reis.Read(new ReisBindingModel
             {

@@ -8,12 +8,12 @@
 
 <hr />
 <div>
-    <a class="text-dark" asp-action="ChangeReis" asp-route-id="@ViewBag.DogovorId">Вернуться назад</a>
+    <a class="text-dark" asp-action="ChangeReis" asp-route-dogovorId="@ViewBag.DogovorId">Вернуться назад</a>
 </div>
 <hr />
 
 <div class="text-left">
-    <h4>Перевозка: @ViewBag.ReisName</h4>
+    <h4>Перевозка: @ViewBag.ReisName </h4>
 </div>
 
 <div class="row">
@@ -32,9 +32,12 @@
                 <label asp-for="Obem" class="control-label">Obem</label>
                 <input asp-for="Obem" class="form-control" />
                 <span asp-validation-for="Obem" class="text-danger"></span>
-                <label asp-for="Nadbavka" class="control-label">Nadbavka</label>
-                <input asp-for="Nadbavka" class="form-control" />
-                <span asp-validation-for="Nadbavka" class="text-danger"></span>
+                <label asp-for="NadbavkaCena" class="control-label">Nadbavka</label>
+                <input asp-for="NadbavkaCena" class="form-control" />
+                <span asp-validation-for="NadbavkaTime" class="text-danger"></span>
+                <label asp-for="NadbavkaTime" class="control-label">Nadbavka time</label>
+                <input asp-for="NadbavkaTime" class="form-control" />
+                <span asp-validation-for="NadbavkaTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Пополнить" class="btn btn-dark" />

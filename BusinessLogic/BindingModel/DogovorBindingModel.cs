@@ -18,6 +18,6 @@ namespace BusinessLogic.BindingModel
         public double Summa { get; set; }
         [DataMember]
         public DateTime data { get; set; }
-        public Dictionary<int, (int,int,string,double, double)> Dogovor_Reiss;
+        public Dictionary<int, (int,int,double,double,string,double, double)> Dogovor_Reiss;
      }
 }

@@ -16,6 +16,7 @@
         <tr>
             <td>Название</td>
             <td>Цена</td>
+            <td>Время</td>
             <td>Объем груза</td>
             <td>Вес груза</td>
             <td>Комментарий</td>
@@ -29,31 +30,33 @@
     {
         if (@r.Value.Item6 / @r.Value.Item5 > 250)
         {
-            <tr>
-                <td>@reis.Name</td>
-                <td>
-                </td>
-                <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item6)</td>
-                <td>@r.Value.Item5</td>
-                <td>@r.Value.Item6</td>
-                <td>@r.Value.Item4</td>
-                <td>
-                    @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
-                </td>
-            </tr>
+    <tr>
+        <td>@reis.Name</td>
+        <td>
+        </td>
+        <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item7)</td>
+        <td>@(@r.Value.Item4+@reis.Time)</td>
+        <td>@r.Value.Item5</td>
+        <td>@r.Value.Item6</td>
+        <td>@r.Value.Item4</td>
+        <td>
+            @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
+        </td>
+    </tr>
 }
         else
         {
-<tr>
-    <td>@reis.Name</td>
-    <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item5)</td>
-    <td>@r.Value.Item5</td>
-    <td>@r.Value.Item6</td>
-    <td>@r.Value.Item4</td>
-    <td>
-        @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
-    </td>
-</tr>}
+    <tr>
+        <td>@reis.Name</td>
+        <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item6)</td>
+        <td>@(@r.Value.Item4+@reis.Time)</td>
+        <td>@r.Value.Item5</td>
+        <td>@r.Value.Item6</td>
+        <td>@r.Value.Item4</td>
+        <td>
+            @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
+        </td>
+    </tr>}
 
                         }
                     }}

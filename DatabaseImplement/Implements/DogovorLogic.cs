@@ -39,7 +39,6 @@ namespace DatabaseImplement.Implements
                 context.SaveChanges();
             }
         }
-        
              public void DeleteReisDogovor(Dogovor_ReisBM model)
         {
             using (var context = new KursachDatabase())
@@ -57,29 +56,27 @@ namespace DatabaseImplement.Implements
                 }
             }
         }
+        public List<DogovorViewModel> ReadReis(Dogovor_ReisBM model)
+        {
+            using (var context = new KursachDatabase())
+            {
+                return context.Dogovor_Reiss
+                 .Where(rec => model == null || (rec.DogovorId==model.DogovorId && rec.ReisId==model.ReisId)
+                      ).ToList()
+               .Select(rec => new DogovorViewModel
+               {
+                   Id = rec.Id,
+
+                 })
+                .ToList();
+            }
+        }
             public void AddReis(Dogovor_ReisBM model)
         {
             using (var context = new KursachDatabase())
             {
                 var werehouseCosmetics = context.Dogovor_Reiss.FirstOrDefault(rec =>
                  rec.DogovorId == model.DogovorId && rec.ReisId == model.ReisId);
-
-                if (model.Obem<=0)
-                {
-                    throw new Exception("Недостаточно места в складе");
-                }
-                if (model.Obem <= 0)
-                {
-                    throw new Exception("Недостаточно места в складе");
-                }
-                if (model.ves <= 0)
-                {
-                    throw new Exception("Недостаточно места в складе");
-                }
-                if (model.Obem <= 0)
-                {
-                    throw new Exception("Недостаточно места в складе");
-                }
                 if (werehouseCosmetics == null)
                 {
                     context.Dogovor_Reiss.Add(new Dogovor_Reis
@@ -89,19 +86,20 @@ namespace DatabaseImplement.Implements
                         Obem=model.Obem,
                         ves=model.ves,
                         Comm=model.Comm,
-                        Nadbavka=model.Nadbavka
+                        NadbavkaCena=model.NadbavkaCena,
+                        NadbavkaTime=model.NadbavkaTime
                     });
                 }
                 else
                 {
-                    werehouseCosmetics.Obem = model.Obem;
-                    werehouseCosmetics.ves = model.ves;
+                    werehouseCosmetics.Obem += model.Obem;
+                    werehouseCosmetics.ves += model.ves;
                     werehouseCosmetics.Comm = model.Comm;
-                    werehouseCosmetics.Nadbavka = model.Nadbavka;
+                    werehouseCosmetics.NadbavkaCena = model.NadbavkaTime;
                 }
 
                 Reis element = context.Reiss.FirstOrDefault(rec =>
-                    rec.Id == model.ReisId);
+                rec.Id == model.ReisId);
                 context.SaveChanges();
             }
         }
@@ -126,7 +124,7 @@ namespace DatabaseImplement.Implements
                    Dogovor_Reiss = context.Dogovor_Reiss
                             .Include(recCC => recCC.Reiss)
                             .Where(recCC => recCC.DogovorId == rec.Id)
-                            .ToDictionary(recCC => recCC.Id, recCC => ((int)recCC.DogovorId, recCC.ReisId, recCC.Nadbavka, recCC.Comm, recCC.Obem, recCC.ves))
+                            .ToDictionary(recCC => recCC.Id, recCC => ((int)recCC.DogovorId, recCC.ReisId, recCC.NadbavkaCena,recCC.NadbavkaTime, recCC.Comm, recCC.Obem, recCC.ves))
                })
                 .ToList();
             }
@@ -148,7 +146,7 @@ namespace DatabaseImplement.Implements
                    Dogovor_Reiss = context.Dogovor_Reiss
                             .Include(recCC => recCC.Reiss)
                             .Where(recCC => recCC.DogovorId == rec.Id)
-                            .ToDictionary(recCC => recCC.Id, recCC => ((int)recCC.DogovorId, recCC.ReisId, recCC.Nadbavka, recCC.Comm, recCC.Obem, recCC.ves))
+                            .ToDictionary(recCC => recCC.Id, recCC => ((int)recCC.DogovorId, recCC.ReisId, recCC.NadbavkaCena,recCC.NadbavkaTime, recCC.Comm, recCC.Obem, recCC.ves))
                })
                 .ToList();
             }

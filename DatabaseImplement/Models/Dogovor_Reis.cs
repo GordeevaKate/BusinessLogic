@@ -11,7 +11,9 @@ namespace DatabaseImplement.Models
         public int ReisId { get; set; }
         public int DogovorId { get; set; }
         [Required]
-        public double Nadbavka { get; set; }
+        public double NadbavkaCena { get; set; }
+        [Required]
+        public double NadbavkaTime { get; set; }
         [Required]
         public string Comm { get; set; }
         [Required]

@@ -45,13 +45,13 @@ namespace WebClient.Areas.Agent.Controllers
                     foreach (var reis_dogovor in dogovor.Dogovor_Reiss)
                     {
                         var reis = _reis.Read(new ReisBindingModel { Id = reis_dogovor.Value.Item2 });
-                        if (reis_dogovor.Value.Item6 / reis_dogovor.Value.Item5 > 250)
+                        if (reis_dogovor.Value.Item7 / reis_dogovor.Value.Item6 > 250)
                         {
-                            Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena * reis_dogovor.Value.Item6;
+                            Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena * reis_dogovor.Value.Item7;
 
                         }
                         else
-                            Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena * reis_dogovor.Value.Item5;
+                            Itog = Itog + reis_dogovor.Value.Item3 + reis[0].Cena * reis_dogovor.Value.Item6;
                     }
                 ViewBag.Itog = Itog;
                 ViewBag.ReisDogovor = _dogovor.Read(new DogovorBindingModel
@@ -78,16 +78,50 @@ namespace WebClient.Areas.Agent.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddReis([Bind("DogovorId, ReisId, Comm, Nadbavka", "Obem", "ves")] Dogovor_ReisBM model)
         {
-
-            if (ModelState.IsValid)
+            if (_dogovor.ReadReis(new Dogovor_ReisBM { DogovorId = model.DogovorId, ReisId = model.ReisId }).Count != 0)
             {
-                try
+                var reis = _reis.Read(new ReisBindingModel { Id = model.ReisId })[0];
+                if (model.ves / model.Obem > 250)
                 {
-                    _dogovor.AddReis(model);
+                    if (reis.Cena * model.ves +model.NadbavkaCena<=0)
+                    {
+                        TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
+                        return RedirectToAction("AddReis", "Reis", new
+                        {
+                            reisID = model.ReisId,
+                            dogovorId = model.DogovorId
+                        });
+
+                    }
                 }
-                catch (Exception exception)
+                else
                 {
-                    TempData["ErrorLackInWerehouse"] = exception.Message;
+                    if (reis.Cena * model.Obem + model.NadbavkaCena<=0)
+                    {
+                        TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
+                        return RedirectToAction("AddReis", "Reis", new
+                        {
+                            reisID = model.ReisId,
+                            dogovorId = model.DogovorId
+                        });
+                    }
+                }
+
+            }
+            else
+            {
+                if (model.Obem <= 0)
+                {
+                    TempData["ErrorLack"] = "Объем не должен быть меньше или равна нулю";
+                    return RedirectToAction("AddReis", "Reis", new
+                    {
+                        reisID = model.ReisId,
+                        dogovorId = model.DogovorId
+                    });
+                }
+                if (model.ves <= 0)
+                {
+                    TempData["ErrorLack"] = "Вес не должен быть меньше или равна нулю";
                     return RedirectToAction("AddReis", "Reis", new
                     {
                         reisID = model.ReisId,
@@ -95,9 +129,9 @@ namespace WebClient.Areas.Agent.Controllers
                     });
                 }
             }
+             _dogovor.AddReis(model);
             return RedirectToAction("ChangeDogovor", new { id = model.DogovorId });
         }
-
         public IActionResult Dogovor(int? id, SpisokClientViewModel model)
         {
             Program.ClientId = (int)id;

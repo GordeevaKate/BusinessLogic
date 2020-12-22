@@ -19,6 +19,6 @@ namespace BusinessLogic.ViewModel
         [DataMember]
         [DisplayName("Дата")]
         public DateTime data { get; set; }
-        public Dictionary<int, (int, int, double, string, double, double)> Dogovor_Reiss;
+        public Dictionary<int, (int, int, double,double, string, double, double)> Dogovor_Reiss;
     }
 }
