@@ -1,0 +1,46 @@
+﻿@model WebClient.Areas.Agent.Models.SpisokClientViewModel
+@{
+    ViewData["Title"] = "Клиенты";
+}
+<div class="text-center text-info">
+    <h1>Клиенты</h1>
+</div>
+<p>
+    <a class="btn btn-primary d-block mx-auto" asp-action="AddClient">Добавление клиента</a>
+</p>
+@Html.ValidationMessageFor(model => model.Passport)
+<form asp-action="Client">
+    <div class="form-inline">
+        <label class="control-label">Паспорт: <br /></label>
+        <input asp-for="Passport" class="form-control" /><br />
+        <label class="control-label">Номер договора <br /></label>
+        <input asp-for="DogovorId" class="form-control" min="0" /><br />
+        <label class="control-label">Объем товара<br /></label>
+        <input asp-for="Obem" class="form-control"/><br />
+        <font size="2" color="red" face="Arial">
+            @Html.ValidationMessageFor(model => model.Obem)
+        </font>
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+<table class="table">
+    <tr>
+        <td>Паспорт</td>
+        <td>ФИО</td>
+        <td>Номер телефона</td>
+        <td>Email</td>
+    </tr>
+    @foreach (var client in ViewBag.client)
+    {
+    <tr>
+        <td>@client.Pasport</td>
+        <td>@client.ClientFIO</td>
+        <td>@client.PhoneNumber</td>
+        <td>@client.Email</td>
+        <td>
+            <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-id="@client.Id">Договора</a>|
+        </td>
+    </tr>
+    }
+</table>
+@Html.ActionLink("Report", "Report")

@@ -1,0 +1,23 @@
+﻿
+@{ ViewData["Title"] = "Личный кабинет"; }
+
+<div class="text-center text-info">
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<p>Имя: @ViewBag.Agent.Name</p>
+<p>Оклад: @ViewBag.Agent.Oklad</p>
+<p>Процент комиссионных: @ViewBag.Agent.Comission</p>
+<p>Зарплата: @ViewBag.Zarplata</p>
+
+<form method="get">
+    <div class="form-inline">
+        @Html.ListBox("Month",
+                          new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                , "Май", "Июнь", "Июль"
+                , "Август", "Сентябрь", "Октябрь"
+                , "Ноябрь", "Декабрь"}))
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+

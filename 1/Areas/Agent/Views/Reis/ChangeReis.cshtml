@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Перевозки";
+}
+<div class="text-center text-info">
+    <h1>Перевозки к договору @ViewBag.DogovorId</h1>
+</div>
+
+<div>
+    <a class="text-dark" asp-controller="Dogovor" asp-action="ChangeDogovor" asp-route-id="@ViewBag.DogovorId">Вернуться назад</a>
+</div>
+<table class="table">
+    <tr>
+        <td>Id</td>
+        <td>Пункт отправления</td>
+        <td>Пункт прибытия</td>
+        <td>Название</td>
+        <td>Цена</td>
+        <td>Длительность</td>
+    </tr>
+    @foreach (var reis in ViewBag.reiss)
+    {
+        <tr>
+            <td>@reis.Id</td>
+            <td>@reis.OfId</td>
+            <td>@reis.ToId</td>
+            <td>@reis.Name</td>
+            <td>@reis.Cena</td>
+            <td>@reis.Time</td>
+            <td><a class="btn btn-primary btn-sm btn-block" asp-action="AddReis" asp-route-dogovorId="@ViewBag.DogovorId" asp-route-reisId="@reis.Id">Выбор рейса</a></td>
+        </tr>
+    }
+</table>
+

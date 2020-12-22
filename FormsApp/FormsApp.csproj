@@ -221,11 +221,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\DatabaseImplement.csproj">
+    <ProjectReference Include="..\DatabaseImplement\DatabaseImplement.csproj">
       <Project>{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}</Project>
       <Name>DatabaseImplement</Name>
     </ProjectReference>
-    <ProjectReference Include="..\КурсоваяПис\BusinessLogic.csproj">
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{95908e7a-8b2c-4b36-a47e-599565c32d6d}</Project>
       <Name>BusinessLogic</Name>
     </ProjectReference>
