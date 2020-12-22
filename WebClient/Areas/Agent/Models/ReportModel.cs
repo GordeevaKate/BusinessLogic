@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HospitalWebClient.Models
+namespace WebClient.Areas.Agent.Models
 {
     public class ReportModel
     {

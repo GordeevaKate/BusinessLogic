@@ -2,8 +2,9 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.BindingModel;
 
-namespace WebClient.Controllers
+namespace WebClient.Areas.Agent.Controllers
 {
+    [Area("Agent")]
     public class AgentController : Controller
     {
         private readonly IUserLogic _client;

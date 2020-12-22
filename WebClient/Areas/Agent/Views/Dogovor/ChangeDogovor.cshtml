@@ -21,17 +21,34 @@
             <td>Комментарий</td>
         </tr>
         @foreach (var reis in ViewBag.Reis)
-    @foreach (var reisd in ViewBag.ReisDogovor)
+@foreach (var reisd in ViewBag.ReisDogovor)
+{
+@foreach (var r in reisd.Dogovor_Reiss)
+{
+    if (r.Value.Item2 == reis.Id)
     {
-    @foreach (var r in reisd.Dogovor_Reiss)
-    {
-        if (r.Value.Item2 == reis.Id)
+        if (@r.Value.Item6 / @r.Value.Item5 > 250)
         {
-            if (@r.Value.Item6 / @r.Value.Item5 > 250) { <tr>
+            <tr>
+                <td>@reis.Name</td>
+                <td>
+                </td>
+                <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item6)</td>
+                <td>@r.Value.Item5</td>
+                <td>@r.Value.Item6</td>
+                <td>@r.Value.Item4</td>
+                <td>
+                    @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
+                </td>
+            </tr>
+}
+        else
+        {
+<tr>
     <td>@reis.Name</td>
     <td>
     </td>
-    <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item6)</td>
+    <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item5)</td>
     <td>@r.Value.Item5</td>
     <td>@r.Value.Item6</td>
     <td>@r.Value.Item4</td>
@@ -39,23 +56,8 @@
         @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
     </td>
 </tr>}
-            else
-            {
-                <tr>
-                    <td>@reis.Name</td>
-                    <td>
-                    </td>
-                    <td>@(@r.Value.Item3 + @reis.Cena* @r.Value.Item5)</td>
-                    <td>@r.Value.Item5</td>
-                    <td>@r.Value.Item6</td>
-                    <td>@r.Value.Item4</td>
-                    <td>
-                        @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
-                    </td>
-                </tr>
-            }
 
-        }
-    }}
+                        }
+                    }}
     </table>
 </div>

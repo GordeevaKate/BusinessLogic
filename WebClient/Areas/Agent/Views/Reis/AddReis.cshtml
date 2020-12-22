@@ -1,4 +1,4 @@
-﻿@model КурсоваяПис.BindingModel.Dogovor_ReisBM
+﻿@model BusinessLogic.BindingModel.Dogovor_ReisBM
 
 @{ ViewData["Title"] = "Пополнение"; }
 
@@ -18,7 +18,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-controller="Dogovor" asp-action="AddReis" asp-route-id="@ViewBag.ClientId" >
+        <form asp-controller="Dogovor" asp-action="AddReis" asp-route-id="@ViewBag.ClientId">
             <input type="hidden" asp-for="DogovorId" />
             <input type="hidden" asp-for="ReisId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -15,12 +15,16 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Database\DatabaseImplement.csproj" />
-    <ProjectReference Include="..\КурсоваяПис\BusinessLogic.csproj" />
+    <Folder Include="Areas\Buhgalter\" />
+    <Folder Include="Areas\Client\" />
+    <Folder Include="Models\Agent\" />
+    <Folder Include="Models\Client\" />
+    <Folder Include="Models\Buhgalter\" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <Folder Include="Views\Новая папка\" />
+    <ProjectReference Include="..\Database\DatabaseImplement.csproj" />
+    <ProjectReference Include="..\КурсоваяПис\BusinessLogic.csproj" />
   </ItemGroup>
 </Project>

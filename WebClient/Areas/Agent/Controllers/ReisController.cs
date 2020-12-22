@@ -7,8 +7,11 @@ using BusinessLogic.Interfaces;
 using BusinessLogic.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessLogic.BindingModel;
-namespace WebClient.Controllers
+using WebClient.Areas.Agent.Models;
+
+namespace WebClient.Areas.Agent.Controllers
 {
+    [Area("Agent")]
     public class ReisController: Controller
     {
         private readonly IReisLogic _reis;

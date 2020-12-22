@@ -5,8 +5,9 @@ using System.Linq;
 using BusinessLogic.BindingModel;
 using BusinessLogic.Interfaces;
 
-namespace WebClient.Controllers
+namespace WebClient.Areas.Agent.Controllers
 {
+    [Area("Agent")]
     public class DogovorController : Controller
     {
         private readonly IDogovorLogic _dogovor;

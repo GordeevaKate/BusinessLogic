@@ -1,4 +1,4 @@
-﻿@model ClientViewModel
+﻿@model WebClient.Areas.Agent.Models.ClientViewModel
 @{
     ViewData["Title"] = "Клиенты";
 }
@@ -6,7 +6,7 @@
     <h1>Клиенты</h1>
 </div>
 <p>
-    <a class="btn btn-primary d-block mx-auto" asp-action="AddClient" >Добавление клиента</a>
+    <a class="btn btn-primary d-block mx-auto" asp-action="AddClient">Добавление клиента</a>
 </p>
 @Html.ValidationMessageFor(model => model.Passport)
 <form asp-action="Client">
@@ -27,15 +27,15 @@
     </tr>
     @foreach (var client in ViewBag.client)
     {
-        <tr>
-            <td>@client.Pasport</td>
-            <td>@client.ClientFIO</td>
-            <td>@client.PhoneNumber</td>
-            <td>@client.Email</td>
-            <td>
-                <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-id="@client.Id">Договора</a>|
-            </td>
-        </tr>
+    <tr>
+        <td>@client.Pasport</td>
+        <td>@client.ClientFIO</td>
+        <td>@client.PhoneNumber</td>
+        <td>@client.Email</td>
+        <td>
+            <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-id="@client.Id">Договора</a>|
+        </td>
+    </tr>
     }
 </table>
 @Html.ActionLink("Report", "Report")
