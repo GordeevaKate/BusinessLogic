@@ -24,12 +24,12 @@ namespace WebClient
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-        //    services.AddTransient<IClientLogic, ClientLogic>();
-    //        services.AddTransient<IUserLogic, UserLogic>();
-    //        services.AddTransient<IAgentLogic, AgentLogic>();
-    //        services.AddTransient<IReisLogic, ReisLogic>();
-    //       services.AddTransient<IRaionLogic, RaionLogic>();
-    //        services.AddTransient<IDogovorLogic, DogovorLogic>();
+            services.AddTransient<IClientLogic, ClientLogic>();
+            services.AddTransient<IUserLogic, UserLogic>();
+            services.AddTransient<IAgentLogic, AgentLogic>();
+            services.AddTransient<IReisLogic, ReisLogic>();
+           services.AddTransient<IRaionLogic, RaionLogic>();
+            services.AddTransient<IDogovorLogic, DogovorLogic>();
             //        services.AddTransient<ReportLogic>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
