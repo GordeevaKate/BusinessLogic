@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebClient.Areas.Agent.Models.SpisokClientViewModel
+@{
     ViewData["Title"] = "Клиенты";
 }
 
@@ -8,6 +9,14 @@
 <p>
     <a class="btn btn-primary d-block mx-auto" asp-action="ChangeDogovor" asp-route-clientid="@ViewBag.ClientId">Создание договора</a>
 </p>
+@Html.ValidationMessageFor(model => model.Passport)
+<form asp-action="Dogovor">
+    <div class="form-inline">
+        <label class="control-label">Номер договора </label>
+        <input asp-for="DogovorId" class="form-control" min="0" />
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
 <table class="table">
     <tr>
         <td>Номер</td>

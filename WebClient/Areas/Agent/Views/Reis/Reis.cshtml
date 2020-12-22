@@ -9,7 +9,7 @@ function drawStacked() {
     data.addColumn('number', 'Количевство Грузоперевозок');
    foreach(var r in @ViewBag.reiss) {
         data.addRows([
-            ['CPass ', 3]
+            ["CPass", 3]
         ]);
     }
       data.addRows([
@@ -53,7 +53,7 @@ function drawStacked() {
         <label class="control-label">Район: </label>
         @Html.DropDownList("raion", Model.Raion as SelectList,
                     htmlAttributes: new { @class = "form-control" })
-        <label class="control-label">От </label>
+        <label class="control-label"> Цена От </label>
         @Html.EditorFor(model => model.Cena1)
         <font size="5" color="red" face="Arial">
             @Html.ValidationMessageFor(model => model.Cena1)

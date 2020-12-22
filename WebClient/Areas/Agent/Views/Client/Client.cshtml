@@ -1,4 +1,4 @@
-﻿@model WebClient.Areas.Agent.Models.ClientViewModel
+﻿@model WebClient.Areas.Agent.Models.SpisokClientViewModel
 @{
     ViewData["Title"] = "Клиенты";
 }
@@ -11,10 +11,15 @@
 @Html.ValidationMessageFor(model => model.Passport)
 <form asp-action="Client">
     <div class="form-inline">
-        <label class="control-label">Паспорт: </label>
-        <input asp-for="Passport" class="form-control" />
-        <label class="control-label">Номер договора </label>
-        <input asp-for="DogovorId" class="form-control" min="0" />
+        <label class="control-label">Паспорт: <br /></label>
+        <input asp-for="Passport" class="form-control" /><br />
+        <label class="control-label">Номер договора <br /></label>
+        <input asp-for="DogovorId" class="form-control" min="0" /><br />
+        <label class="control-label">Объем товара<br /></label>
+        <input asp-for="Obem" class="form-control"/><br />
+        <font size="2" color="red" face="Arial">
+            @Html.ValidationMessageFor(model => model.Obem)
+        </font>
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
 </form>

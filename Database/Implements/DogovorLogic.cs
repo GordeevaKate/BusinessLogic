@@ -110,7 +110,27 @@ namespace DatabaseImplement.Implements
         {
             throw new NotImplementedException();
         }
-
+        public List<DogovorViewModel> Rascet(int? AgentId, DateTime date)
+        {
+            using (var context = new KursachDatabase())
+            {
+                return context.Dogovors
+                 .Where(rec => rec.AgentId == AgentId && rec.data >= date && rec.data <= date.AddMonths(1).AddDays(-1)
+                      ).ToList()
+               .Select(rec => new DogovorViewModel
+               {
+                   Id = rec.Id,
+                   ClientId = rec.ClientId,
+                   Summa = rec.Summa,
+                   data = rec.data,
+                   Dogovor_Reiss = context.Dogovor_Reiss
+                            .Include(recCC => recCC.Reiss)
+                            .Where(recCC => recCC.DogovorId == rec.Id)
+                            .ToDictionary(recCC => recCC.Id, recCC => ((int)recCC.DogovorId, recCC.ReisId, recCC.Nadbavka, recCC.Comm, recCC.Obem, recCC.ves))
+               })
+                .ToList();
+            }
+        }
         public List<DogovorViewModel> Read(DogovorBindingModel model)
         {
             using (var context = new KursachDatabase())

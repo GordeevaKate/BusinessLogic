@@ -8,9 +8,10 @@ namespace BusinessLogic.Interfaces
 {
         public interface IDogovorLogic
     {
-            List<DogovorViewModel> Read(DogovorBindingModel model);
-            void CreateOrUpdate(DogovorBindingModel model);
-            void Delete(DogovorBindingModel model);
+        List<DogovorViewModel> Read(DogovorBindingModel model);
+        void CreateOrUpdate(DogovorBindingModel model);
+        void Delete(DogovorBindingModel model);
+        List<DogovorViewModel> Rascet(int? AgentId, DateTime date);
         void AddReis(Dogovor_ReisBM model);
         void DeleteReisDogovor(Dogovor_ReisBM model);
     }

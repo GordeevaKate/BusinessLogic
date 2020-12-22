@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebClient.Areas.Agent.Models;
 
 namespace WebClient.Areas.Agent.Controllers
 {
@@ -97,7 +98,7 @@ namespace WebClient.Areas.Agent.Controllers
             return RedirectToAction("ChangeDogovor", new { id = model.DogovorId });
         }
 
-        public IActionResult Dogovor(int? id)
+        public IActionResult Dogovor(int? id, SpisokClientViewModel model)
         {
             Program.ClientId = (int)id;
             ViewBag.ClientId = id;
@@ -105,6 +106,24 @@ namespace WebClient.Areas.Agent.Controllers
             if (id == null)
             {
                 return NotFound();
+            }
+            if (model.DogovorId > 0)
+            {
+                var dogovor = _dogovor.Read(new DogovorBindingModel
+                {
+                    Id = model.DogovorId,
+                    ClientId= (int)id
+                });
+                foreach (var r in dogovor)
+                {
+                    ViewBag.Dogovors = _client.Read(new ClientBindingModel { Id = r.ClientId });
+                }
+                if (dogovor.Count != 0)
+                {
+                    ViewBag.Dogovors = dogovor;
+                      return View();
+                }
+                ModelState.AddModelError("Passport", "Такого Договора у клиента не существует");
             }
             ViewBag.Dogovors = _dogovor.Read(new DogovorBindingModel
             {
