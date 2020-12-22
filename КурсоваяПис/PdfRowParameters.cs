@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
-namespace КурсоваяBusinessLogic.HelperModels
+namespace BusinessLogic.HelperModels
 {
     public class PdfRowParameters
     {

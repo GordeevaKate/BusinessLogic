@@ -225,9 +225,9 @@
       <Project>{52F2B0A6-C363-44E4-88ED-7B787FCA8C08}</Project>
       <Name>DatabaseImplement</Name>
     </ProjectReference>
-    <ProjectReference Include="..\КурсоваяПис\КурсоваяПис.csproj">
+    <ProjectReference Include="..\КурсоваяПис\BusinessLogic.csproj">
       <Project>{95908e7a-8b2c-4b36-a47e-599565c32d6d}</Project>
-      <Name>КурсоваяПис</Name>
+      <Name>BusinessLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\КурсоваяПис\КурсоваяПис.csproj" />
+    <ProjectReference Include="..\КурсоваяПис\BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,11 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using КурсоваяBusinessLogic.BindingModel;
-using КурсоваяBusinessLogic.Interfaces;
-using КурсоваяBusinessLogic.ViewModel;
-using КурсоваяПис.BindingModel;
+using BusinessLogic.BindingModel;
+using BusinessLogic.Interfaces;
+using BusinessLogic.ViewModel;
 
 namespace DatabaseImplement.Implements
 {

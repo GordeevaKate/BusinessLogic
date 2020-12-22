@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace КурсоваяBusinessLogic.HelperModels
+namespace BusinessLogic.HelperModels
 {
     public class PdfCellParameters
     {

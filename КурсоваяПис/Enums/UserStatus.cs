@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace КурсоваяBusinessLogic.Enums
+namespace BusinessLogic.Enums
 {
      public enum UserStatus
     {

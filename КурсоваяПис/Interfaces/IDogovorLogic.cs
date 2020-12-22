@@ -1,11 +1,10 @@
-﻿using КурсоваяBusinessLogic.BindingModel;
-using КурсоваяBusinessLogic.ViewModel;
+﻿using BusinessLogic.BindingModel;
+using BusinessLogic.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using КурсоваяПис.BindingModel;
 
-namespace КурсоваяBusinessLogic.Interfaces
+namespace BusinessLogic.Interfaces
 {
         public interface IDogovorLogic
     {

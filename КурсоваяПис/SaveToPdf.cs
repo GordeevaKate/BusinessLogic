@@ -3,9 +3,9 @@ using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using System.Collections.Generic;
-using КурсоваяBusinessLogic.HelperModels;
+using BusinessLogic.HelperModels;
 
-namespace КурсоваяBusinessLogic.Report
+namespace BusinessLogic.Report
 {
     public class SaveToPdf
     {

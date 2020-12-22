@@ -1,11 +1,11 @@
-﻿using КурсоваяBusinessLogic.Enums;
+﻿using BusinessLogic.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace КурсоваяBusinessLogic.ViewModel
+namespace BusinessLogic.ViewModel
 {
         [DataContract]
         public class UserViewModel

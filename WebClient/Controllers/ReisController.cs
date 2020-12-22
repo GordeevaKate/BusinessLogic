@@ -2,20 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebClient.Models;
-using КурсоваяBusinessLogic.Interfaces;
-using КурсоваяBusinessLogic.ViewModel;
+using BusinessLogic.Interfaces;
+using BusinessLogic.ViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using КурсоваяBusinessLogic.BindingModel;
-using System.IO;
-using HospitalWebClient.Models;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using КурсоваяПис.BindingModel;
-
+using BusinessLogic.BindingModel;
 namespace WebClient.Controllers
 {
     public class ReisController: Controller

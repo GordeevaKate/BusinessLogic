@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using КурсоваяBusinessLogic.Interfaces;
-using КурсоваяBusinessLogic.BindingModel;
-using КурсоваяBusinessLogic.ViewModel;
+using BusinessLogic.Interfaces;
+using BusinessLogic.BindingModel;
+using BusinessLogic.ViewModel;
 
 namespace DatabaseImplement.Implements
 {

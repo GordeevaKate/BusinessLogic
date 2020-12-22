@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace КурсоваяПис.BindingModel
+namespace BusinessLogic.BindingModel
 {
    public class Dogovor_ReisBM
     {

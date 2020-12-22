@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
-using КурсоваяBusinessLogic.ViewModel;
+using BusinessLogic.ViewModel;
 
-namespace КурсоваяBusinessLogic.HelperModels
+namespace BusinessLogic.HelperModels
 {
     public class PdfInfo
     {

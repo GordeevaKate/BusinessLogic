@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using КурсоваяBusinessLogic.Enums;
+using BusinessLogic.Enums;
 
 namespace DatabaseImplement.Models
 {

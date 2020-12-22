@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
-using КурсоваяBusinessLogic.BindingModel;
-using КурсоваяBusinessLogic.Interfaces;
-using КурсоваяПис.BindingModel;
+using BusinessLogic.BindingModel;
+using BusinessLogic.Interfaces;
 
 namespace WebClient.Controllers
 {

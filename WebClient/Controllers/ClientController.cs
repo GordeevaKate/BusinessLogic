@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessLogic.BindingModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebClient.Models;
-using КурсоваяBusinessLogic.BindingModel;
-using КурсоваяBusinessLogic.HelperModels;
-using КурсоваяBusinessLogic.Interfaces;
-using КурсоваяBusinessLogic.Report;
+using BusinessLogic.HelperModels;
+using BusinessLogic.Interfaces;
+using BusinessLogic.Report;
 
 namespace WebClient.Controllers
 {
