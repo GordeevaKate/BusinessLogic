@@ -1,5 +1,7 @@
 ﻿using BusinessLogic.BindingModel;
+using BusinessLogic.HelperModels;
 using BusinessLogic.Interfaces;
+using BusinessLogic.Report;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,16 +18,45 @@ namespace WebClient.Areas.Agent.Controllers
         private readonly IDogovorLogic _dogovor;
         private readonly IClientLogic _client;
         private readonly IReisLogic _reis;
-        public DogovorController(IClientLogic client, IReisLogic reis, IDogovorLogic dogovor)
+        private readonly IRaionLogic _raion;
+        public DogovorController(IClientLogic client, IRaionLogic raion,IReisLogic reis, IDogovorLogic dogovor)
         {
             _client = client;
             _dogovor = dogovor;
             _reis = reis;
+            _raion = raion;
         }
         public ActionResult Delete(int id, int dogovotId)
         {
             _dogovor.DeleteReisDogovor(new Dogovor_ReisBM { Id = id });
             return RedirectToAction("ChangeDogovor", new { id = dogovotId });
+        }
+        public ActionResult Report(int dogovorid)
+        {
+            List<string> list = new List<string> { "Название", "Цена", "Откуда", "Куда", "Время выполнения", "Объем товара", "Вес товара" };
+            var clientsall = _client.Read(null);
+            var clients = _client.Read(new ClientBindingModel { Id = 0 });
+            foreach (var client in clientsall)
+            {
+                var dogovorofclient = _dogovor.Read(new DogovorBindingModel { ClientId = client.Id, AgentId = (int)Program.Agent.Id });
+                if (dogovorofclient.Count >= 0)
+                {
+                    clients.Add(client);
+                }
+            }
+            SaveToPdf.CreateDocDogovor(new PdfInfo
+            {
+                FileName = $"C:\\report-kursovaa\\ReportDogovorpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                Colon = list,
+                Title = $" Договор {dogovorid}",
+                Client = _client.Read(new ClientBindingModel { Id = Program.ClientId })[0].ClientFIO,
+                Agent=Program.Agent.Name,
+                dogovor = _dogovor.Read(new DogovorBindingModel { Id = dogovorid })[0],
+                dogovor_Reis = _dogovor.ReadReis(null),
+                raion = _raion.Read(null),
+                reiss = _reis.Read(null)
+            });
+            return RedirectToAction("Client", Program.ClientId);
         }
         public IActionResult ChangeDogovor(int? id)
         {

@@ -104,12 +104,22 @@ namespace WebClient.Areas.Agent.Controllers
         public IActionResult Report()//кнопка отчет на странице клиент
         {
             List<string> list = new List<string> { "Паспорт", "ФИО", "Номер телефона", "Email" };
+            var clientsall = _client.Read(null);
+            var clients = _client.Read(new ClientBindingModel { Id = 0 });
+            foreach (var client in clientsall)
+            {
+               var dogovorofclient= _dogovor.Read(new DogovorBindingModel { ClientId = client.Id, AgentId = (int)Program.Agent.Id });
+                if (dogovorofclient.Count >= 0)
+                {
+                    clients.Add(client);
+                }
+            }
             SaveToPdf.CreateDoc(new PdfInfo
             {
-                FileName = "C:\\report-kursovaa\\Reportpdf.pdf",
+                FileName = $"C:\\report-kursovaa\\ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Colon = list,
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
-                Components = _client.Read(null)
+                Clients = clients
             });
             return RedirectToAction("Client");
         }

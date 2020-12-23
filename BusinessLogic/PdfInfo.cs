@@ -10,8 +10,14 @@ namespace BusinessLogic.HelperModels
     public class PdfInfo
     {
         public string FileName { get; set; }
+        public string Client { get; set; }
+        public string Agent { get; set; }
+        public DogovorViewModel dogovor { get; set; }
+        public List<Dogovor_ReisVM> dogovor_Reis { get; set; }
+        public List<ReisViewModel> reiss { get; set; }
+        public List<RaionViewModel> raion { get; set; }
         public string Title { get; set; }
         public List<string> Colon { get; set; }
-        public List<ClientViewModel> Components { get; set; }
+        public List<ClientViewModel> Clients { get; set; }
     }
 }
