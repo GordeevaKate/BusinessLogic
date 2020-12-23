@@ -1,7 +1,9 @@
 ﻿
+using BusinessLogic;
 using BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 
 namespace WebClient.Areas.Agent.Controllers
 {
@@ -11,13 +13,15 @@ namespace WebClient.Areas.Agent.Controllers
         private readonly IUserLogic _client;
         private readonly IAgentLogic _agent;
         private readonly IDogovorLogic _dogovor;
-        public AgentController(IUserLogic client, IAgentLogic agent, IDogovorLogic dogovor)
+
+
+        public AgentController(IUserLogic client,IAgentLogic agent, IDogovorLogic dogovor)
         {
             _client = client;
             _agent = agent;
             _dogovor = dogovor;
         }
-        public ActionResult Profile(string[] Month)
+        public IActionResult Profile(string[] Month)
         {
             try {
                 DateTime date=  PeriodDate(Month[0]);
@@ -84,5 +88,7 @@ namespace WebClient.Areas.Agent.Controllers
             }
             return date;
         }
+
+       
     }
 }

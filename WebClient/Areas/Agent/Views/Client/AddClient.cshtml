@@ -1,7 +1,7 @@
 ﻿@model WebClient.Areas.Agent.Models.RegistrationModel
 
 @{
-    ViewData["Title"] = "Регистрация";
+    ViewData["Title"] = "Добавление клиента";
 }
 
 <div class="text-left text-info">
@@ -10,16 +10,16 @@
 @using (Html.BeginForm("AddClient", "Client"))
 {
     <p>
-        Логин:<br>
+        Фио:<br>
         @Html.TextBoxFor(x => x.ClientFIO)<br>
         Email: <br>
         @Html.TextBoxFor(x => x.Email)<br>
-        Пароль:<br>
+        Паспорт:<br>
         @Html.TextBoxFor(x => x.Pasport)<br>
         Телефон:<br>
         @Html.TextBoxFor(x => x.PhoneNumber)<br>
     </p>
     @Html.ValidationSummary(true, "", new { @style = "color: blue" })
-    <input type="submit" value="Зарегистрироваться" class="btn btn-info btn-sm" />
+    <input type="submit" value="Зарегистрировать" class="btn btn-info btn-sm" />
 
 }

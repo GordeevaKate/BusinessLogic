@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLogic.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -14,11 +15,12 @@ namespace BusinessLogic.ViewModel
         public int ClientId { get; set; }
         public int AgentId { get; set; }
         [DataMember]
-        [DisplayName("Стоимость договора")]
+        [Column(title: "Сумма договора", gridViewAutoSize: GridViewAutoSize.Fill)]
         public double Summa { get; set; }
         [DataMember]
-        [DisplayName("Дата")]
+        [Column(title: "Дата договора", gridViewAutoSize: GridViewAutoSize.Fill)]
         public DateTime data { get; set; }
         public Dictionary<int, (int, int, double,double, string, double, double)> Dogovor_Reiss;
+
     }
 }

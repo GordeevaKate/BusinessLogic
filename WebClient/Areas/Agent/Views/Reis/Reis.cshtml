@@ -72,24 +72,28 @@ function drawStacked() {
         <td>Пункт прибытия</td>
         <td>Название</td>
         <td>Цена</td>
-        <td>Длительность</td>
+        <td>Длительность в днях</td>
     </tr>
     @foreach (var reis in ViewBag.reiss)
     {
-        <tr>
-            <td>@reis.OfId</td>
-            <td>@reis.ToId</td>
-            <td>@reis.Name</td>
-            <td>@reis.Cena</td>
-            <td>@reis.Time</td>
-            <td>
+<tr>
+    @foreach (var raion in ViewBag.Raions)
+    {
+        @if (reis.OfId == raion.Id)
+        {
+            <td>@raion.Name</td>
+        }
+        @if (reis.ToId == raion.Id)
+        {
 
-                @Html.ActionLink("Удалить", "Delete", new { id = reis.Id })
-            </td>
-        </tr>
+            <td>@raion.Name</td>
+        }
     }
-</table>
+    <td>@reis.Name</td>
+    <td>@reis.Cena</td>
+    <td>@reis.Time</td>
+</tr>
+            }
+        </table>
 @Html.ActionLink("Diagram", "Diagram")
-
-
 <div id="chart_div"></div>

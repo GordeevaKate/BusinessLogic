@@ -14,6 +14,6 @@ namespace BusinessLogic.Interfaces
         List<DogovorViewModel> Rascet(int? AgentId, DateTime date);
         void AddReis(Dogovor_ReisBM model);
         void DeleteReisDogovor(Dogovor_ReisBM model);
-        List<DogovorViewModel> ReadReis(Dogovor_ReisBM model);
+        List<Dogovor_ReisVM> ReadReis(Dogovor_ReisBM model);
     }
 }

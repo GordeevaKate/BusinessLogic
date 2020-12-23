@@ -56,18 +56,25 @@ namespace DatabaseImplement.Implements
                 }
             }
         }
-        public List<DogovorViewModel> ReadReis(Dogovor_ReisBM model)
+        public List<Dogovor_ReisVM> ReadReis(Dogovor_ReisBM model)
         {
             using (var context = new KursachDatabase())
             {
                 return context.Dogovor_Reiss
-                 .Where(rec => model == null || (rec.DogovorId==model.DogovorId && rec.ReisId==model.ReisId)
+                 .Where(rec => model == null ||(rec.Id==model.Id) ||(rec.DogovorId==model.DogovorId && rec.ReisId==model.ReisId)
                       ).ToList()
-               .Select(rec => new DogovorViewModel
+               .Select(rec => new Dogovor_ReisVM
                {
                    Id = rec.Id,
+                   DogovorId = rec.DogovorId,
+                   ReisId = rec.ReisId,
+                   Obem = rec.Obem,
+                   ves = rec.ves,
+                   Comm = rec.Comm,
+                   NadbavkaCena = rec.NadbavkaCena,
+                   NadbavkaTime = rec.NadbavkaTime
 
-                 })
+               })
                 .ToList();
             }
         }
@@ -106,7 +113,20 @@ namespace DatabaseImplement.Implements
 
         public void Delete(DogovorBindingModel model)
         {
-            throw new NotImplementedException();
+            using (var context = new KursachDatabase())
+            {
+                Dogovor element = context.Dogovors.FirstOrDefault(rec => rec.Id == model.Id);
+
+                if (element != null)
+                {
+                    context.Dogovors.Remove(element);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Элемент не найден");
+                }
+            }
         }
         public List<DogovorViewModel> Rascet(int? AgentId, DateTime date)
         {

@@ -3,6 +3,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using BusinessLogic.ViewModel;
+using BusinessLogic;
+using DatabaseImplement.Implements;
+using Unity;
+using Unity.Lifetime;
 
 namespace WebClient
 {
@@ -15,7 +19,8 @@ namespace WebClient
         {
             CreateHostBuilder(args).Build().Run();
         }
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+
+        public static IHostBuilder CreateHostBuilder(string[] args ) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

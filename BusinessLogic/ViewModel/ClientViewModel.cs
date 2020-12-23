@@ -12,6 +12,7 @@ namespace BusinessLogic.ViewModel
         [DataMember]
         public int Id { get; set; }
         [DataMember]
+
         public int UserId { get; set; }
         [DataMember]
         [DisplayName("Паспортные данные")]

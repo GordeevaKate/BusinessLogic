@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic;
 using BusinessLogic.Interfaces;
 using DatabaseImplement.Implements;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Unity;
+using Unity.Lifetime;
 
 namespace WebClient
 {
@@ -19,7 +22,7 @@ namespace WebClient
         {
             Configuration = configuration;
         }
-
+   
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -30,7 +33,7 @@ namespace WebClient
             services.AddTransient<IReisLogic, ReisLogic>();
            services.AddTransient<IRaionLogic, RaionLogic>();
             services.AddTransient<IDogovorLogic, DogovorLogic>();
-            //        services.AddTransient<ReportLogic>();
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

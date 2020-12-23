@@ -13,11 +13,12 @@
 <form method="get">
     <div class="form-inline">
         @Html.ListBox("Month",
-                          new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                                    new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
                 , "Май", "Июнь", "Июль"
                 , "Август", "Сентябрь", "Октябрь"
                 , "Ноябрь", "Декабрь"}))
         <input type="submit" value="Фильтр" class="btn btn-default" />
     </div>
 </form>
+
 

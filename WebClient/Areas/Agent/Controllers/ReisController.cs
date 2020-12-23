@@ -22,20 +22,11 @@ namespace WebClient.Areas.Agent.Controllers
             _reis = reis;
             raions = raion;
         }
-
-        public ActionResult Delete(int id)
-        {
-            _reis.Delete(new ReisBindingModel { Id = id });
-            return RedirectToAction("Reis");
-        }
-
-
         public IActionResult Reis(int raion, SpisokModel model)
         {
-        
-
             ViewBag.Reiss = _reis.Read(null);
             var Raion = raions.Read(null);
+            ViewBag.Raions = Raion;
             Raion.Insert(0, new RaionViewModel { Name = "Все", Id = 0 });
             SpisokModel plvm = new SpisokModel
             {
@@ -53,7 +44,6 @@ namespace WebClient.Areas.Agent.Controllers
                         if ((i.OfId == raion) || (i.ToId == raion) || (raion == 0))
                             reisV.Add(i);
                     }
-
                 }
             }
             else
@@ -90,8 +80,6 @@ namespace WebClient.Areas.Agent.Controllers
                 return false;
             }
         }
-
-
         public IActionResult ChangeReis(int dogovorId)
         {
 
