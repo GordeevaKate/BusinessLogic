@@ -56,7 +56,7 @@ namespace WebClient.Areas.Agent.Controllers
                 raion = _raion.Read(null),
                 reiss = _reis.Read(null)
             });
-            return RedirectToAction("Client", Program.ClientId);
+            return RedirectToAction("Dogovor", new { id = Program.ClientId });
         }
         public IActionResult ChangeDogovor(int? id)
         {

@@ -176,7 +176,7 @@ namespace BusinessLogic.Report
                                             Convert.ToString(dr.NadbavkaCena+dr.ves*reis.Cena),
                                             raion2.Name,
                                              raion1.Name,
-                                            Convert.ToString(reis.Time+dr.NadbavkaTime)+ "дня",
+                                            Convert.ToString(reis.Time+dr.NadbavkaTime)+  " дня",
                                            Convert.ToString(dr.Obem),
                                              Convert.ToString(dr.ves),
                                          },
