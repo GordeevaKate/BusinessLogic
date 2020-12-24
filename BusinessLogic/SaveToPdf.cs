@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using BusinessLogic.HelperModels;
 using BusinessLogic.BindingModel;
 using System;
+using BusinessLogic.ViewModel;
 
 namespace BusinessLogic.Report
 {
@@ -206,6 +207,96 @@ namespace BusinessLogic.Report
             paragraph.Style = "NormalTitle";
             paragraph.Style = "Normal";
 
+            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
+            {
+                Document = document
+            };
+            renderer.RenderDocument();
+            renderer.PdfDocument.Save(info.FileName);
+        }
+
+
+        public static string Count(PdfInfo info, RaionViewModel raion, DateTime date)
+        {
+            int count = 0;
+            foreach (var dogogovor in info.dogovors)
+            {
+                if(dogogovor.data>=date && dogogovor.data<=date.AddMonths(1).AddDays(-1)){
+                    bool proverka = false;
+                    foreach (var dr in dogogovor.Dogovor_Reiss)
+                    {
+                        foreach (var reis in info.reiss)
+                        {
+                            if (reis.OfId == raion.Id || reis.ToId == raion.Id)
+                                proverka = true;
+                        }
+                    }
+                    if (proverka)
+                    {
+                        count++;
+                    }
+                }
+            }
+            
+            return Convert.ToString(count);
+        } 
+
+
+        public static void CreateDocPere(PdfInfo info)
+        {
+
+            Document document = new Document();
+            DefineStyles(document);
+            Section section = document.AddSection();
+            Paragraph paragraph = section.AddParagraph(info.Title);
+
+            paragraph.Format.SpaceAfter = "1cm";
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.Style = "NormalTitle";
+            paragraph.Style = "Normal";
+        
+            var table = document.LastSection.AddTable();
+            List<string> columns = new List<string> { "2cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm", "1cm" };
+
+            foreach (var elem in columns)
+            {
+                table.AddColumn(elem);
+            }
+            CreateRow(new PdfRowParameters
+            {
+                Table = table,
+                Texts = info.Colon,
+                Style = "NormalTitle",
+                ParagraphAlignment = ParagraphAlignment.Center
+            });
+                foreach (var raion in info.raion)
+                {
+            
+                    CreateRow(new PdfRowParameters
+                    {
+                        Table = table,
+                        Texts = new List<string>
+                                          {
+                            raion.Name,
+                                           Count(info, raion, new DateTime(2020, 1, 1)),
+                                               Count(info, raion, new DateTime(2020, 2, 1)),
+                                               Count(info, raion, new DateTime(2020, 3, 1)),
+                                               Count(info, raion, new DateTime(2020, 4, 1)),
+                                               Count(info, raion, new DateTime(2020, 5, 1)),
+                                               Count(info, raion, new DateTime(2020, 6, 1)),
+                                                  Count(info, raion, new DateTime(2020, 7, 1)),
+                                               Count(info, raion, new DateTime(2020, 8, 1)),
+                                                  Count(info, raion, new DateTime(2020, 9, 1)),
+                                                     Count(info, raion, new DateTime(2020, 10, 1)),
+                                                        Count(info, raion, new DateTime(2020, 11, 1)),
+                                                           Count(info, raion, new DateTime(2020, 12, 1)),
+
+            },
+                        Style = "Normal",
+                        ParagraphAlignment = ParagraphAlignment.Left
+                    });
+
+                }
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
             {
                 Document = document

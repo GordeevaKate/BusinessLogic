@@ -18,8 +18,10 @@ namespace WebClient.Areas.Agent.Controllers
     {
         private  readonly IReisLogic _reis;
         private  readonly IRaionLogic _raions;
-        public ReportController(IReisLogic reis, IRaionLogic raion)
+        private readonly IDogovorLogic _dogovor;
+        public ReportController(IReisLogic reis, IRaionLogic raion, IDogovorLogic dogovor)
         {
+            _dogovor = dogovor;
             _reis = reis;
             _raions = raion;
         }
@@ -73,14 +75,16 @@ namespace WebClient.Areas.Agent.Controllers
 
         public IActionResult PereReport()
         {
-            List<string> list = new List<string> { "", "", "", "", "", "", "", "", ",", "," };
-            SaveToPdf.CreateDoc(new PdfInfo
+            List<string> list = new List<string> { "район-месяц","01", "02", "03", "04", "05", "06", "07", "08", "09","10","11","12"};
+            SaveToPdf.CreateDocPere(new PdfInfo
             {
                 FileName = $"C:\\report-kursovaa\\ReportPerepdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Colon = list,
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
-              //  Clients = clients
-            });
+                raion = _raions.Read(null),
+                dogovors=_dogovor.Read(null),
+                reiss=_reis.Read(null)
+            }) ;
             return RedirectToAction("Report");
         }
     }
