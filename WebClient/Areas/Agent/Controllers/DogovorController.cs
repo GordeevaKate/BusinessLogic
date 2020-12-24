@@ -172,15 +172,24 @@ namespace WebClient.Areas.Agent.Controllers
             {
                 return NotFound();
             }
+            var dogovor = _dogovor.Read(null);
+            foreach(var d in dogovor)
+            {
+                if (d.Dogovor_Reiss.Count == 0)
+                {
+                    _dogovor.Delete(new DogovorBindingModel { Id = d.Id });
+                }
+            }
             if (model.DogovorId > 0)
             {
-                var dogovor = _dogovor.Read(new DogovorBindingModel
+                 dogovor = _dogovor.Read(new DogovorBindingModel
                 {
                     Id = model.DogovorId,
                     ClientId= (int)id
                 });
                 foreach (var r in dogovor)
                 {
+
                     ViewBag.Dogovors = _client.Read(new ClientBindingModel { Id = r.ClientId });
                 }
                 if (dogovor.Count != 0)

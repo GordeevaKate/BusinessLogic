@@ -1,6 +1,4 @@
-﻿@model WebClient.Areas.Agent.Models.RegistrationModel
-
-@{ ViewData["Title"] = "Оттчеты"; }
+﻿@{ ViewData["Title"] = "Оттчеты"; }
 
 <div class="text-left text-info">
     <h1>@ViewData["Title"]</h1>
@@ -9,12 +7,13 @@
 {
 <p>
     @Html.ListBox("Month",
-                                       new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                                               new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
                 , "Май", "Июнь", "Июль"
                 , "Август", "Сентябрь", "Октябрь"
                 , "Ноябрь", "Декабрь"}))
 </p>
-                                <input type="submit" value="Отчет за последний месяц" class="btn btn-info btn-sm" />
- }
-
+                <input type="submit" value="Отчет за последний месяц" class="btn btn-info btn-sm" />
+}
+@Html.ActionLink("Диаграмма", "Diagramma")
+@Html.ActionLink("Пееркрестный отчет", "PereReport")
 

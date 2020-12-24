@@ -61,7 +61,7 @@ namespace DatabaseImplement.Implements
             {
                 return context.Reiss
                  .Where(rec => model == null
-                   || rec.Id == model.Id
+                   || rec.Id == model.Id||rec.OfId==model.OfId
                       )
                .Select(rec => new ReisViewModel
                {

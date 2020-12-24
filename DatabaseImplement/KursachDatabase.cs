@@ -9,7 +9,7 @@ namespace DatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=PC;Initial Catalog=KursachDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=25.57.59.231\NEWMSSQLSERVER;Initial Catalog=KursachDatabase;User Id = sa; Password = 123;");
             }
             base.OnConfiguring(optionsBuilder);
         }
@@ -21,6 +21,6 @@ namespace DatabaseImplement
         public virtual DbSet<Raion> Raions { set; get; }
         public virtual DbSet<Reis> Reiss { set; get; }
         public virtual DbSet<User> Users { set; get; }
-
+        public virtual DbSet<Zarplata> Zarplatas { set; get; }
     }
 }
