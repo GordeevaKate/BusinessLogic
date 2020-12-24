@@ -10,16 +10,6 @@ namespace DatabaseImplement.Implements
 {
     public class AgentLogic : IAgentLogic
     {
-        public void CreateOrUpdate(AgentBindingModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(AgentBindingModel model)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AgentViewModel> Read(AgentBindingModel model)
         {
             using (var context = new KursachDatabase())

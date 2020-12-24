@@ -10,7 +10,5 @@ namespace BusinessLogic.Interfaces
         public interface IAgentLogic
         {
             List<AgentViewModel> Read(AgentBindingModel model);
-            void CreateOrUpdate(AgentBindingModel model);
-            void Delete(AgentBindingModel model);
         }
 }
