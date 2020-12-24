@@ -9,7 +9,7 @@ namespace DatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=PC;Initial Catalog=KursachDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=192.168.43.242\NEWMSSQLSERVER;Initial Catalog=KursachDatabase;User Id = sa; Password = 123;");
             }
             base.OnConfiguring(optionsBuilder);
         }
