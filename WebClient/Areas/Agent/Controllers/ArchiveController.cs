@@ -28,12 +28,11 @@ namespace WebClient.Areas.Agent.Controllers
         }
         public ActionResult Archive()
         {
-           Dictionary<int,DateTime> dats = new Dictionary<int, DateTime> { };
+            Dictionary<int,DateTime> dats = new Dictionary<int, DateTime> { };
             var dogovors = dogovorLogic.Read(null);//все договоры
             var olddogovors = dogovorLogic.Read(new DogovorBindingModel { Id = 0 });//
             var oldreis = dogovorLogic.ReadReis(new Dogovor_ReisBM { Id = 0 });//устаревшие рейсы по договору
             bool proverca = false;
-
             foreach (var dogovor in dogovors)
             {
                 dats.Add((int)dogovor.Id, new DateTime());
@@ -47,10 +46,13 @@ namespace WebClient.Areas.Agent.Controllers
                         dats[(int)dogovor.Id] = dt1;
                     }
                     DateTime dt2 = DateTime.Now;
+                    if (DateTime.Now.Month != 12)
+                    {
+                        dt2 = DateTime.Now.AddYears(-1);
+                    }
                     if (dt1 > dt2)
                     {
                         proverca = true;
-  
                     }
                 }
                 if (proverca != true)
@@ -88,6 +90,10 @@ namespace WebClient.Areas.Agent.Controllers
                             var reis1=  rlogic.Read(new ReisBindingModel { Id = dr.Value.Item2 })[0];
                         DateTime dt1 = dogovor.data.AddDays(reis1.Time + dr.Value.Item4);
                         DateTime dt2 = DateTime.Now;
+                        if (DateTime.Now.Month != 12)
+                        {
+                             dt2 = DateTime.Now.AddYears(-1);
+                        }
                         if (dt1> dt2)
                             {
                                 proverca = true;

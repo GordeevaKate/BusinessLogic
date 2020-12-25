@@ -41,7 +41,7 @@ namespace WebClient.Areas.Agent.Controllers
             ViewBag.Agent = Program.Agent;
             return View();
         }
-        public DateTime PeriodDate(string Month)
+        public static DateTime PeriodDate(string Month)
         {
             DateTime date;
             switch (Month)

@@ -1,8 +1,120 @@
-﻿@{ ViewData["Title"] = "Оттчеты"; }
+﻿<<title>@ViewData["Title"] - DemoGoogleChart</title>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<div class="text-left text-info">
-    <h1>@ViewData["Title"]</h1>
-</div>
-@Html.ActionLink("Диаграмма", "Diagramma")
-@Html.ActionLink("Пееркрестный отчет", "PereReport")
+<div id="chart_div"></div>
+<script type="text/javascript">
 
+    google.charts.load('current', {
+        packages: ['corechart', 'bar']
+    });
+    google.charts.setOnLoadCallback(LoadData);
+
+    function LoadData() {
+        $.ajax({
+
+            url: '  http://localhost:53661/Agent/Report/PopulationChart',
+            dataType: "json",
+            type: "GET",
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                toastr.error(err.message);
+            },
+            success: function (data) {
+                PopulationChart(data);
+                return false;
+            }
+        });
+        return false;
+    }
+
+    function PopulationChart(data) {
+        var dataArray = [
+            ['Raions', 'Count Reis']
+        ];
+        $.each(data, function (i, item) {
+            dataArray.push([item.cityName, item.populationYear2020]);
+        });
+        var data = google.visualization.arrayToDataTable(dataArray);
+        var options = {
+            title: ' Количевство перевозок по райну',
+
+            is3D: true,
+            isStacked: true,
+
+            chartArea: {
+                width: '50%'
+            },
+            colors: ['#b0120a'],
+            hAxis: {
+                title: 'Raions',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Count'
+            }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+        return false;
+    }
+</script>
+<p>
+    <a class="btn btn-primary d-block" asp-action="Diagramma">Сохранение диаграммы</a>
+</p>
+
+
+
+<table class="table">
+    <tr>
+        <td>Район-месяц</td>
+        <td>01</td>
+        <td>02</td>
+        <td>03</td>
+        <td>04</td>
+        <td>05</td>
+        <td>06</td>
+        <td>07</td>
+        <td>08</td>
+        <td>09</td>
+        <td>10</td>
+        <td>11</td>
+        <td>12</td>
+    </tr>
+    @foreach (var dogovor in ViewBag.list)
+    {
+        <tr>
+            <td>@dogovor[0]</td>
+            <td>@dogovor[1]</td>
+            <td>@dogovor[2]</td>
+            <td>@dogovor[3]</td>
+            <td>@dogovor[4]</td>
+            <td>@dogovor[5]</td>
+            <td>@dogovor[6]</td>
+            <td>@dogovor[7]</td>
+            <td>@dogovor[8]</td>
+            <td>@dogovor[9]</td>
+            <td>@dogovor[10]</td>
+            <td>@dogovor[11]</td>
+            <td>@dogovor[12]</td>
+        </tr>
+    }
+</table>
+
+
+
+
+<p>
+    <a class="btn btn-primary d-block" asp-action="PereReport">Перекрестный отчет</a>
+</p>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="get">
+    <div class="form-inline">
+        @Html.ListBox("Month",
+                                    new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                , "Май", "Июнь", "Июль"
+                , "Август", "Сентябрь", "Октябрь"
+                , "Ноябрь", "Декабрь"}))
+        <input type="submit" asp-action="ReportMonth" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>

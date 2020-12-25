@@ -7,33 +7,47 @@
 </div>
 
 <hr />
+@if (ViewBag.DR == "")
+{
 <div>
     <a class="text-dark" asp-action="ChangeReis" asp-route-dogovorId="@ViewBag.DogovorId">Вернуться назад</a>
+</div> 
+}
+else
+{
+ <div>
+      <a class="text-dark" asp-controller="Dogovor" asp-action="ChangeDogovor" asp-route-dogovorId="@ViewBag.DogovorId">Вернуться назад</a>
 </div>
+}
 <hr />
-
 <div class="text-left">
     <h4>Перевозка: @ViewBag.ReisName </h4>
 </div>
-<div class="text-left">
-    <h4>Хорошенько подумайте перед тем как выбрать!! Изменения внести в договор нельзя!!</h4>
-</div>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-controller="Dogovor" asp-action="AddReis" asp-route-id="@ViewBag.ClientId">
             <input type="hidden" asp-for="DogovorId" />
             <input type="hidden" asp-for="ReisId" />
+            <input type="hidden" asp-for="Id" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Comm" class="control-label">Comm</label>
-                <input asp-for="Comm" class="form-control" />
-                <span asp-validation-for="Comm" class="text-danger"></span>
-                <label asp-for="ves" class="control-label">Ves</label>
+                @if (ViewBag.DR == "")
+                {
+
+                 <label asp-for="ves" class="control-label">Ves</label>
                 <input asp-for="ves" class="form-control" />
                 <span asp-validation-for="ves" class="text-danger"></span>
                 <label asp-for="Obem" class="control-label">Obem</label>
                 <input asp-for="Obem" class="form-control" />
                 <span asp-validation-for="Obem" class="text-danger"></span>
+                 }
+                 else
+                 {
+                 }
+                <label asp-for="Comm" class="control-label">Comm</label>
+                <input asp-for="Comm" class="form-control" />
+                <span asp-validation-for="Comm" class="text-danger"></span>
                 <label asp-for="NadbavkaCena" class="control-label">Nadbavka</label>
                 <input asp-for="NadbavkaCena" class="form-control" />
                 <span asp-validation-for="NadbavkaTime" class="text-danger"></span>
@@ -41,9 +55,17 @@
                 <input asp-for="NadbavkaTime" class="form-control" />
                 <span asp-validation-for="NadbavkaTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Пополнить" class="btn btn-dark" />
-            </div>
+            @if (ViewBag.DR == "")
+            {
+        <div class="form-group">
+            <input type="submit" value="Пополнить" class="btn btn-dark" />
+        </div> }
+                    else
+                    {
+        <div class="form-group">
+            <input type="submit" value="Изменить" class="btn btn-dark" />
+        </div>            }
+
         </form>
     </div>
 </div>

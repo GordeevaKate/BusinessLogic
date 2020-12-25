@@ -39,6 +39,10 @@ namespace BusinessLogic.Report
             });
             foreach (var sf in info.Clients)
             {
+               
+            }
+            foreach (var sf in info.Clients)
+            {
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
@@ -98,28 +102,6 @@ namespace BusinessLogic.Report
             cellParameters.Cell.Format.Alignment = cellParameters.ParagraphAlignment;
             cellParameters.Cell.VerticalAlignment = VerticalAlignment.Center;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public static void CreateDocDogovor(PdfInfo info) { 
 
@@ -215,6 +197,84 @@ namespace BusinessLogic.Report
             renderer.PdfDocument.Save(info.FileName);
         }
 
+        public static void ReportMonth(PdfInfo info, DateTime date)
+        {
+            Document document = new Document();
+            DefineStyles(document);
+            Section section = document.AddSection();
+            Paragraph paragraph = section.AddParagraph(info.Title);
+
+            paragraph.Format.SpaceAfter = "1cm";
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.Style = "NormalTitle";
+            paragraph.Style = "Normal";
+            double itog = 0;
+            foreach (var dogovor in info.dogovors)
+            {
+                if (dogovor.data >= date && dogovor.data <= date.AddMonths(1).AddDays(-1))
+                {
+                    itog+= dogovor.Summa;
+                }
+            }
+            paragraph = section.AddParagraph($"Были заключены договора на общую сумму: {itog}");
+
+            paragraph.Format.SpaceAfter = "1cm";
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.Style = "NormalTitle";
+            paragraph.Style = "Normal";
+            if (itog != 0)
+            {
+                var table = document.LastSection.AddTable();
+                List<string> columns = new List<string> { "3cm", "3cm", "3cm", "3cm" };
+
+                foreach (var elem in columns)
+                {
+                    table.AddColumn(elem);
+                }
+                CreateRow(new PdfRowParameters
+                {
+                    Table = table,
+                    Texts = info.Colon,
+                    Style = "NormalTitle",
+                    ParagraphAlignment = ParagraphAlignment.Center
+                });
+                foreach (var dogovor in info.dogovors)
+                {
+                    if (dogovor.data >= date && dogovor.data <= date.AddMonths(1).AddDays(-1))
+                    {
+                        foreach (var client in info.Clients)
+                        {
+                            if (dogovor.ClientId == client.Id)
+                            {
+                                CreateRow(new PdfRowParameters
+                                {
+                                    Table = table,
+                                    Texts = new List<string>
+                        {
+                            Convert.ToString(dogovor.Id),
+                          Convert.ToString(   dogovor.data),
+                         client.ClientFIO,
+                           Convert.ToString(  dogovor.Summa)
+
+                         },
+                                    Style = "Normal",
+                                    ParagraphAlignment = ParagraphAlignment.Left
+                                });
+                            }
+                        }
+
+                    }
+
+                }
+            }
+           
+            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
+            {
+                Document = document
+            };
+            renderer.RenderDocument();
+            renderer.PdfDocument.Save(info.FileName);
+        }
 
         public static string Count(PdfInfo info, RaionViewModel raion, DateTime date)
         {

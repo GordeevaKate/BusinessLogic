@@ -57,6 +57,8 @@
         <td>
             @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
         </td>
+        <td><a class="btn btn-primary btn-sm btn-block" asp-controller="Reis" asp-action="AddReis" asp-route-dogovorId="@ViewBag.Id"asp-route-drId="@reisd.Id"asp-route-reisId="@reis.Id">Изменение</a></td>
+
     </tr>}}}}}
     </table>
 </div>

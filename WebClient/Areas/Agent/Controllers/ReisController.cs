@@ -17,10 +17,12 @@ namespace WebClient.Areas.Agent.Controllers
     {
         private readonly IReisLogic _reis;
         private readonly IRaionLogic raions;
-        public ReisController(IReisLogic reis, IRaionLogic raion)
+        private readonly IDogovorLogic _dogovor;
+        public ReisController(IReisLogic reis, IRaionLogic raion, IDogovorLogic dogovor)
         {
             _reis = reis;
             raions = raion;
+            _dogovor = dogovor;
         }
         public IActionResult Reis(int raion, SpisokModel model)
         {
@@ -82,12 +84,34 @@ namespace WebClient.Areas.Agent.Controllers
         }
         public IActionResult ChangeReis(int dogovorId)
         {
-
             ViewBag.DogovorId = dogovorId;
-            ViewBag.Reiss = _reis.Read(null);
+            var dogovor = _dogovor.Read(new DogovorBindingModel { Id = dogovorId})[0];
+            if (dogovor.Dogovor_Reiss.Count == 0)
+            {
+                ViewBag.Reiss = _reis.Read(null);
+
+            }
+
+            else
+            {
+                foreach (var keyr in dogovor.Dogovor_Reiss)
+                {
+                    var ghjj = _reis.Read(new ReisBindingModel { Id = keyr.Value.Item2 });
+                    ViewBag.Reiss = _reis.Read(new ReisBindingModel
+                    {
+
+                        OfId = (int)raions.Read(new RaionBindingModel { Id = _reis.Read(new ReisBindingModel { Id = keyr.Value.Item2 })[0].OfId})[0].Id
+                    });
+                }
+                 
+
+
+
+            }
+     
             return View();
         }
-        public IActionResult AddReis(int? reisId, int? dogovorId, int clientId)
+        public IActionResult AddReis(int? reisId, int? dogovorId, int clientId, int drId)
         {
             ViewBag.ClientId = clientId;
             if (TempData["ErrorLack"] != null)
@@ -104,11 +128,33 @@ namespace WebClient.Areas.Agent.Controllers
             }
             ViewBag.ReisName = Cosmetic.Name;
             ViewBag.DogovorId = dogovorId;
-            return View(new Dogovor_ReisBM
+            if (drId!= 0)
             {
+                ViewBag.DR = "1";
+                var r = _dogovor.ReadReis(new Dogovor_ReisBM
+                {
+                    Id = drId
+                })[0];
+                return View(new Dogovor_ReisBM
+                {
+                    DogovorId = (int)dogovorId,
+                    ReisId = (int)reisId,
+                    Id= (int)r.Id,
+                    Obem = r.Obem,
+                    Comm = r.Comm,
+                    ves=r.ves,
+                    NadbavkaCena=r.NadbavkaCena,
+                    NadbavkaTime=r.NadbavkaTime
+                });
+
+            }
+            ViewBag.DR = "";
+            return View(new Dogovor_ReisBM
+            {Id=0,
                 DogovorId = (int)dogovorId,
-                ReisId = (int)reisId,
+                ReisId = (int)reisId
             });
+
         }
 
     }

@@ -135,9 +135,14 @@ namespace WebClient.Areas.Agent.Controllers
                 ModelState.AddModelError("", "Введите номер паспорта");
                 return View(client);
             }
+            if (!Regex.IsMatch(client.Email, @"^[1-9]{10}$"))
+            {
+                ModelState.AddModelError("", "Паспорт введен некорректно");
+                return View(client);
+            }
             if (client.Pasport.Length != 10)
             {
-                ModelState.AddModelError("", "Введите номер паспорта");
+                ModelState.AddModelError("", "Паспорт состоит из 10 цифр");
                 return View(client);
             }
             if (!Regex.IsMatch(client.Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))

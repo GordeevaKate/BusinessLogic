@@ -1,7 +1,9 @@
 ﻿using BusinessLogic.BindingModel;
+using BusinessLogic.BusinessLogic;
 using BusinessLogic.HelperModels;
 using BusinessLogic.Interfaces;
 using BusinessLogic.Report;
+using BusinessLogic.ViewModel;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,59 +21,91 @@ namespace WebClient.Areas.Agent.Controllers
         private  readonly IReisLogic _reis;
         private  readonly IRaionLogic _raions;
         private readonly IDogovorLogic _dogovor;
-        public ReportController(IReisLogic reis, IRaionLogic raion, IDogovorLogic dogovor)
+        private readonly IClientLogic _client;
+        public ReportController(IReisLogic reis, IRaionLogic raion, IDogovorLogic dogovor, IClientLogic client)
         {
             _dogovor = dogovor;
             _reis = reis;
             _raions = raion;
-        }
-        public ActionResult Report()
-        {
-            return View();
+            _client = client;
         }
 
-        public IActionResult Diagramma()
+        public IActionResult Report()
         {
-            string pathDocument = $"C:\\report-kursovaa\\ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc";
-            DocX document = DocX.Create(pathDocument);
-            document.InsertChart(CreatePieChart());
-            document.InsertChart(CreateBarChart());
-            document.Save();
-            return RedirectToAction("Report");
-        }
-        private  Chart CreatePieChart()
-        {
-            PieChart pieChart = new PieChart();
-            pieChart.AddLegend(ChartLegendPosition.Left, false);
-            pieChart.AddSeries(GetSeriesFirst());
-            return pieChart;
-        }
-
-        private  Chart CreateBarChart()
-        {       
-            BarChart barChart = new BarChart();
-            barChart.AddLegend(ChartLegendPosition.Top, false);
-            barChart.AddSeries(GetSeriesFirst());
-            return barChart;
-        }
-        private  List<ReisBindingModel> GetTestDataFirst()
-        {
-            List<ReisBindingModel> testDataFirst = new List<ReisBindingModel>();
             var raions = _raions.Read(null);
+           var dogovors = _dogovor.Read(null);
+               var  reiss = _reis.Read(null);
+            var Texts = new List<string> { };
+            var list = new List<List<string>> { };
+            if (TempData["ErrorLack"] != null)
+            {
+                ModelState.AddModelError("", TempData["ErrorLack"].ToString());
+            }
             foreach (var raion in raions)
             {
-                testDataFirst.Add(new ReisBindingModel() { Name = raion.Name, Cena = _reis.Read(new ReisBindingModel { OfId = (int)raion.Id }).Count });
+                Texts = new List<string>{
+                            raion.Name,
+                                           SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 1, 1)),
+                                             SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 2, 1)),
+                                              SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 3, 1)),
+                                           SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 4, 1)),
+                                              SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 5, 1)),
+                                               SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 6, 1)),
+                                               SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 7, 1)),
+                                             SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 8, 1)),
+                                                 SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 9, 1)),
+                                                    SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 10, 1)),
+                                                       SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 11, 1)),
+                                                            SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 12, 1))};
+                list.Add(Texts);
             }
-
-            return testDataFirst;
+            ViewBag.list = list;
+                return View();
         }
-        public  Series GetSeriesFirst()
+
+        [HttpGet]
+        public JsonResult PopulationChart()
         {
-            Series seriesFirst = new Series("Диаграмма");
-            seriesFirst.Bind(GetTestDataFirst(), "Name", "Cena");
-            return seriesFirst;
+                   var populationList = SaveToWord.GetTestDataFirst(new PdfInfo
+                   {raion=_raions.Read(null),
+                   reiss=_reis.Read(null)
+                   });
+            return Json(populationList);
         }
-
+        public IActionResult Diagramma()
+        {
+         
+            SaveToWord.Diagramma(new PdfInfo
+            {
+                FileName = $"C:\\report-kursovaa\\ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc",
+                raion = _raions.Read(null),
+                reiss = _reis.Read(null)
+            });
+            return RedirectToAction("Report");
+        }
+        public IActionResult ReportMonth(string[] Month)
+        {
+           
+            if (Month.Length == 0)
+            {
+                TempData["ErrorLack"]="Вы не выбрали месяц";
+                return RedirectToAction("Report");
+            }
+            List<string> list = new List<string> { "Номер", "дата", "Клиент", "Сумма"};
+            DateTime date = AgentController.PeriodDate(Month[0]);
+            SaveToPdf.ReportMonth(new PdfInfo
+            {
+                FileName = $"C:\\report-kursovaa\\ReportMonth{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                Title =$"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}",
+                Colon=list,
+                dogovors = _dogovor.Read(null),
+                Clients=_client.Read(null)
+            }, date);
+            return RedirectToAction("Report");
+        }
+     
+        /// </summary>
+        /// <returns></returns>
 
         public IActionResult PereReport()
         {

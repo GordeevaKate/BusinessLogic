@@ -99,10 +99,20 @@ namespace DatabaseImplement.Implements
                 }
                 else
                 {
-                    werehouseCosmetics.Obem += model.Obem;
-                    werehouseCosmetics.ves += model.ves;
+                    if (model.Id != 0)
+                    {
+                        werehouseCosmetics.NadbavkaCena = model.NadbavkaCena;
+                        werehouseCosmetics.NadbavkaTime = model.NadbavkaTime;
+                    }
+                    else
+                    {
+                        werehouseCosmetics.Obem += model.Obem;
+                        werehouseCosmetics.ves += model.ves;
+                        werehouseCosmetics.Comm = model.Comm;
+                        werehouseCosmetics.NadbavkaCena += model.NadbavkaCena;
+                        werehouseCosmetics.NadbavkaTime += model.NadbavkaTime;
+                    }
                     werehouseCosmetics.Comm = model.Comm;
-                    werehouseCosmetics.NadbavkaCena = model.NadbavkaTime;
                 }
 
                 Reis element = context.Reiss.FirstOrDefault(rec =>
