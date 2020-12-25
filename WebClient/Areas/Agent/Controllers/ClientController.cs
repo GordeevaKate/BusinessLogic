@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WebClient.Areas.Agent.Models;
-
+using BusinessLogic.BusinessLogic;
 namespace WebClient.Areas.Agent.Controllers
 {
     [Area("Agent")]
@@ -114,13 +114,20 @@ namespace WebClient.Areas.Agent.Controllers
                     clients.Add(client);
                 }
             }
-            SaveToPdf.CreateDoc(new PdfInfo
+            SaveToPdf.CreateDoc(new Info
             {
                 FileName = $"C:\\report-kursovaa\\ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Colon = list,
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
                 Clients = clients
             });
+    SaveToExcel.CreateDoc(new Info { 
+         FileName = $"C:\\report-kursovaa\\ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}..xlsx",
+                Colon = list,
+                Title = $" Список клиентов для Агента{Program.Agent.Name}",
+                Clients = clients
+            }
+        );
             return RedirectToAction("Client");
         }
         public IActionResult AddClient()

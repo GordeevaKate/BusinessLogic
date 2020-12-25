@@ -44,7 +44,7 @@ namespace WebClient.Areas.Agent.Controllers
                     clients.Add(client);
                 }
             }
-            SaveToPdf.CreateDocDogovor(new PdfInfo
+            SaveToPdf.CreateDocDogovor(new Info
             {
                 FileName = $"C:\\report-kursovaa\\ReportDogovorpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Colon = list,
@@ -60,7 +60,7 @@ namespace WebClient.Areas.Agent.Controllers
         }
         public IActionResult ChangeDogovor(int? id)
         {
-
+            ViewBag.Raions = _raion.Read(null);
             if (id != null)
             {
                 ViewBag.Id = id;

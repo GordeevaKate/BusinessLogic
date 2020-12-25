@@ -25,16 +25,18 @@
     </tr>
     @foreach (var dogovor in ViewBag.dogovors)
     {
-<tr>
-    <td>@dogovor.Id</td>
-    <td>@dogovor.Summa</td>
-    <td>@dogovor.data</td>
-    <td>
-        <a class="btn btn-primary btn-sm" asp-action="ChangeDogovor" asp-route-id="@dogovor.Id" asp-route-clientid="@ViewBag.ClientId">Изменить</a>|
-    </td>
-    <td>
-        <a class="btn btn-primary btn-sm" asp-action="Report" asp-route-dogovorid="@dogovor.Id">Экспорт</a>|
-    </td>
-</tr>
+        <tr>
+            <td>@dogovor.Id</td>
+            <td>@dogovor.Summa</td>
+            <td>@dogovor.data</td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-action="ChangeDogovor" asp-route-id="@dogovor.Id" asp-route-clientid="@ViewBag.ClientId">Изменить</a>|
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-action="Report" asp-route-dogovorid="@dogovor.Id">Экспорт</a>|
+            </td>
+        </tr>
     }
 </table>
+
+

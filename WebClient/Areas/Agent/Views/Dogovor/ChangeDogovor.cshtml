@@ -23,26 +23,93 @@
         </tr>
         @foreach (var reis in ViewBag.Reis)
         {
-    @foreach (var reisd in ViewBag.ReisDogovor)
+        @foreach (var reisd in ViewBag.ReisDogovor)
+       {
+        @foreach (var r in reisd.Dogovor_Reiss)
+       { @if (r.Value.Item2 == reis.Id)
+       {
+        @if ((@r.Value.Item7/@r.Value.Item6)> 250)
+{
+        <tr>
+            <td>@reis.Name</td>
+            <td>@(@r.Value.Item3 + @reis.Cena * @r.Value.Item7)</td>
+            <td>@(@r.Value.Item4 + @reis.Time)</td>
+            <td>@r.Value.Item6</td>
+            <td>@r.Value.Item7</td>
+            <td>@r.Value.Item5</td>
+            <td>
+                @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
+            </td>
+        </tr>
+ }
+                else
+                                {
+        <tr>
+            <td>@reis.Name</td>
+            <td>@(@r.Value.Item3 + @reis.Cena * @r.Value.Item6)</td>
+            <td>@(@r.Value.Item4 + @reis.Time)</td>
+            <td>@r.Value.Item6</td>
+            <td>@r.Value.Item7</td>
+            <td>@r.Value.Item5</td>
+            <td>
+                @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
+            </td>
+            <td><a class="btn btn-primary btn-sm btn-block" asp-controller="Reis" asp-action="AddReis" asp-route-dogovorId="@ViewBag.Id" asp-route-drId="@reisd.Id" asp-route-reisId="@reis.Id">Изменение</a></td>
+
+        </tr>
+}}}}}
+    </table>
+</div>
+<p style="border: 3px solid #C1FF0A; background-color: #d5d5d1; padding: 10px;">
+    Вид договора
+</p>
+
+                                                                  <p align="center">
+                                                                      Договор  @ViewBag.Id
+                                                                  </p><hr />
+                                                                  <p align="right">
+                                                                      @ViewBag.Data
+                                                                  </p>
+
+    <table class="table">
+        <tr>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Откуда</td>
+            <td>Куда</td>
+            <td>Время</td>
+            <td>Объем груза</td>
+            <td>Вес груза</td>
+
+        </tr>
+        @foreach (var reis in ViewBag.Reis)
+        {
+        @foreach (var reisd in ViewBag.ReisDogovor)
     {
-    @foreach (var r in reisd.Dogovor_Reiss)
+        @foreach (var r in reisd.Dogovor_Reiss)
     {
-    @if (r.Value.Item2 == reis.Id)
+        @if (r.Value.Item2 == reis.Id)
     {
-    @if ((@r.Value.Item7/@r.Value.Item6)> 250)
+        @if ((@r.Value.Item7/@r.Value.Item6)> 250)
 {
     <tr>
         <td>@reis.Name</td>
-        <td>
-        </td>
         <td>@(@r.Value.Item3 + @reis.Cena * @r.Value.Item7)</td>
+
+        @foreach(var raion in @ViewBag.Raions){
+            if(@reis.OfId==raion.Id){
+        <td>@raion.Name </td>
+            }
+            }
+        @foreach(var raion in @ViewBag.Raions){
+            if(@reis.ToId==raion.Id){
+        <td>@raion.Name </td>
+            }
+            }
         <td>@(@r.Value.Item4 + @reis.Time)</td>
-        <td>@r.Value.Item5</td>
         <td>@r.Value.Item6</td>
-        <td>@r.Value.Item4</td>
-        <td>
-            @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
-        </td>
+        <td>@r.Value.Item7</td>
+
     </tr>
  }
                 else
@@ -50,15 +117,29 @@
     <tr>
         <td>@reis.Name</td>
         <td>@(@r.Value.Item3 + @reis.Cena * @r.Value.Item6)</td>
-        <td>@(@r.Value.Item4 + @reis.Time)</td>
-        <td>@r.Value.Item5</td>
-        <td>@r.Value.Item6</td>
-        <td>@r.Value.Item4</td>
-        <td>
-            @Html.ActionLink("Удалить", "Delete", new { id = r.Key, dogovotId = ViewBag.Id })
-        </td>
-        <td><a class="btn btn-primary btn-sm btn-block" asp-controller="Reis" asp-action="AddReis" asp-route-dogovorId="@ViewBag.Id"asp-route-drId="@reisd.Id"asp-route-reisId="@reis.Id">Изменение</a></td>
+        @foreach(var raion in @ViewBag.Raions){
+            if(@reis.OfId==raion.Id){
+        <td>@raion.Name </td>
+            }
+            }
+        @foreach(var raion in @ViewBag.Raions){
+            if(@reis.ToId==raion.Id){
+        <td>@raion.Name </td>
+            }
+            }
 
-    </tr>}}}}}
+
+
+        <td>@(@r.Value.Item4 + @reis.Time)</td>
+        <td>@r.Value.Item6</td>
+        <td>@r.Value.Item7</td>
+
+    </tr>
+}}}}}
     </table>
-</div>
+<label class="control-label"> На общую сумму: @ViewBag.Itog</label>
+<hr />
+<label class="control-label"> Подпись заказчика</label>
+<hr />
+<label class="control-label">Подпись исполнителя</label>
+

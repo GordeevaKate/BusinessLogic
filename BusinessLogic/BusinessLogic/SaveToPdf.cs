@@ -12,7 +12,7 @@ namespace BusinessLogic.Report
 {
     public class SaveToPdf
     {
-        public static void CreateDoc(PdfInfo info)
+        public static void CreateDoc(Info info)
         {
 
             Document document = new Document();
@@ -37,10 +37,6 @@ namespace BusinessLogic.Report
                 Style = "NormalTitle",
                 ParagraphAlignment = ParagraphAlignment.Center
             });
-            foreach (var sf in info.Clients)
-            {
-               
-            }
             foreach (var sf in info.Clients)
             {
                 CreateRow(new PdfRowParameters
@@ -103,7 +99,7 @@ namespace BusinessLogic.Report
             cellParameters.Cell.VerticalAlignment = VerticalAlignment.Center;
         }
 
-        public static void CreateDocDogovor(PdfInfo info) { 
+        public static void CreateDocDogovor(Info info) { 
 
             Document document = new Document();
             DefineStyles(document);
@@ -125,7 +121,7 @@ namespace BusinessLogic.Report
             paragraph.Style = "NormalTitle";
             paragraph.Style = "Normal";
             var table = document.LastSection.AddTable();
-            List<string> columns = new List<string> { "3cm", "2cm", "3cm", "3cm", "3cm", "3cm", "2cm" };
+            List<string> columns = new List<string> { "2cm", "2cm", "2cm", "2cm", "2cm", "2cm", "2cm" };
 
             foreach (var elem in columns)
             {
@@ -150,10 +146,11 @@ namespace BusinessLogic.Report
                             {
                                 if ((reis.OfId==raion2.Id)&&(reis.ToId==raion1.Id))
                                 {
-                                    CreateRow(new PdfRowParameters
-                                    {
-                                        Table = table,
-                                        Texts = new List<string>
+                                        if (dr.ves/dr.Obem > 250){
+                                            CreateRow(new PdfRowParameters
+                                            {
+                                                Table = table,
+                                                Texts = new List<string>
                                           {
                                             reis.Name,
                                             Convert.ToString(dr.NadbavkaCena+dr.ves*reis.Cena),
@@ -163,9 +160,30 @@ namespace BusinessLogic.Report
                                            Convert.ToString(dr.Obem),
                                              Convert.ToString(dr.ves),
                                          },
-                                        Style = "Normal",
-                                        ParagraphAlignment = ParagraphAlignment.Left
-                                    });
+                                                Style = "Normal",
+                                                ParagraphAlignment = ParagraphAlignment.Left
+                                            });
+                                        }
+                                        else
+                                        {
+                                            CreateRow(new PdfRowParameters
+                                            {
+                                                Table = table,
+                                                Texts = new List<string>
+                                          {
+                                            reis.Name,
+                                            Convert.ToString(dr.NadbavkaCena+dr.ves*reis.Cena),
+                                            raion2.Name,
+                                             raion1.Name,
+                                            Convert.ToString(reis.Time+dr.NadbavkaTime)+  " дня",
+                                           Convert.ToString(dr.Obem),
+                                             Convert.ToString(dr.ves),
+                                         },
+                                                Style = "Normal",
+                                                ParagraphAlignment = ParagraphAlignment.Left
+                                            });
+                                        }
+                                   
                                 }
                             }
                         }
@@ -197,7 +215,7 @@ namespace BusinessLogic.Report
             renderer.PdfDocument.Save(info.FileName);
         }
 
-        public static void ReportMonth(PdfInfo info, DateTime date)
+        public static void ReportMonth(Info info, DateTime date)
         {
             Document document = new Document();
             DefineStyles(document);
@@ -276,7 +294,7 @@ namespace BusinessLogic.Report
             renderer.PdfDocument.Save(info.FileName);
         }
 
-        public static string Count(PdfInfo info, RaionViewModel raion, DateTime date)
+        public static string Count(Info info, RaionViewModel raion, DateTime date)
         {
             int count = 0;
             foreach (var dogogovor in info.dogovors)
@@ -302,7 +320,7 @@ namespace BusinessLogic.Report
         } 
 
 
-        public static void CreateDocPere(PdfInfo info)
+        public static void CreateDocPere(Info info)
         {
 
             Document document = new Document();

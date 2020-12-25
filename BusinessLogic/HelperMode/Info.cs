@@ -7,7 +7,7 @@ using BusinessLogic.ViewModel;
 
 namespace BusinessLogic.HelperModels
 {
-    public class PdfInfo
+    public class Info
     {
         public string FileName { get; set; }
         public string Client { get; set; }

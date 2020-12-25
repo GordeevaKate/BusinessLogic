@@ -14,7 +14,7 @@ namespace BusinessLogic.BusinessLogic
 {
   public  class SaveToWord
     {
-        public static void Diagramma(PdfInfo info)
+        public static void Diagramma(Info info)
         {
             string pathDocument =info.FileName;
             DocX document = DocX.Create(pathDocument);
@@ -22,7 +22,7 @@ namespace BusinessLogic.BusinessLogic
             document.InsertChart(CreateBarChart(info));
             document.Save();
         }
-        private static Chart CreatePieChart(PdfInfo info)
+        private static Chart CreatePieChart(Info info)
         {
             PieChart pieChart = new PieChart();
             pieChart.AddLegend(ChartLegendPosition.Left, false);
@@ -30,14 +30,14 @@ namespace BusinessLogic.BusinessLogic
             return pieChart;
         }
 
-        private static Chart CreateBarChart(PdfInfo info)
+        private static Chart CreateBarChart(Info info)
         {
             BarChart barChart = new BarChart();
             barChart.AddLegend(ChartLegendPosition.Top, false);
             barChart.AddSeries(GetSeriesFirst(info));
             return barChart;
         }
-        public static List<DiagrammaModel> GetTestDataFirst(PdfInfo info)
+        public static List<DiagrammaModel> GetTestDataFirst(Info info)
         {
             List<DiagrammaModel> testDataFirst = new List<DiagrammaModel>();
             foreach (var raion in info.raion)
@@ -55,7 +55,7 @@ namespace BusinessLogic.BusinessLogic
 
             return testDataFirst;
         }
-        public static Series GetSeriesFirst(PdfInfo info)
+        public static Series GetSeriesFirst(Info info)
         {
             Series seriesFirst = new Series("Диаграмма");
             seriesFirst.Bind(GetTestDataFirst(info), "cityName", "PopulationYear2020");

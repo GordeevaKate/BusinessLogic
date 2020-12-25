@@ -45,18 +45,18 @@ namespace WebClient.Areas.Agent.Controllers
             {
                 Texts = new List<string>{
                             raion.Name,
-                                           SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 1, 1)),
-                                             SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 2, 1)),
-                                              SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 3, 1)),
-                                           SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 4, 1)),
-                                              SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 5, 1)),
-                                               SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 6, 1)),
-                                               SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 7, 1)),
-                                             SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 8, 1)),
-                                                 SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 9, 1)),
-                                                    SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 10, 1)),
-                                                       SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 11, 1)),
-                                                            SaveToPdf.Count(new PdfInfo{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 12, 1))};
+                                           SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 1, 1)),
+                                             SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 2, 1)),
+                                              SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 3, 1)),
+                                           SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 4, 1)),
+                                              SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 5, 1)),
+                                               SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 6, 1)),
+                                               SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 7, 1)),
+                                             SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 8, 1)),
+                                                 SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 9, 1)),
+                                                    SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 10, 1)),
+                                                       SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 11, 1)),
+                                                            SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 12, 1))};
                 list.Add(Texts);
             }
             ViewBag.list = list;
@@ -66,7 +66,7 @@ namespace WebClient.Areas.Agent.Controllers
         [HttpGet]
         public JsonResult PopulationChart()
         {
-                   var populationList = SaveToWord.GetTestDataFirst(new PdfInfo
+                   var populationList = SaveToWord.GetTestDataFirst(new Info
                    {raion=_raions.Read(null),
                    reiss=_reis.Read(null)
                    });
@@ -75,7 +75,7 @@ namespace WebClient.Areas.Agent.Controllers
         public IActionResult Diagramma()
         {
          
-            SaveToWord.Diagramma(new PdfInfo
+            SaveToWord.Diagramma(new Info
             {
                 FileName = $"C:\\report-kursovaa\\ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc",
                 raion = _raions.Read(null),
@@ -93,7 +93,7 @@ namespace WebClient.Areas.Agent.Controllers
             }
             List<string> list = new List<string> { "Номер", "дата", "Клиент", "Сумма"};
             DateTime date = AgentController.PeriodDate(Month[0]);
-            SaveToPdf.ReportMonth(new PdfInfo
+            SaveToPdf.ReportMonth(new Info
             {
                 FileName = $"C:\\report-kursovaa\\ReportMonth{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Title =$"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}",
@@ -110,7 +110,7 @@ namespace WebClient.Areas.Agent.Controllers
         public IActionResult PereReport()
         {
             List<string> list = new List<string> { "район-месяц","01", "02", "03", "04", "05", "06", "07", "08", "09","10","11","12"};
-            SaveToPdf.CreateDocPere(new PdfInfo
+            SaveToPdf.CreateDocPere(new Info
             {
                 FileName = $"C:\\report-kursovaa\\ReportPerepdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Colon = list,
