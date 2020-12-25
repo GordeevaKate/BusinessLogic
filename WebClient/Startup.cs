@@ -43,7 +43,7 @@ namespace WebClient
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("Client/Home/Error");
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

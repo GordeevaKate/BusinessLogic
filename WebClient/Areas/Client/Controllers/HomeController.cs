@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using WebClient.Models;
+using WebClient.Areas.Client.Models;
 
 namespace WebClient.Areas.Client.Controllers
 {

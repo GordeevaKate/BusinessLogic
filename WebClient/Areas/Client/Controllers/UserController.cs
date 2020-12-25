@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WebClient.Models;
 using BusinessLogic.Interfaces;
 using BusinessLogic.BindingModel;
+using WebClient.Areas.Client.Models;
 
 namespace WebClient.Areas.Client.Controllers
 {

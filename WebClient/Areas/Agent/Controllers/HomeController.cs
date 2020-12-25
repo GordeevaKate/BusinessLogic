@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebClient.Models;
+using WebClient.Areas.Agent.Models;
 
 namespace WebClient.Areas.Agent.Controllers
 {
