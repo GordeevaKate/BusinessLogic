@@ -1,4 +1,4 @@
-﻿@model WebClient.Areas.Agent.Models.SpisokClientViewModel
+﻿@model WebClient.Areas.Agent.Models.ClientSpisokViewModel
 @{
     ViewData["Title"] = "Клиенты";
 }
@@ -33,7 +33,7 @@
                 <a class="btn btn-primary btn-sm" asp-action="ChangeDogovor" asp-route-id="@dogovor.Id" asp-route-clientid="@ViewBag.ClientId">Изменить</a>|
             </td>
             <td>
-                <a class="btn btn-primary btn-sm" asp-action="Report" asp-route-dogovorid="@dogovor.Id">Экспорт</a>|
+                <a class="btn btn-primary btn-sm"  asp-controller="Report" asp-action="SendPuth" asp-route-id=2 asp-route-did="@dogovor.Id">Экспорт</a>|
             </td>
         </tr>
     }

@@ -20,5 +20,6 @@ namespace BusinessLogic.HelperModels
         public string Title { get; set; }
         public List<string> Colon { get; set; }
         public List<ClientViewModel> Clients { get; set; }
+        public bool SendMail { get; set; }
     }
 }

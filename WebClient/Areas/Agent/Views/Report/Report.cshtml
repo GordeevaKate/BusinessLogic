@@ -12,7 +12,7 @@
     function LoadData() {
         $.ajax({
 
-            url: '  http://localhost:53661/Agent/Report/PopulationChart',
+            url: '  http://localhost:53661/Agent/Report/Diagramma',
             dataType: "json",
             type: "GET",
             error: function (xhr, status, error) {
@@ -20,14 +20,14 @@
                 toastr.error(err.message);
             },
             success: function (data) {
-                PopulationChart(data);
+                Diagramma(data);
                 return false;
             }
         });
         return false;
     }
 
-    function PopulationChart(data) {
+    function Diagramma(data) {
         var dataArray = [
             ['Raions', 'Count Reis']
         ];
@@ -60,11 +60,8 @@
     }
 </script>
 <p>
-    <a class="btn btn-primary d-block" asp-action="Diagramma">Сохранение диаграммы</a>
+    <a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=5 asp-action="SendPuth">Сохранение диаграммы</a>
 </p>
-
-
-
 <table class="table">
     <tr>
         <td>Район-месяц</td>
@@ -100,12 +97,8 @@
         </tr>
     }
 </table>
-
-
-
-
 <p>
-    <a class="btn btn-primary d-block" asp-action="PereReport">Перекрестный отчет</a>
+    <a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=4 asp-action="SendPuth">Перекрестный отчет</a>
 </p>
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <form method="get">
@@ -115,6 +108,8 @@
                 , "Май", "Июнь", "Июль"
                 , "Август", "Сентябрь", "Октябрь"
                 , "Ноябрь", "Декабрь"}))
-        <input type="submit" asp-action="ReportMonth" value="Фильтр" class="btn btn-default" />
+    
+        <input type="submit" asp-controller="Report" asp-route-id=3 asp-action="SendPuth" value="Отчет агента за месяц этого года" class="btn btn-default" />
     </div>
 </form>
+

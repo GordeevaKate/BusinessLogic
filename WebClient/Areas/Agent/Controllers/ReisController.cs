@@ -24,13 +24,13 @@ namespace WebClient.Areas.Agent.Controllers
             raions = raion;
             _dogovor = dogovor;
         }
-        public IActionResult Reis(int raion, SpisokModel model)
+        public IActionResult Reis(int raion, ReisSpisokModel model)
         {
             ViewBag.Reiss = _reis.Read(null);
             var Raion = raions.Read(null);
             ViewBag.Raions = Raion;
             Raion.Insert(0, new RaionViewModel { Name = "Все", Id = 0 });
-            SpisokModel plvm = new SpisokModel
+            ReisSpisokModel plvm = new ReisSpisokModel
             {
                 Raion = new SelectList(Raion, "Id", "Name")
             };
@@ -52,7 +52,7 @@ namespace WebClient.Areas.Agent.Controllers
                 ViewBag.Reiss = _reis.Read(null);
             return View(plvm);
         }
-        public bool Validation(SpisokModel model)
+        public bool Validation(ReisSpisokModel model)
         {
             try
             {

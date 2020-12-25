@@ -26,7 +26,7 @@ namespace WebClient.Areas.Agent.Controllers
             _client = client;
             _dogovor = dogovor;
         }
-        public IActionResult Client(SpisokClientViewModel model)
+        public IActionResult Client(ClientSpisokViewModel model)
         {
             if (model.DogovorId > 0)
             {
@@ -40,13 +40,19 @@ namespace WebClient.Areas.Agent.Controllers
                 }
                 if (dogovor.Count==0)
                 {
-                    ModelState.AddModelError("Passport", "Клиента не существует");
+                    ModelState.AddModelError("Passport", "Договора не существует");
                     ViewBag.Client = _client.Read(null);
                     return View();
                 }
             }
             if (model.Passport != null)
             {
+                if (!Regex.IsMatch(model.Passport, @"^[1-9]{10}$"))
+                {
+                    ModelState.AddModelError("Passport", "Паспорт введен некорректно");
+                    ViewBag.Client = _client.Read(null);
+                    return View();
+                }
                 var client = _client.Read(new ClientBindingModel { Pasport = model.Passport });
                 ViewBag.Client = client;
                 if (client.Count == 0)
@@ -55,6 +61,7 @@ namespace WebClient.Areas.Agent.Controllers
                     ViewBag.Client = _client.Read(null);
                     return View();
                 }
+                return View();
             }
             if (Validation(model.Obem) == true)
             {
@@ -87,7 +94,7 @@ namespace WebClient.Areas.Agent.Controllers
                 return View();
             }
             else {
-                    if (model.Obem != "0")
+                  if (model.Obem != "0")
                     ModelState.AddModelError("Obem", "Объем введен неправильно");
                 }
             ViewBag.Client = _client.Read(null);
@@ -101,8 +108,9 @@ namespace WebClient.Areas.Agent.Controllers
             }
             return true;
         }
-        public IActionResult Report()//кнопка отчет на странице клиент
+        public IActionResult ReadOfReportSpisok(ReportViewModel model)//кнопка отчет на странице клиент
         {
+            string filename = model.puth+$"ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.";
             List<string> list = new List<string> { "Паспорт", "ФИО", "Номер телефона", "Email" };
             var clientsall = _client.Read(null);
             var clients = _client.Read(new ClientBindingModel { Id = 0 });
@@ -116,18 +124,30 @@ namespace WebClient.Areas.Agent.Controllers
             }
             SaveToPdf.CreateDoc(new Info
             {
-                FileName = $"C:\\report-kursovaa\\ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                FileName =filename+"pdf",
                 Colon = list,
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
                 Clients = clients
             });
-    SaveToExcel.CreateDoc(new Info { 
-         FileName = $"C:\\report-kursovaa\\ReportClientpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}..xlsx",
+            if (model.SendMail == true)
+            {
+                Mail.SendMail("dggfddg6@gmail.com", $"{filename}pdf", $"Список клиентов для Агента{Program.Agent.Name}");
+
+            }
+
+            SaveToExcel.CreateDoc(new Info { 
+         FileName =filename+ "xlsx",
                 Colon = list,
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
                 Clients = clients
             }
-        );
+
+
+        ); if (model.SendMail == true)
+            {
+                Mail.SendMail("dggfddg6@gmail.com", $"{filename}xlsx", $"Список клиентов для Агента{Program.Agent.Name}");
+
+            }
             return RedirectToAction("Client");
         }
         public IActionResult AddClient()
@@ -135,21 +155,31 @@ namespace WebClient.Areas.Agent.Controllers
             return View();
         }
         [HttpPost]
-        public ViewResult AddClient(RegistrationModel client)
+        public ViewResult AddClient(AddClientModel client)
         {
             if (String.IsNullOrEmpty(client.Pasport))
             {
                 ModelState.AddModelError("", "Введите номер паспорта");
                 return View(client);
             }
-            if (!Regex.IsMatch(client.Email, @"^[1-9]{10}$"))
+            if (!Regex.IsMatch(client.Pasport, @"^[1-9]{10}$"))
             {
                 ModelState.AddModelError("", "Паспорт введен некорректно");
+                return View(client);
+            }
+            if (_client.Read(new ClientBindingModel { Pasport = client.Pasport }).Count != 0)
+            {
+                ModelState.AddModelError("", "Такой паспорт уже существует");
                 return View(client);
             }
             if (client.Pasport.Length != 10)
             {
                 ModelState.AddModelError("", "Паспорт состоит из 10 цифр");
+                return View(client);
+            }
+            if (String.IsNullOrEmpty(client.Email))
+            {
+                ModelState.AddModelError("", "Введите Email");
                 return View(client);
             }
             if (!Regex.IsMatch(client.Email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
@@ -166,6 +196,12 @@ namespace WebClient.Areas.Agent.Controllers
             {
                 ModelState.AddModelError("", "Введите номер телефона");
                 return View(client);
+            }
+            if (!Regex.IsMatch(client.PhoneNumber, @"^[1-9]{1}[0-9]{5,10}"))
+            {
+                ModelState.AddModelError("", "Заполните телефон правильно: 89176258099 или 565656");
+                return View(client);
+
             }
             _client.CreateOrUpdate(new ClientBindingModel
             {

@@ -8,6 +8,8 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using WebClient.Areas.Agent.Models;
 using Xceed.Document.NET;
 using Xceed.Words.NET;
 using Chart = Xceed.Document.NET.Chart;
@@ -64,62 +66,150 @@ namespace WebClient.Areas.Agent.Controllers
         }
 
         [HttpGet]
-        public JsonResult PopulationChart()
+        public JsonResult Diagramma()
         {
                    var populationList = SaveToWord.GetTestDataFirst(new Info
                    {raion=_raions.Read(null),
                    reiss=_reis.Read(null)
                    });
+
             return Json(populationList);
         }
-        public IActionResult Diagramma()
+        public IActionResult ReadOfDiagramma(ReportViewModel model)
         {
          
             SaveToWord.Diagramma(new Info
             {
-                FileName = $"C:\\report-kursovaa\\ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc",
+                FileName =model.puth+ $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc",
                 raion = _raions.Read(null),
                 reiss = _reis.Read(null)
             });
+            if ( model.SendMail== true)
+            {
+                Mail.SendMail("dggfddg6@gmail.com", model.puth + $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc", $"Диаграмма");
+
+            }
             return RedirectToAction("Report");
         }
-        public IActionResult ReportMonth(string[] Month)
+        [HttpGet]
+        public IActionResult ReadOfAgent(string[] Month, ReportViewModel m)
         {
            
             if (Month.Length == 0)
             {
+
                 TempData["ErrorLack"]="Вы не выбрали месяц";
                 return RedirectToAction("Report");
             }
+            var FileName = m.puth + $"ReportMonth{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf";
             List<string> list = new List<string> { "Номер", "дата", "Клиент", "Сумма"};
             DateTime date = AgentController.PeriodDate(Month[0]);
             SaveToPdf.ReportMonth(new Info
             {
-                FileName = $"C:\\report-kursovaa\\ReportMonth{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                FileName =FileName,
                 Title =$"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}",
                 Colon=list,
                 dogovors = _dogovor.Read(null),
                 Clients=_client.Read(null)
             }, date);
+            if (m.SendMail == true)
+            {
+                Mail.SendMail("dggfddg6@gmail.com", FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
+
+            }
             return RedirectToAction("Report");
         }
      
         /// </summary>
         /// <returns></returns>
 
-        public IActionResult PereReport()
+        public IActionResult ReadOfPereReport(ReportViewModel model)
         {
             List<string> list = new List<string> { "район-месяц","01", "02", "03", "04", "05", "06", "07", "08", "09","10","11","12"};
+            var FileName =model.puth + $"ReportPerepdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf";
             SaveToPdf.CreateDocPere(new Info
             {
-                FileName = $"C:\\report-kursovaa\\ReportPerepdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                FileName =FileName,
                 Colon = list,
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
                 raion = _raions.Read(null),
                 dogovors=_dogovor.Read(null),
                 reiss=_reis.Read(null)
             }) ;
+            if (model.SendMail == true)
+            {
+                Mail.SendMail("dggfddg6@gmail.com", FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
+
+            }
             return RedirectToAction("Report");
+        }
+
+        public IActionResult SendPuth(ReportViewModel model, int id, int did, string[] Month)
+        {
+            ViewBag.Id = id;
+            ViewBag.Month = Month;
+            if (did != null) { ViewBag.Did = did; }
+            else { ViewBag.Did = 0;}
+            if (TempData["ErrorLack"] != null)
+            {
+                ModelState.AddModelError("", TempData["ErrorLack"].ToString());
+            }
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Validation(ReportViewModel model1,int id, int did, string[] Month)
+        {
+            if (!Directory.Exists(model1.puth))
+            {
+                TempData["ErrorLack"] = "На данном компьютере не существует такого пути";
+                return RedirectToAction("SendPuth", "Report",model1);
+            }
+            if (id == 1)
+            {
+                return RedirectToAction("ReadOfReportSpisok", "Client",model1);
+            }
+            if (id == 2)
+            {
+                return RedirectToAction("Report", "Dogovor", new
+                {
+                  
+                   SendMail=model1.SendMail,
+                    puth = model1.puth,
+
+                    dogovorid =  did
+                }  );
+            }
+            if (id== 3)
+            {
+                return RedirectToAction("ReadOfAgent", new
+                {
+                    SendMail = model1.SendMail, puth = model1.puth , Month
+                });
+            }
+          if(id==4)
+            {
+                return RedirectToAction("ReadOfPereReport", new
+                {
+                    SendMail = model1.SendMail,
+                    puth = model1.puth       
+                });
+            }
+            if (id == 5)
+            {
+                return RedirectToAction("ReadOfDiagramma", new
+                {
+                    SendMail = model1.SendMail,
+                    puth = model1.puth
+                });
+            }
+
+            return RedirectToAction("Archivation", "Archive", new
+            {
+                SendMail = model1.SendMail,
+                puth = model1.puth
+            });
+
         }
     }
 }

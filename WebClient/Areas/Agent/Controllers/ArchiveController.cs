@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using BusinessLogic.BindingModel;
+using BusinessLogic.BusinessLogic;
 using BusinessLogic.Interfaces;
 using BusinessLogic.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Unity;
+using WebClient.Areas.Agent.Models;
 
 namespace WebClient.Areas.Agent.Controllers
 {
@@ -70,12 +72,11 @@ namespace WebClient.Areas.Agent.Controllers
 
             return View();
         }
-        public ActionResult Archivation()
+        public ActionResult Archivation(ReportViewModel model)
         {
             DateTime date1 = DateTime.Now;
-            string fileName = "C:\\report-kursovaa\\Archive";
-            Directory.CreateDirectory($@"{fileName}\\ArchiveOf{date1.Year}");
-            fileName = $@"{fileName}\\ArchiveOf{date1.Year}";
+            string fileName = model.puth+ $"\\ArchiveOf{date1.Year}";
+            Directory.CreateDirectory(fileName);  
             if (Directory.Exists(fileName))
             {
                 var dogovors = dogovorLogic.Read(null);//все договоры
@@ -126,6 +127,12 @@ namespace WebClient.Areas.Agent.Controllers
                 }
                 ZipFile.CreateFromDirectory(fileName, $"{fileName}.zip");
                 Directory.Delete(fileName, true);
+
+                if (model.SendMail == true)
+                {
+                    Mail.SendMail("dggfddg6@gmail.com", $"{fileName}.zip", $"Archive");
+
+                }
                 return RedirectToAction("Archive");
             }
             else

@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace WebClient.Areas.Agent.Models
 {
-    public class RegistrationModel
+    public class AddClientModel
     {
         [Required(ErrorMessage = "Пожалуйста, введите логин")]
         [StringLength(50, ErrorMessage = "Логин должен содержать от 1 до 50 символов", MinimumLength = 1)]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, введите пароль")]
-     //   [DataType(DataType.Password)]
-     //   [StringLength(20, ErrorMessage = "Поле {0} должно иметь минимум {2} и максимум {1} символов.", MinimumLength = 6)]
         public string Pasport { get; set; }
 
         [Required(ErrorMessage = "Пожалуйста, введите E-Mail")]

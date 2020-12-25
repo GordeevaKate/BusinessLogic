@@ -26,12 +26,8 @@ namespace WebClient.Areas.Agent.Controllers
             _reis = reis;
             _raion = raion;
         }
-        public ActionResult Delete(int id, int dogovotId)
-        {
-            _dogovor.DeleteReisDogovor(new Dogovor_ReisBM { Id = id });
-            return RedirectToAction("ChangeDogovor", new { id = dogovotId });
-        }
-        public ActionResult Report(int dogovorid)
+        [HttpGet]
+        public IActionResult Report(ReportViewModel model, int dogovorid)
         {
             List<string> list = new List<string> { "Название", "Цена", "Откуда", "Куда", "Время выполнения", "Объем товара", "Вес товара" };
             var clientsall = _client.Read(null);
@@ -46,7 +42,7 @@ namespace WebClient.Areas.Agent.Controllers
             }
             SaveToPdf.CreateDocDogovor(new Info
             {
-                FileName = $"C:\\report-kursovaa\\ReportDogovorpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                FileName =model.puth+ $"ReportDogovorpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
                 Colon = list,
                 Title = $" Договор {dogovorid}",
                 Client = _client.Read(new ClientBindingModel { Id = Program.ClientId })[0].ClientFIO,
@@ -107,72 +103,124 @@ namespace WebClient.Areas.Agent.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddReis([Bind("DogovorId, ReisId,Id, Comm, NadbavkaCena, NadbavkaTime, Obem, ves")] Dogovor_ReisBM model)
+        
+        public bool Validation([Bind("DogovorId, ReisId,Id, Comm, NadbavkaCena, NadbavkaTime, Obem, ves")] Dogovor_ReisBM model)
         {
-            if (model.Id == 0)
+
+                var reis = _reis.Read(new ReisBindingModel { Id = model.ReisId })[0];
+
+                var ts = _dogovor.ReadReis(new Dogovor_ReisBM { DogovorId = model.DogovorId, ReisId = model.ReisId });
+                if (_dogovor.ReadReis(new Dogovor_ReisBM { DogovorId = model.DogovorId, ReisId = model.ReisId }).Count != 0 )
             {
-                if (_dogovor.ReadReis(new Dogovor_ReisBM { DogovorId = model.DogovorId, ReisId = model.ReisId }).Count != 0)
+                var t = ts[0];
+                if (model.Id > 0)
                 {
-                    var reis = _reis.Read(new ReisBindingModel { Id = model.ReisId })[0];
-                    if (model.ves / model.Obem > 250)
+                   
+                    if (t.ves / t.Obem > 250)
+                        {
+                            if (reis.Cena * t.ves + model.NadbavkaCena <= 0)
+                            {
+                                TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
+                                return false;
+
+                            }
+                        }
+                        else
+                        {
+                            if (reis.Cena * t.Obem + model.NadbavkaCena <= 0)
+                            {
+                                TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
+                                return false;
+                            }
+                        }
+
+                            if (reis.Time  + model.NadbavkaTime <= 0)
+                            {
+                                TempData["ErrorLack"] = "Time за перевозку не может быть меньше или равна 0";
+                                return false;
+
+                            }
+                    }
+                    else
                     {
-                        if (reis.Cena * model.ves + model.NadbavkaCena <= 0)
+                    if ((t.ves + model.ves) / (t.Obem + t.Obem) > 250)
+                    {
+                        if (reis.Cena * (t.ves + model.ves) + model.NadbavkaCena + t.NadbavkaCena <= 0)
                         {
                             TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
-                            return RedirectToAction("AddReis", "Reis", new
-                            {
-                                reisID = model.ReisId,
-                                dogovorId = model.DogovorId
-                            });
+                            return false;
 
                         }
                     }
                     else
                     {
-                        if (reis.Cena * model.Obem + model.NadbavkaCena <= 0)
+                        if (reis.Cena * t.Obem * model.Obem + t.NadbavkaCena + model.NadbavkaCena <= 0)
                         {
                             TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
-                            return RedirectToAction("AddReis", "Reis", new
-                            {
-                                reisID = model.ReisId,
-                                dogovorId = model.DogovorId
-                            });
+                            return false;
                         }
                     }
+
+                    if (reis.Time + model.NadbavkaTime + t.NadbavkaTime <= 0)
+                    {
+                        TempData["ErrorLack"] = "Time за перевозку не может быть меньше или равна 0";
+                        return false;
+
+                    }
+                }
+              
+                   
 
                 }
                 else
                 {
-                    if (model.Obem <= 0)
+
+                if (model.ves / model.Obem > 250)
+                {
+                    if (reis.Cena * model.ves + model.NadbavkaCena <= 0)
                     {
-                        TempData["ErrorLack"] = "Объем не должен быть меньше или равна нулю";
-                        return RedirectToAction("AddReis", "Reis", new
-                        {
-                            reisID = model.ReisId,
-                            dogovorId = model.DogovorId
-                        });
-                    }
-                    if (model.ves <= 0)
-                    {
-                        TempData["ErrorLack"] = "Вес не должен быть меньше или равна нулю";
-                        return RedirectToAction("AddReis", "Reis", new
-                        {
-                            reisID = model.ReisId,
-                            dogovorId = model.DogovorId
-                        });
+                        TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
+                        return false;
+
                     }
                 }
-                _dogovor.AddReis(model);
-                return RedirectToAction("ChangeDogovor", new { id = model.DogovorId });
+                else
+                {
+                    if (reis.Cena * model.Obem + model.NadbavkaCena <= 0)
+                    {
+                        TempData["ErrorLack"] = "Цена за перевозку не может быть меньше или равна 0";
+                        return false;
+                    }
+                }
+                if (reis.Time + model.NadbavkaTime  <= 0)
+                {
+                    TempData["ErrorLack"] = "Time за перевозку не может быть меньше или равна 0";
+                    return false;
+
+                }
             }
-            else
-            {
                 _dogovor.AddReis(model);
-                return RedirectToAction("ChangeDogovor", new { id = model.DogovorId });
-            }
-          
+                return true;
         }
-        public IActionResult Dogovor(int? id, SpisokClientViewModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddReis([Bind("DogovorId, ReisId,Id, Comm, NadbavkaCena, NadbavkaTime, Obem, ves")] Dogovor_ReisBM model)
+        {
+            if (Validation(model))
+            {
+                return RedirectToAction("ChangeDogovor", new { id = model.DogovorId });
+            }
+            else{
+                TempData["ErrorLack"]+= ". Не получилось добавить";
+                return RedirectToAction("AddReis", "Reis", new
+                {
+                    reisID = model.ReisId,
+                    dogovorId = model.DogovorId,
+                    drId = model.Id
+                });
+            }
+        }
+        public IActionResult Dogovor(int? id, ClientSpisokViewModel model)
         {
             Program.ClientId = (int)id;
             ViewBag.ClientId = id;

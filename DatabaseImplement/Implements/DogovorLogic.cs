@@ -112,9 +112,12 @@ namespace DatabaseImplement.Implements
                         werehouseCosmetics.NadbavkaCena += model.NadbavkaCena;
                         werehouseCosmetics.NadbavkaTime += model.NadbavkaTime;
                     }
-                    werehouseCosmetics.Comm = model.Comm;
                 }
-
+                if (model.Comm == null)
+                {
+                    model.Comm = " ";
+                }
+                werehouseCosmetics.Comm = model.Comm;
                 Reis element = context.Reiss.FirstOrDefault(rec =>
                 rec.Id == model.ReisId);
                 context.SaveChanges();

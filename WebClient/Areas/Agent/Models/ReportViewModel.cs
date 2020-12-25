@@ -2,10 +2,9 @@
 
 namespace WebClient.Areas.Agent.Models
 {
-    public class ReportModel
+    public class ReportViewModel
     {
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public string puth { get; set; }
         public bool SendMail { get; set; }
     }
 }

@@ -1,0 +1,18 @@
+﻿@model WebClient.Areas.Agent.Models.ReportViewModel
+
+@{ ViewData["Title"] = "Выбор пути"; }
+
+<div class="text-left text-info">
+    <h1>@ViewData["Title"]</h1>
+</div>
+@using (Html.BeginForm("Validation", "Report", new { id=ViewBag.Id, did=ViewBag.Did, Month=ViewBag.Month}))
+{
+<p>
+    Паспорт:<br>
+    @Html.TextBoxFor(x => x.puth, new { @Value = "C:\\report-kursovaa\\" })<br>
+    Телефон:<br>
+    @Html.EditorFor(model => model.SendMail) Отправить отчёт на почту
+</p>
+ @Html.ValidationSummary(true, "", new { @style = "color: blue" })
+<input type="submit" value="Зарегистрировать" class="btn btn-info btn-sm" />
+   }

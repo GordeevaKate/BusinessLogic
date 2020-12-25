@@ -1,4 +1,5 @@
-﻿@model WebClient.Areas.Agent.Models.SpisokClientViewModel
+﻿@model WebClient.Areas.Agent.Models.ClientSpisokViewModel
+
 @{
     ViewData["Title"] = "Клиенты";
 }
@@ -13,10 +14,26 @@
     <div class="form-inline">
         <label class="control-label">Паспорт: <br /></label>
         <input asp-for="Passport" class="form-control" /><br />
+        <font size="2" color="red" face="Arial">
+            @Html.ValidationMessageFor(model => model.Passport)
+        </font>
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+<form asp-action="Client">
+    <div class="form-inline">
         <label class="control-label">Номер договора <br /></label>
-        <input asp-for="DogovorId" class="form-control" min="0" /><br />
+        <input asp-for="DogovorId" class="form-control" /><br />
+        <font size="2" color="red" face="Arial">
+            @Html.ValidationMessageFor(model => model.DogovorId)
+        </font>
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+<form asp-action="Client">
+    <div class="form-inline">
         <label class="control-label">Объем товара<br /></label>
-        <input asp-for="Obem" class="form-control"/><br />
+        <input asp-for="Obem" class="form-control" /><br />
         <font size="2" color="red" face="Arial">
             @Html.ValidationMessageFor(model => model.Obem)
         </font>
@@ -32,15 +49,15 @@
     </tr>
     @foreach (var client in ViewBag.client)
     {
-    <tr>
-        <td>@client.Pasport</td>
-        <td>@client.ClientFIO</td>
-        <td>@client.PhoneNumber</td>
-        <td>@client.Email</td>
-        <td>
-            <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-id="@client.Id">Договора</a>|
-        </td>
-    </tr>
+        <tr>
+            <td>@client.Pasport</td>
+            <td>@client.ClientFIO</td>
+            <td>@client.PhoneNumber</td>
+            <td>@client.Email</td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-id="@client.Id">Договора</a>|
+            </td>
+        </tr>
     }
 </table>
-@Html.ActionLink("Report", "Report")
+<a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=1 asp-action="SendPuth">Список клиентов у которых есть договора с агентом</a>
