@@ -129,12 +129,7 @@ namespace WebClient.Areas.Agent.Controllers
                 Title = $" Список клиентов для Агента{Program.Agent.Name}",
                 Clients = clients
             });
-            if (model.SendMail == true)
-            {
-                Mail.SendMail("dggfddg6@gmail.com", $"{filename}pdf", $"Список клиентов для Агента{Program.Agent.Name}");
-
-            }
-
+                Mail.SendMail(model.SendMail, $"{filename}pdf", $"Список клиентов для Агента{Program.Agent.Name}");
             SaveToExcel.CreateDoc(new Info { 
          FileName =filename+ "xlsx",
                 Colon = list,
@@ -143,11 +138,10 @@ namespace WebClient.Areas.Agent.Controllers
             }
 
 
-        ); if (model.SendMail == true)
-            {
-                Mail.SendMail("dggfddg6@gmail.com", $"{filename}xlsx", $"Список клиентов для Агента{Program.Agent.Name}");
+        ); 
 
-            }
+                Mail.SendMail(model.SendMail, $"{filename}xlsx", $"Список клиентов для Агента{Program.Agent.Name}");
+
             return RedirectToAction("Client");
         }
         public IActionResult AddClient()

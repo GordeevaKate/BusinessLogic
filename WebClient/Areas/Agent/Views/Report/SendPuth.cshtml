@@ -8,9 +8,9 @@
 @using (Html.BeginForm("Validation", "Report", new { id=ViewBag.Id, did=ViewBag.Did, Month=ViewBag.Month}))
 {
 <p>
-    Паспорт:<br>
+    Путь сохранения:<br>
     @Html.TextBoxFor(x => x.puth, new { @Value = "C:\\report-kursovaa\\" })<br>
-    Телефон:<br>
+    Почта:<br>
     @Html.EditorFor(model => model.SendMail) Отправить отчёт на почту
 </p>
  @Html.ValidationSummary(true, "", new { @style = "color: blue" })

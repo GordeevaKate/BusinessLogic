@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using WebClient.Areas.Agent.Models;
 using Xceed.Document.NET;
 using Xceed.Words.NET;
@@ -84,11 +85,7 @@ namespace WebClient.Areas.Agent.Controllers
                 raion = _raions.Read(null),
                 reiss = _reis.Read(null)
             });
-            if ( model.SendMail== true)
-            {
-                Mail.SendMail("dggfddg6@gmail.com", model.puth + $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc", $"Диаграмма");
-
-            }
+                Mail.SendMail(model.SendMail, model.puth + $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc", $"Диаграмма");
             return RedirectToAction("Report");
         }
         [HttpGet]
@@ -112,11 +109,7 @@ namespace WebClient.Areas.Agent.Controllers
                 dogovors = _dogovor.Read(null),
                 Clients=_client.Read(null)
             }, date);
-            if (m.SendMail == true)
-            {
-                Mail.SendMail("dggfddg6@gmail.com", FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
-
-            }
+                Mail.SendMail(m.SendMail, FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
             return RedirectToAction("Report");
         }
      
@@ -136,11 +129,8 @@ namespace WebClient.Areas.Agent.Controllers
                 dogovors=_dogovor.Read(null),
                 reiss=_reis.Read(null)
             }) ;
-            if (model.SendMail == true)
-            {
-                Mail.SendMail("dggfddg6@gmail.com", FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
 
-            }
+            Mail.SendMail(model.SendMail, FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
             return RedirectToAction("Report");
         }
 
@@ -163,7 +153,17 @@ namespace WebClient.Areas.Agent.Controllers
             if (!Directory.Exists(model1.puth))
             {
                 TempData["ErrorLack"] = "На данном компьютере не существует такого пути";
-                return RedirectToAction("SendPuth", "Report",model1);
+                return RedirectToAction("SendPuth", "Report",new{id=id,puth=model1.puth, SendMail=model1.SendMail, dis= did, Month=Month } );
+            }
+            if (String.IsNullOrEmpty(model1.SendMail))
+            {
+                TempData["ErrorLack"] = "Вы не ввели почту";
+                return RedirectToAction("SendPuth", "Report", new { id = id, puth = model1.puth, SendMail = model1.SendMail, dis = did, Month = Month });
+            }
+            if (!Regex.IsMatch(model1.SendMail, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$"))
+            {
+                TempData["ErrorLack"] = "Почта введена некоретно";
+                return RedirectToAction("SendPuth", "Report", new { id = id, puth = model1.puth, SendMail = model1.SendMail, dis = did, Month = Month });
             }
             if (id == 1)
             {

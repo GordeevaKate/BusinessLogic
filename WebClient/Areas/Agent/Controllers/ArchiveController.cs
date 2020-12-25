@@ -127,12 +127,7 @@ namespace WebClient.Areas.Agent.Controllers
                 }
                 ZipFile.CreateFromDirectory(fileName, $"{fileName}.zip");
                 Directory.Delete(fileName, true);
-
-                if (model.SendMail == true)
-                {
-                    Mail.SendMail("dggfddg6@gmail.com", $"{fileName}.zip", $"Archive");
-
-                }
+                    Mail.SendMail(model.SendMail, $"{fileName}.zip", $"Archive");
                 return RedirectToAction("Archive");
             }
             else
