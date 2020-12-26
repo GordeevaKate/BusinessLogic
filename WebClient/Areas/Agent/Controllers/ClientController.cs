@@ -37,6 +37,7 @@ namespace WebClient.Areas.Agent.Controllers
                 foreach (var r in dogovor)
                 {
                     ViewBag.Client = _client.Read(new ClientBindingModel { Id = r.ClientId });
+                    return View();
                 }
                 if (dogovor.Count==0)
                 {
@@ -140,7 +141,7 @@ namespace WebClient.Areas.Agent.Controllers
 
         ); 
 
-                Mail.SendMail(model.SendMail, $"{filename}xlsx", $"Список клиентов для Агента{Program.Agent.Name}");
+                Mail.SendMail(model.SendMail, $"{filename}xlsx", $"Список клиентов для Агента{Program.Agent.Name} за {DateTime.Now}");
 
             return RedirectToAction("Client");
         }

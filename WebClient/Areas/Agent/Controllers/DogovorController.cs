@@ -110,6 +110,10 @@ namespace WebClient.Areas.Agent.Controllers
                 var reis = _reis.Read(new ReisBindingModel { Id = model.ReisId })[0];
 
                 var ts = _dogovor.ReadReis(new Dogovor_ReisBM { DogovorId = model.DogovorId, ReisId = model.ReisId });
+            if (model.Comm == null || model.Comm == "")
+            {
+                model.Comm = "  ";
+            }
                 if (_dogovor.ReadReis(new Dogovor_ReisBM { DogovorId = model.DogovorId, ReisId = model.ReisId }).Count != 0 )
             {
                 var t = ts[0];

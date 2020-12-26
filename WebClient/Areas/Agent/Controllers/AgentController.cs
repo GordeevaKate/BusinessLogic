@@ -26,12 +26,16 @@ namespace WebClient.Areas.Agent.Controllers
             try {
                 DateTime date=  PeriodDate(Month[0]);
             var dogovors = _dogovor.Rascet(Program.Agent.Id, date);
-            double zarplata = Program.Agent.Oklad;
+            double zarplata = 0;
+                double zarplata1 = 0;
             foreach(var dogovor in dogovors)
             {
                 zarplata += dogovor.Summa * Program.Agent.Comission;
+                    zarplata1 += dogovor.Summa;
             }
-            ViewBag.Zarplata=zarplata; 
+            ViewBag.Zarplata=zarplata;
+                ViewBag.Zarplata1 = zarplata1;
+
             }
             catch
             {

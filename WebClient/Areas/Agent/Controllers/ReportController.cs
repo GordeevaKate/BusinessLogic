@@ -48,18 +48,18 @@ namespace WebClient.Areas.Agent.Controllers
             {
                 Texts = new List<string>{
                             raion.Name,
-                                           SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 1, 1)),
-                                             SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 2, 1)),
-                                              SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 3, 1)),
-                                           SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 4, 1)),
-                                              SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 5, 1)),
-                                               SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 6, 1)),
-                                               SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 7, 1)),
-                                             SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 8, 1)),
-                                                 SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 9, 1)),
-                                                    SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null), reiss=_reis.Read(null) }, raion, new DateTime(2020, 10, 1)),
-                                                       SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 11, 1)),
-                                                            SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(null) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 12, 1))};
+                                           SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 1, 1)),
+                                             SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 2, 1)),
+                                              SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 3, 1)),
+                                           SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 4, 1)),
+                                              SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 5, 1)),
+                                               SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 6, 1)),
+                                               SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 7, 1)),
+                                             SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 8, 1)),
+                                                 SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 9, 1)),
+                                                    SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}), reiss=_reis.Read(null) }, raion, new DateTime(2020, 10, 1)),
+                                                       SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 11, 1)),
+                                                            SaveToPdf.Count(new Info{ dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}) , reiss=_reis.Read(null)}, raion, new DateTime(2020, 12, 1))};
                 list.Add(Texts);
             }
             ViewBag.list = list;
@@ -67,7 +67,7 @@ namespace WebClient.Areas.Agent.Controllers
         }
 
         [HttpGet]
-        public JsonResult Diagramma()
+        public JsonResult Metod()
         {
                    var populationList = SaveToWord.GetTestDataFirst(new Info
                    {raion=_raions.Read(null),
@@ -81,7 +81,8 @@ namespace WebClient.Areas.Agent.Controllers
          
             SaveToWord.Diagramma(new Info
             {
-                FileName =model.puth+ $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc",
+                Title = $"Даграмма за перевозки за {DateTime.Now.Year}",
+                FileName = model.puth+ $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc",
                 raion = _raions.Read(null),
                 reiss = _reis.Read(null)
             });
@@ -124,9 +125,9 @@ namespace WebClient.Areas.Agent.Controllers
             {
                 FileName =FileName,
                 Colon = list,
-                Title = $" Список клиентов для Агента{Program.Agent.Name}",
+                Title = $" Список клиентов для Агента{Program.Agent.Name} по неархивированным заключенным договорам{DateTime.Now}",
                 raion = _raions.Read(null),
-                dogovors=_dogovor.Read(null),
+                dogovors=_dogovor.Read(new DogovorBindingModel { AgentId= (int)Program.Agent.Id}),
                 reiss=_reis.Read(null)
             }) ;
 

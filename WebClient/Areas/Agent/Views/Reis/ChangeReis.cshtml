@@ -3,7 +3,7 @@
     ViewData["Title"] = "Перевозки";
 }
 <div class="text-center text-info">
-    <h1>Перевозки к договору @ViewBag.DogovorId</h1>
+    <h1>Перевозки по договору @ViewBag.DogovorId</h1>
 </div>
 
 <div>
@@ -18,17 +18,28 @@
         <td>Цена</td>
         <td>Длительность</td>
     </tr>
-    @foreach (var reis in ViewBag.reiss)
-    {
-        <tr>
-            <td>@reis.Id</td>
-            <td>@reis.OfId</td>
-            <td>@reis.ToId</td>
-            <td>@reis.Name</td>
-            <td>@reis.Cena</td>
-            <td>@reis.Time</td>
-            <td><a class="btn btn-primary btn-sm btn-block" asp-action="AddReis" asp-route-dogovorId="@ViewBag.DogovorId" asp-route-reisId="@reis.Id">Выбор рейса</a></td>
-        </tr>
-    }
-</table>
+    <tr>
+      
+            @foreach (var reis in ViewBag.reiss)
+            {
+            <tr>
+                <td>@reis.Id</td>
+                  @foreach (var raion in ViewBag.Raions)
+                  {
+                @if (reis.OfId == raion.Id)
+                {
+                    <td>@raion.Name</td>
+                }
+                @if (reis.ToId == raion.Id)
+                {
+                    <td>@raion.Name</td>
+                    }
+                }
+                <td>@reis.Name</td>
+                <td>@reis.Cena</td>
+                <td>@reis.Time</td>
+                <td><a class="btn btn-primary btn-sm btn-block" asp-action="AddReis" asp-route-dogovorId="@ViewBag.DogovorId" asp-route-reisId="@reis.Id">Выбор рейса</a></td>
+            </tr>
+        }
+    </table>
 

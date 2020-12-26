@@ -113,11 +113,6 @@ namespace DatabaseImplement.Implements
                         werehouseCosmetics.NadbavkaTime += model.NadbavkaTime;
                     }
                 }
-                if (model.Comm == null)
-                {
-                    model.Comm = " ";
-                }
-                werehouseCosmetics.Comm = model.Comm;
                 Reis element = context.Reiss.FirstOrDefault(rec =>
                 rec.Id == model.ReisId);
                 context.SaveChanges();
@@ -168,7 +163,7 @@ namespace DatabaseImplement.Implements
             {
                 return context.Dogovors
                  .Where(rec => model == null || (rec.Id == model.Id && model.AgentId == 0) || (rec.Id == model.Id && model.AgentId == rec.AgentId)
-                   || (rec.ClientId == model.ClientId && rec.AgentId == model.AgentId)||(rec.data==model.data)
+                   || (rec.ClientId == model.ClientId && rec.AgentId == model.AgentId)||(rec.data==model.data)||(rec.AgentId==model.AgentId && model.ClientId==0)
                       ).ToList()
                .Select(rec => new DogovorViewModel
                {

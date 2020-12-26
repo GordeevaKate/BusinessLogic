@@ -86,6 +86,7 @@ namespace WebClient.Areas.Agent.Controllers
         {
             ViewBag.DogovorId = dogovorId;
             var dogovor = _dogovor.Read(new DogovorBindingModel { Id = dogovorId})[0];
+           ViewBag.Raions = raions.Read(null);
             if (dogovor.Dogovor_Reiss.Count == 0)
             {
                 ViewBag.Reiss = _reis.Read(null);
@@ -113,7 +114,7 @@ namespace WebClient.Areas.Agent.Controllers
         }
         public IActionResult AddReis(int? reisId, int? dogovorId, int clientId, int drId)
         {
-            ViewBag.ClientId = clientId;
+            ViewBag.ClientId = Program.ClientId;
             if (TempData["ErrorLack"] != null)
             {
                 ModelState.AddModelError("", TempData["ErrorLack"].ToString());

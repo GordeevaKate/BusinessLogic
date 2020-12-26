@@ -57,7 +57,7 @@ namespace BusinessLogic.BusinessLogic
         }
         public static Series GetSeriesFirst(Info info)
         {
-            Series seriesFirst = new Series("Диаграмма");
+            Series seriesFirst = new Series($"Диаграмма {DateTime.Now}");
             seriesFirst.Bind(GetTestDataFirst(info), "cityName", "PopulationYear2020");
             return seriesFirst;
         }

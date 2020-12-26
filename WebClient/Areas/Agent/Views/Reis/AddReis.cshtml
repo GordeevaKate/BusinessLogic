@@ -1,6 +1,6 @@
 ﻿@model BusinessLogic.BindingModel.Dogovor_ReisBM
 
-@{ ViewData["Title"] = "Пополнение"; }
+@{ ViewData["Title"] = "Рейс к договору"; }
 
 <div class="text-left">
     <h4>Изменение договора  №@ViewBag.DogovorId</h4>
@@ -42,10 +42,7 @@ else
                 <input asp-for="Obem" class="form-control" />
                 <span asp-validation-for="Obem" class="text-danger"></span>
                  }
-                 else
-                 {
-                 }
-                <label asp-for="Comm" class="control-label">Comm</label>
+                      <label asp-for="Comm" class="control-label">Comm</label>
                 <input asp-for="Comm" class="form-control" />
                 <span asp-validation-for="Comm" class="text-danger"></span>
                 <label asp-for="NadbavkaCena" class="control-label">Nadbavka</label>
@@ -54,6 +51,7 @@ else
                 <label asp-for="NadbavkaTime" class="control-label">Nadbavka time</label>
                 <input asp-for="NadbavkaTime" class="form-control" />
                 <span asp-validation-for="NadbavkaTime" class="text-danger"></span>
+              
             </div>
             @if (ViewBag.DR == "")
             {
