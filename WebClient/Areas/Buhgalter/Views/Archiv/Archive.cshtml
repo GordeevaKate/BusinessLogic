@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Архив договоров";
+}
+<div class="text-left text-info">
+    <h1> Архив договоров</h1>
+</div>
+<table class="table">
+    <tr>
+        <td>Номер</td>
+        <td>Сумма</td>
+        <td>Дата заключения</td>
+        <td>Дата выполнения</td>
+    </tr>
+    @foreach (var dogovor in ViewBag.dogovors)
+    {
+        <tr>
+            <td>@dogovor.Id</td>
+            <td>@dogovor.Summa</td>
+            <td>@dogovor.data</td>
+            @foreach (var data in ViewBag.Dats)
+            {
+                @if (data.Key == dogovor.Id)
+                {
+                    <td>@data.Value</td>
+                }
+            }
+        </tr>
+    }
+</table>
+<div>
+    <a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=6 asp-action="SendPuth">Архивация</a>
+</div>
