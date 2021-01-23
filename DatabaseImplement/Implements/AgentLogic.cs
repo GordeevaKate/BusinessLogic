@@ -16,14 +16,14 @@ namespace DatabaseImplement.Implements
             {
                 return context.Agents
                  .Where(rec => model == null
-                   || (rec.UserId == model.UserId ))
+                   || (rec.UserId == model.UserId) || (rec.Name == model.Name))
                .Select(rec => new AgentViewModel
                {
                    Id = rec.Id,
                    Name = rec.Name,
                    Oklad = rec.Oklad,
                    Comission = rec.Comission,
-    })
+            })
                 .ToList();
             }
         }

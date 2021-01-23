@@ -7,7 +7,7 @@ using BusinessLogic.Interfaces;
 using BusinessLogic.Report;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebClient.Areas.Buhgalter.Model;
+using WebClient.Areas.Buhgalter.Models;
 
 namespace WebClient.Areas.Buhgalter.Controllers
 {
@@ -241,11 +241,11 @@ namespace WebClient.Areas.Buhgalter.Controllers
                     _dogovor.Delete(new DogovorBindingModel { Id = d.Id });
                 }
             }
-            if (model.DogovorId > 0)
+            if (model.Id > 0)
             {
                 dogovor = _dogovor.Read(new DogovorBindingModel
                 {
-                    Id = model.DogovorId,
+                    Id = model.Id,
                     ClientId = (int)id
                 });
                 foreach (var r in dogovor)

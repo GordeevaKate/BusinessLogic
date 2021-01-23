@@ -53,7 +53,16 @@ namespace WebClient.Areas.Client.Controllers
                 }
                 else//бухгалтер!!!!!
                 {
-
+                    if (clientView.Status == BusinessLogic.Enums.UserStatus.Бухгалтер)
+                    {
+                        var agentView = _agent.Read(new AgentBindingModel
+                        {
+                            UserId = clientView.Id
+                        }).FirstOrDefault();
+                        Program.Agent = agentView;
+                        Program.User = clientView;
+                        return RedirectToAction("Agent", "Agent", new { area = "Buhgalter" });
+                    }
                 }
             }
 

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebClient.Areas.Buhgalter.Model
+namespace WebClient.Areas.Buhgalter.Models
 {
-	public class ErrorModel
+	public class ErrorViewModel
 	{
 		public string RequestId { get; set; }
 		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);

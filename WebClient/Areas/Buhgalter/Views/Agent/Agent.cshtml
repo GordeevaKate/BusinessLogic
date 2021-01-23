@@ -1,0 +1,35 @@
+﻿@model WebClient.Areas.Buhgalter.Models.AgentListModel
+
+@{
+    ViewData["Title"] = "Агенты";
+}
+<div class="text-center text-info">
+    <h1>Агенты</h1>
+</div>
+@Html.ValidationMessageFor(model => model.FIO)
+<form asp-action="Agent">
+    <div class="form-inline">
+        <label class="control-label">Номер: <br/></label>
+        <input asp-for="FIO"/><br />
+        <font size="2" color="red" face="Arial">
+            @Html.ValidationMessageFor(model => model.FIO)
+        </font>
+        <input type="submit" value="Поиск" class="btn btn-default" />
+    </div>
+</form>
+<table class="table">
+    <tr>
+        <td>id</td>
+        <td>ФИО</td>
+        <td>Оклад</td>
+    </tr>
+    @foreach (var agent in ViewBag.Agent)
+    {
+        <tr>
+            <td>@agent.Id</td>
+            <td>@agent.Name</td>
+            <td>@agent.Oklad</td>
+        </tr>
+    }
+</table>
+<a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=1 asp-action="SendPuth">Список клиентов у которых есть договора с агентом</a>
