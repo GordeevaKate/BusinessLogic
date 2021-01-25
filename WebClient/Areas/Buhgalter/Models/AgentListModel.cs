@@ -7,7 +7,7 @@ namespace WebClient.Areas.Buhgalter.Models
 {
 	public class AgentListModel
 	{
-		public int Id { get; set; }
+		public int? Id { get; set; }
 		public string FIO { get; set; }
 		public double Oklad { get; set; }
 		public double Comission { get; set; }

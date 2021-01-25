@@ -32,6 +32,18 @@ namespace WebClient.Areas.Buhgalter.Controllers
                 }
                 return View();
             }
+            if (model.Id != null)
+            {
+                var agent = _agent.Read(new AgentBindingModel { Id = model.Id });
+                ViewBag.Agent = agent;
+                if (agent.Count == 0)
+                {
+                    ModelState.AddModelError("Id", "Агента не существует");
+                    ViewBag.Agent = _agent.Read(null);
+                    return View();
+                }
+                return View();
+            }
             /*if (Validation(model.Obem) == true)
             {
 

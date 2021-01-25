@@ -9,10 +9,15 @@
 @Html.ValidationMessageFor(model => model.FIO)
 <form asp-action="Agent">
     <div class="form-inline">
-        <label class="control-label">Номер: <br/></label>
-        <input asp-for="FIO"/><br />
+        <label class="control-label">Поиск по ФИО: <br /></label>
+        <input asp-for="FIO" /><br />
         <font size="2" color="red" face="Arial">
             @Html.ValidationMessageFor(model => model.FIO)
+        </font>
+        <label class="control-label">Поиск по номеру: <br /></label>
+        <input asp-for="Id" /><br />
+        <font size="2" color="red" face="Arial">
+            @Html.ValidationMessageFor(model => model.Id)
         </font>
         <input type="submit" value="Поиск" class="btn btn-default" />
     </div>
@@ -29,6 +34,9 @@
             <td>@agent.Id</td>
             <td>@agent.Name</td>
             <td>@agent.Oklad</td>
+             <td>
+                <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-fio="@agent.Name">Договора</a>|
+            </td>
         </tr>
     }
 </table>

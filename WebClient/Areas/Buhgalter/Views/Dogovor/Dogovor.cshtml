@@ -1,0 +1,30 @@
+﻿@model WebClient.Areas.Buhgalter.Models.AgentListModel
+@{
+    ViewData["Title"] = "Клиенты";
+}
+<div class="text-left">
+    <h4>Договора агента @ViewBag.Agent</h4>
+</div>
+@Html.ValidationMessageFor(model => model.FIO)
+<form asp-action="Dogovor">
+    <div class="form-inline">
+        <label class="control-label">Имя агента </label>
+        <input asp-for="FIO" class="form-control" min="0" />
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+<table class="table">
+    <tr>
+        <td>Номер</td>
+        <td>Сумма</td>
+        <td>Дата</td>
+    </tr>
+    @foreach (var dogovor in ViewBag.dogovors)
+    {
+        <tr>
+            <td>@dogovor.Id</td>
+            <td>@dogovor.Summa</td>
+            <td>@dogovor.data</td>
+        </tr>
+    }
+</table>

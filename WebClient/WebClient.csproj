@@ -9,7 +9,6 @@
     <Folder Include="Areas\Buhgalter\Views\UpdCrZp\" />
     <Folder Include="Areas\Buhgalter\Views\Reis\" />
     <Folder Include="Areas\Buhgalter\Views\Proverka\" />
-    <Folder Include="Areas\Buhgalter\Views\Dogovor\" />
     <Folder Include="Areas\Buhgalter\Views\Zarplata\" />
     <Folder Include="Areas\Buhgalter\Views\Report\" />
     <Folder Include="Areas\Buhgalter\Views\Index\" />
