@@ -6,7 +6,14 @@
 <div class="text-center text-info">
     <h1>Рассчет зп</h1>
 </div>
-@Html.ValidationMessageFor(model => model.FIO)
-<form asp-action="Zarplata">
-    
+<form method="get">
+    <div class="form-inline">
+        @Html.ListBox("Month", new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                   , "Май", "Июнь", "Июль"
+                   , "Август", "Сентябрь", "Октябрь"
+                   , "Ноябрь", "Декабрь"}))
+
+        <input type="submit" asp-controller="Zarplata" asp-action="Zplata" value="Рассчет за месяц" class="btn btn-default" />
+    </div>
 </form>
+

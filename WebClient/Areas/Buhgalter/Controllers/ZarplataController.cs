@@ -19,5 +19,10 @@ namespace WebClient.Areas.Buhgalter.Controllers
 		{
 			return View();
 		}
+		public IActionResult Zplata(string[] Month)
+		{
+			DateTime date = AgentController.PeriodDate(Month[0]);
+			return View();
+		}
 	}
 }
