@@ -1,0 +1,12 @@
+﻿@model WebClient.Areas.Buhgalter.Models.AgentListModel
+
+@{
+    ViewData["Title"] = "Зарплата";
+}
+<div class="text-center text-info">
+    <h1>Рассчет зп</h1>
+</div>
+@Html.ValidationMessageFor(model => model.FIO)
+<form asp-action="Zarplata">
+    
+</form>

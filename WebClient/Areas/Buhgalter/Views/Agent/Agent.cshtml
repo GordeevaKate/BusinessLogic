@@ -14,7 +14,7 @@
         <font size="2" color="red" face="Arial">
             @Html.ValidationMessageFor(model => model.FIO)
         </font>
-        <label class="control-label">Поиск по номеру: <br /></label>
+        <br /><label class="control-label">Поиск по номеру: <br /></label>
         <input asp-for="Id" /><br />
         <font size="2" color="red" face="Arial">
             @Html.ValidationMessageFor(model => model.Id)
@@ -24,9 +24,10 @@
 </form>
 <table class="table">
     <tr>
-        <td>id</td>
+        <td>Номер агента</td>
         <td>ФИО</td>
         <td>Оклад</td>
+        <td>Комиссионные</td>
     </tr>
     @foreach (var agent in ViewBag.Agent)
     {
@@ -34,10 +35,13 @@
             <td>@agent.Id</td>
             <td>@agent.Name</td>
             <td>@agent.Oklad</td>
-             <td>
-                <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-fio="@agent.Name">Договора</a>|
+            <td>@agent.Comission</td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-controller="Dogovor" asp-action="Dogovor" asp-route-fio="@agent.Name">Договора</a>
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-controller="Zarplata" asp-action="Zarplata" asp-route-id="@agent.Id">Рассчет зп</a>
             </td>
         </tr>
     }
 </table>
-<a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=1 asp-action="SendPuth">Список клиентов у которых есть договора с агентом</a>

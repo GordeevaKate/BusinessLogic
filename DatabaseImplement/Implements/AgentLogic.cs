@@ -16,7 +16,7 @@ namespace DatabaseImplement.Implements
             {
                 return context.Agents
                  .Where(rec => model == null
-                   || (rec.UserId == model.UserId) || (rec.Name == model.Name))
+                   || (rec.UserId == model.UserId) || (rec.Name == model.Name) || (rec.Id == model.Id))
                .Select(rec => new AgentViewModel
                {
                    Id = rec.Id,

@@ -44,41 +44,6 @@ namespace WebClient.Areas.Buhgalter.Controllers
                 }
                 return View();
             }
-            /*if (Validation(model.Obem) == true)
-            {
-
-                var clients = _client.Read(null);
-                List<ClientViewModel> listclient = new List<ClientViewModel> { };
-                foreach (var client in clients)
-                {
-                    double obem = 0;
-                    var dogovorss = _dogovor.Read(null);
-                    var dogovors = _dogovor.Read(new DogovorBindingModel
-                    {
-                        ClientId = client.Id,
-                        AgentId = (int)Program.Agent.Id
-
-                    });
-                    foreach (var dogovor in dogovors)
-                    {
-                        foreach (var reis in dogovor.Dogovor_Reiss)
-                        {
-                            obem += reis.Value.Item6;
-                        }
-                    }
-                    if (obem >= Convert.ToDouble(model.Obem))
-                    {
-                        listclient.Add(client);
-                    }
-                }
-                ViewBag.Client = listclient;
-                return View();
-            }
-            else
-            {
-                if (model.Obem != "0")
-                    ModelState.AddModelError("Obem", "Объем введен неправильно");
-            }*/
             ViewBag.Agent = _agent.Read(null);
             return View();
         }

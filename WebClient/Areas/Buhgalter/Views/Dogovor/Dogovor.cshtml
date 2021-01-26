@@ -1,18 +1,10 @@
 ﻿@model WebClient.Areas.Buhgalter.Models.AgentListModel
 @{
-    ViewData["Title"] = "Клиенты";
+    ViewData["Title"] = "Договора";
 }
-<div class="text-left">
-    <h4>Договора агента @ViewBag.Agent</h4>
+<div class="text-center">
+    <h2>Договора агента @ViewBag.Agent</h2>
 </div>
-@Html.ValidationMessageFor(model => model.FIO)
-<form asp-action="Dogovor">
-    <div class="form-inline">
-        <label class="control-label">Имя агента </label>
-        <input asp-for="FIO" class="form-control" min="0" />
-        <input type="submit" value="Фильтр" class="btn btn-default" />
-    </div>
-</form>
 <table class="table">
     <tr>
         <td>Номер</td>
