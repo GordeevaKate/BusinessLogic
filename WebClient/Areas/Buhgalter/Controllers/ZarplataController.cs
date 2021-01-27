@@ -24,38 +24,65 @@ namespace WebClient.Areas.Buhgalter.Controllers
 			_agent = agent;
 			_dogovor = dogovor;
 		}
-		public IActionResult Zarplata(int id, string[] Month, int check)
+		public IActionResult Zarplata(int id, string[] Month, string valueINeed)
 		{
-			if (check == 123)
+			bool check = false;
+			if (valueINeed == "Рассчет за год")
 			{
-				ViewBag.Zp = "долбаеб";
-				return View();
+				check = true;
 			}
 			var summ = _agent.Read(new AgentBindingModel { Id = id }).FirstOrDefault();
 			zp = summ.Oklad;
 			var com = _agent.Read(new AgentBindingModel { Id = id }).FirstOrDefault();
 			comis = com.Comission;
 			if (Month.Length != 0)
-				zp = ResultZp(Month, id);
+				zp = ResultZp(Month, id, check);
 			ViewBag.Zp = zp;
 			return View();
 
 		}
-		private double ResultZp(string[] Month, int id)
+		private double ResultZp(string[] Month, int id, bool check)
 		{
 			double dogovor = 0;
-			if (Month.Length == 12)
+			if (check)
 			{
-				DateTime date = new DateTime();
 				dogovor = _dogovor.Read(null).Where(rec => (rec.data > DateTime.Now.AddYears(-1)) && (rec.AgentId == id)).Select(rec => rec.Summa).Sum();
+				zp *= 12;
 			}
 			else
 			{
 				DateTime date = AgentController.PeriodDate(Month[0]);
-				dogovor = _dogovor.Read(null).Where(rec => (rec.data.Month == date.Month) && (rec.AgentId == id)).Select(rec => rec.Summa).Sum();
+				dogovor = _dogovor.Read(null).Where(rec => (rec.data.Month ==date.Month) && (rec.AgentId == id)).Select(rec => rec.Summa).Sum();
 			}
 			zp += dogovor * (comis/100);
 			return zp;
+		}
+		public IActionResult Statements(string[] Month, ZarplataModel model)
+		{
+			List<ZarplataModel> inf = new List<ZarplataModel>();
+			if (Month.Length == 0)
+				return View();
+			var agent = _agent.Read(null).Last();
+			for (int i = 1; i <= agent.Id; i++)
+			{
+				var ag = _agent.Read(new AgentBindingModel { Id = i }).FirstOrDefault();
+				if (ag != null)
+				{
+					var summ = _agent.Read(new AgentBindingModel { Id = i }).FirstOrDefault();
+					zp = summ.Oklad;
+					var com = _agent.Read(new AgentBindingModel { Id = i }).FirstOrDefault();
+					comis = com.Comission;
+					inf.Add(new ZarplataModel
+					{
+						Id = i,
+						Name = ag.Name,
+						Summ = ResultZp(Month, i, false)
+					});	
+				}
+			}
+			inf.Add(model);
+			ViewBag.inf = inf;
+			return View();
 		}
 
 	}

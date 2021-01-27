@@ -1,0 +1,33 @@
+﻿@model WebClient.Areas.Buhgalter.Models.ZarplataModel
+
+@{
+    ViewData["Title"] = "Ведомости";
+}
+<div class="text-center text-info">
+    <h1>Ведомость зп</h1>
+</div>
+<form method="get">
+    <div class="form-inline">
+        @Html.ListBox("Month", new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                          , "Май", "Июнь", "Июль"
+                          , "Август", "Сентябрь", "Октябрь"
+                          , "Ноябрь", "Декабрь"}))
+
+        <input type="submit" asp-action="Statements" value="Вывод ведомости" class="btn btn-info" />
+    </div>
+</form>
+<table class="table">
+    <tr>
+        <td>Номер агента</td>
+        <td>ФИО</td>
+        <td>Итого</td>
+    </tr>
+    @foreach (var agent in ViewBag.inf)
+    {
+        <tr>
+            <td>@agent.Id</td>
+            <td>@agent.Name</td>
+            <td>@agent.Summ</td>
+        </tr>
+    }
+</table>

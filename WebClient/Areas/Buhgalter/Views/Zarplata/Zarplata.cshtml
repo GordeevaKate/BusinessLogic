@@ -14,7 +14,8 @@
                    , "Ноябрь", "Декабрь"}))
 
         <input type="submit" asp-action="Zarplata" value="Рассчет за месяц" class="btn btn-info" />
-        <input type="submit" asp-action="Zarplata" value="Рассчет за год" class="btn btn-info" />
-    </div>
+        <input type="submit" asp-action="Zarplata" name="valueINeed" value="Рассчет за год" class="btn btn-info" />
+        <input type="submit" asp-action="Statements" value="Ведомости" class="btn btn-info" />
+    </div> 
 </form>
 <p><b>Сумма рассчитанной заработной платы: </b>@ViewBag.Zp</p>

@@ -13,13 +13,13 @@ namespace BusinessLogic.ViewModel
         [DataMember]
         public int UserId { get; set; }
         [DataMember]
-        [DisplayName("Название")]
+        [DisplayName("Сумма")]
         public double Summa { get; set; }
         [DataMember]
-        [DisplayName("Название")]
+        [DisplayName("Дата")]
         public DateTime data { get; set; }
         [DataMember]
-        [DisplayName("Название")]
+        [DisplayName("Период")]
         public int Period { get; set; }
     }
 }

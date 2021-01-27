@@ -8,7 +8,7 @@ namespace WebClient.Areas.Buhgalter.Models
 	public class ZarplataModel
 	{
 		public int? Id { get; set; }
-		public int AgentId { get; set; }
+		public string Name { get; set; }
 		public double Summ { get; set; }
 	}
 }
