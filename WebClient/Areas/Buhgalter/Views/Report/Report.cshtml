@@ -1,0 +1,12 @@
+﻿@model WebClient.Areas.Buhgalter.Models.ReportModel
+@{
+    ViewData["Title"] = "Отчеты";
+}
+<div class="text-center text-info">
+    <h1>Отчеты</h1>
+</div>
+<form asp-action="Dogovors">
+    <div class="form-inline">
+        <input type="submit" asp-controller="Report" asp-action="Dogovors" value="Договора" class="btn btn-info" />
+    </div>
+</form>

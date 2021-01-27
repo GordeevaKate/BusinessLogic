@@ -1,0 +1,28 @@
+﻿@model WebClient.Areas.Buhgalter.Models.AgentListModel
+@{
+    ViewData["Title"] = "Договора";
+}
+<div class="text-center">
+    <h2>Договора</h2>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Номер</th>
+            <th>Агент</th>
+            <th>Сумма</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dogovor in ViewBag.dogovors)
+        {
+            <tr>
+                <td>@dogovor.Id</td>
+                <td>@dogovor.AgentId</td>
+                <td>@dogovor.Summa</td>
+                <td>@dogovor.data</td>
+            </tr>
+        }
+    </tbody>
+</table>
