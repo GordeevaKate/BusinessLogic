@@ -80,7 +80,6 @@ namespace WebClient.Areas.Buhgalter.Controllers
 					});	
 				}
 			}
-			inf.Add(model);
 			ViewBag.inf = inf;
 			return View();
 		}
