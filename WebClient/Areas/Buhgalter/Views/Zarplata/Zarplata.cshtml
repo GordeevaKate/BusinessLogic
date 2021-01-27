@@ -1,4 +1,4 @@
-﻿@model WebClient.Areas.Buhgalter.Models.AgentListModel
+﻿@model WebClient.Areas.Buhgalter.Models.ZarplataModel
 
 @{
     ViewData["Title"] = "Зарплата";
@@ -13,7 +13,8 @@
                    , "Август", "Сентябрь", "Октябрь"
                    , "Ноябрь", "Декабрь"}))
 
-        <input type="submit" asp-controller="Zarplata" asp-action="Zplata" value="Рассчет за месяц" class="btn btn-default" />
+        <input type="submit" asp-action="Zarplata" value="Рассчет за месяц" class="btn btn-info" />
+        <input type="submit" asp-action="Zarplata" value="Рассчет за год" class="btn btn-info" />
     </div>
 </form>
-
+<p><b>Сумма рассчитанной заработной платы: </b>@ViewBag.Zp</p>

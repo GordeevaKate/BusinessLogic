@@ -168,6 +168,7 @@ namespace DatabaseImplement.Implements
                .Select(rec => new DogovorViewModel
                {
                    Id = rec.Id,
+                   AgentId = rec.AgentId,
                    ClientId=rec.ClientId,
                    Summa = rec.Summa,
                    data = rec.data,

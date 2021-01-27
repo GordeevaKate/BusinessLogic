@@ -18,7 +18,7 @@ namespace BusinessLogic.ViewModel
         [DisplayName("Оклад")]
         public double Oklad { get; set; }
         [DataMember]
-        [DisplayName("Комиссия")]
+        [DisplayName("Комиссионные")]
         public double Comission { get; set; }
         [DataMember]
         public int UserId { get; set; }
