@@ -1,0 +1,34 @@
+﻿@model WebClient.Areas.Client.Models.RegistrationModel
+
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<h1>Регистрация</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegistrationAgent">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClientFIO" class="control-label">ФИО</label>
+                <input asp-for="ClientFIO" class="form-control" />
+                <span asp-validation-for="ClientFIO" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comission" class="control-label">Комиссионные</label>
+                <input asp-for="Comission" class="form-control" />
+                <span asp-validation-for="Comission" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Oklad" class="control-label">Оклад</label>
+                <input asp-for="Oklad" class="form-control" />
+                <span asp-validation-for="Oklad" class="text-danger"></span>
+            </div>
+            @Html.ValidationSummary(true, "", new { @style = "color: red" })
+            <div class="form-group">
+                <input type="submit" value="Зарегистрироваться" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

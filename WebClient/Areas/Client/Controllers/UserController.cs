@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BusinessLogic.Interfaces;
 using BusinessLogic.BindingModel;
 using WebClient.Areas.Client.Models;
+using System;
 
 namespace WebClient.Areas.Client.Controllers
 {
@@ -76,6 +77,56 @@ namespace WebClient.Areas.Client.Controllers
         public IActionResult Registration()
         {
             return View();
+        }
+        [HttpPost]
+        public ViewResult Registration(RegistrationModel user)
+        {
+            if (String.IsNullOrEmpty(user.Login))
+            {
+                ModelState.AddModelError("", "Введите логин");
+                return View(user);
+            }
+            var existClient = _client.Read(new UserBindingModel
+            {
+                Login = user.Login
+            }).FirstOrDefault();
+            if (existClient != null)
+            {
+                ModelState.AddModelError("", "Уже есть клиент с таким логином");
+                return View(user);
+            }
+            if (user.Password.Length > 50 ||
+            user.Password.Length < 8)
+            {
+                ModelState.AddModelError("", $"Длина пароля должна быть от {8} до {50} символов");
+                return View(user);
+            }
+            /*if (String.IsNullOrEmpty(user.ClientFIO))
+            {
+                ModelState.AddModelError("", "Введите ФИО");
+                return View(user);
+            }*/
+            if (String.IsNullOrEmpty(user.Password))
+            {
+                ModelState.AddModelError("", "Введите пароль");
+                return View(user);
+            }
+            _client.CreateOrUpdate(new UserBindingModel
+            {
+                Login = user.Login,
+                Password = user.Password,
+                Status = 0
+            });
+            var id = _client.Read(null).Where(rec => rec.Login == user.Login).FirstOrDefault();
+            _agent.CreateOrUpdate(new AgentBindingModel
+            {
+                Name = user.ClientFIO,
+                Oklad = user.Oklad,
+                UserId = id.Id,
+                Comission = user.Comission
+            });
+            ModelState.AddModelError("", "Вы успешно зарегистрированы");
+            return View("Registration", user);
         }
     }
 }

@@ -59,7 +59,8 @@ namespace DatabaseImplement.Implements
             {
                 return context.Users
                  .Where(rec => model == null
-                   || (rec.Login == model.Login &&rec.Password == model.Password))
+                   || (rec.Login == model.Login &&rec.Password == model.Password)
+                   || (rec.Id == model.Id))
                .Select(rec => new UserViewModel
                {
                    Id = rec.Id,

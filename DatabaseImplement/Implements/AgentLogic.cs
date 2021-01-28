@@ -5,6 +5,7 @@ using System.Text;
 using BusinessLogic.BindingModel;
 using BusinessLogic.Interfaces;
 using BusinessLogic.ViewModel;
+using DatabaseImplement.Models;
 
 namespace DatabaseImplement.Implements
 {
@@ -25,6 +26,31 @@ namespace DatabaseImplement.Implements
                    Comission = rec.Comission,
             })
                 .ToList();
+            }
+        }
+        public void CreateOrUpdate(AgentBindingModel model)
+        {
+            using (var context = new KursachDatabase())
+            {
+                Agent element = model.Id.HasValue ? null : new Agent();
+                if (model.Id.HasValue)
+                {
+                    element = context.Agents.FirstOrDefault(rec => rec.Id == model.Id);
+                    if (element == null)
+                    {
+                        throw new Exception("Элемент не найден");
+                    }
+                }
+                else
+                {
+                    element = new Agent();
+                    context.Agents.Add(element);
+                }
+                element.Name = model.Name;
+                element.Oklad = model.Oklad;
+                element.UserId = model.UserId;
+                element.Comission = model.Comission;
+                context.SaveChanges();
             }
         }
     }
