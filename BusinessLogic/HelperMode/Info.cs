@@ -13,6 +13,7 @@ namespace BusinessLogic.HelperModels
         public string Client { get; set; }
         public string Agent { get; set; }
         public DogovorViewModel dogovor { get; set; }
+        public List<AgentViewModel> agents { get; set; }
         public List< DogovorViewModel> dogovors{ get; set; }
         public List<Dogovor_ReisVM> dogovor_Reis { get; set; }
         public List<ReisViewModel> reiss { get; set; }

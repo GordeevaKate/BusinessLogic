@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Buhgalter\Views\UpdCrZp\" />
-    <Folder Include="Areas\Buhgalter\Views\Reis\" />
     <Folder Include="Areas\Buhgalter\Views\Proverka\" />
     <Folder Include="Areas\Buhgalter\Views\Index\" />
   </ItemGroup>

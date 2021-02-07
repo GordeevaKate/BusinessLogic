@@ -1,0 +1,35 @@
+﻿@model WebClient.Areas.Buhgalter.Models.DogovorListModel
+@{
+    ViewData["Title"] = "Договора";
+}
+<div class="text-center">
+    <h2>Договора</h2>
+</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Номер</th>
+                <th>Агент</th>
+                <th>Сумма</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dogovor in ViewBag.dogovors)
+            {
+                <tr>
+                    <td>@dogovor.Id</td>
+                    <td>@dogovor.AgentId</td>
+                    <td>@dogovor.Summa</td>
+                    <td>@dogovor.data</td>
+                    <td>
+                        <form method="post" action="~/Reis/ReisChange">
+                            <label class="control-label">Изменить на : </label>
+                            <input type="number" min="0" max="100" name="percent" /><br />
+                            <button type="submit" asp-route-id="@dogovor.Id" asp-action="ReisChange">Изменение стоимости</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -2,9 +2,72 @@
 @{
     ViewData["Title"] = "Отчеты";
 }
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div class="text-center text-info">
     <h1>Отчеты</h1>
 </div>
+<div id="chart_div"></div>
+<script type="text/javascript">
+
+    google.charts.load('current', {
+        packages: ['corechart', 'bar']
+    });
+    google.charts.setOnLoadCallback(LoadData);
+
+    function LoadData() {
+        $.ajax({
+
+            url: '  http://localhost:53660/Client/Home/Index/Buhgalter/Report/Metod',
+            dataType: "json",
+            type: "GET",
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                toastr.error(err.message);
+            },
+            success: function (data) {
+                Metod(data);
+                return false;
+            }
+        });
+        return false;
+    }
+
+    function Metod(data) {
+        var dataArray = [
+            ['Raions', 'Summ Dogovor']
+        ];
+        $.each(data, function (i, item) {
+            dataArray.push([item.cityName, item.summ]);
+        });
+        var data = google.visualization.arrayToDataTable(dataArray);
+        var options = {
+            title: ' Сумма договоров',
+
+            is3D: true,
+            isStacked: true,
+
+            chartArea: {
+                width: '50%'
+            },
+            colors: ['#b0120a'],
+            hAxis: {
+                title: 'Агенты',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Сумма'
+            }
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+        return false;
+    }
+</script>
+<p>
+    <a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=5 asp-action="SendPuth">Сохранение диаграммы</a>
+</p>
+
 <form asp-action="Dogovors">
     <div class="form-inline">
         <input type="submit" asp-controller="Report" asp-action="Dogovors" value="Договора" class="btn btn-info" />

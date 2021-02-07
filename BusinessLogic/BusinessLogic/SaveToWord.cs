@@ -55,6 +55,22 @@ namespace BusinessLogic.BusinessLogic
 
             return testDataFirst;
         }
+        public static List<DiagrammaModel> GetDataDiagramm(Info info)
+        {
+            List<DiagrammaModel> testDataFirst = new List<DiagrammaModel>();
+            foreach (var agent in info.agents)
+            {
+                double count = 0;
+                foreach (var dogovor in info.dogovors)
+                {
+                    if (agent.Id == dogovor.AgentId)
+                        count += dogovor.Summa;
+                }
+                testDataFirst.Add(new DiagrammaModel() { cityName = agent.Name, summ = count });
+            }
+
+            return testDataFirst;
+        }
         public static Series GetSeriesFirst(Info info)
         {
             Series seriesFirst = new Series($"Диаграмма {DateTime.Now}");

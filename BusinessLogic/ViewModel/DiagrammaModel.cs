@@ -8,5 +8,6 @@ namespace BusinessLogic.ViewModel
     {
         public string cityName { get; set; }
         public int PopulationYear2020 { get; set; }
+        public double summ { get; set; }
     }
 }

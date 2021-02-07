@@ -17,10 +17,12 @@ namespace WebClient.Areas.Buhgalter.Controllers
 	{
 		private readonly IAgentLogic _agent;
 		private readonly IDogovorLogic _dogovor;
+		private readonly IZarplataLogic _zarplata;
 		private double zp = 0;
 		private double comis = 0;
-		public ZarplataController(IAgentLogic agent, IDogovorLogic dogovor)
+		public ZarplataController(IAgentLogic agent, IDogovorLogic dogovor, IZarplataLogic zarplata)
 		{
+			_zarplata = zarplata;
 			_agent = agent;
 			_dogovor = dogovor;
 		}
@@ -78,8 +80,14 @@ namespace WebClient.Areas.Buhgalter.Controllers
 						Name = ag.Name,
 						Summ = ResultZp(Month, i, false)
 					});	
+					_zarplata.CreateOrUpdate(new ZarplataBindingModel 
+					{
+						UserId = i,
+						Summa = ResultZp(Month, i, false)
+					});
 				}
 			}
+			
 			ViewBag.inf = inf;
 			return View();
 		}
