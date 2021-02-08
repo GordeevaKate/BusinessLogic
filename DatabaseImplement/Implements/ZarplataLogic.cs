@@ -31,6 +31,7 @@ namespace DatabaseImplement.Implements
                 }
                 element.UserId = model.UserId;
                 element.Summa = model.Summa;
+                element.data = model.data;
                 context.SaveChanges();
             }
         }

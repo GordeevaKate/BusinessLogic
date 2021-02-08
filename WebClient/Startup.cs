@@ -33,6 +33,7 @@ namespace WebClient
             services.AddTransient<IReisLogic, ReisLogic>();
            services.AddTransient<IRaionLogic, RaionLogic>();
             services.AddTransient<IDogovorLogic, DogovorLogic>();
+            services.AddTransient<IZarplataLogic, ZarplataLogic>();
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

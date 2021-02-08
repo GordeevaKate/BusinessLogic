@@ -35,8 +35,7 @@ namespace WebClient.Areas.Buhgalter.Controllers
 			}
 			var summ = _agent.Read(new AgentBindingModel { Id = id }).FirstOrDefault();
 			zp = summ.Oklad;
-			var com = _agent.Read(new AgentBindingModel { Id = id }).FirstOrDefault();
-			comis = com.Comission;
+			comis = summ.Comission;
 			if (Month.Length != 0)
 				zp = ResultZp(Month, id, check);
 			ViewBag.Zp = zp;
@@ -48,7 +47,7 @@ namespace WebClient.Areas.Buhgalter.Controllers
 			double dogovor = 0;
 			if (check)
 			{
-				dogovor = _dogovor.Read(null).Where(rec => (rec.data > DateTime.Now.AddYears(-1)) && (rec.AgentId == id)).Select(rec => rec.Summa).Sum();
+				dogovor = _dogovor.Read(null).Where(rec => (rec.data > DateTime.Now.AddYears(-1) && rec.data < DateTime.Now) && (rec.AgentId == id)).Select(rec => rec.Summa).Sum();
 				zp *= 12;
 			}
 			else
