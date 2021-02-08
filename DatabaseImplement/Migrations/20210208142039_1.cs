@@ -102,6 +102,22 @@ namespace DatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Zarplatas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(nullable: false),
+                    Summa = table.Column<double>(nullable: false),
+                    data = table.Column<DateTime>(nullable: false),
+                    Period = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zarplatas", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Dogovor_Reiss",
                 columns: table => new
                 {
@@ -159,6 +175,9 @@ namespace DatabaseImplement.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Zarplatas");
 
             migrationBuilder.DropTable(
                 name: "Dogovors");

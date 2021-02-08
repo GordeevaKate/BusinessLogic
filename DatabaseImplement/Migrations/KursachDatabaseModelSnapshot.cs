@@ -204,6 +204,30 @@ namespace DatabaseImplement.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("DatabaseImplement.Models.Zarplata", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Period")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Summa")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("data")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Zarplatas");
+                });
+
             modelBuilder.Entity("DatabaseImplement.Models.Dogovor_Reis", b =>
                 {
                     b.HasOne("DatabaseImplement.Models.Dogovor", null)

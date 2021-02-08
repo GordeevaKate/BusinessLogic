@@ -8,7 +8,6 @@ namespace BusinessLogic.Interfaces
 {
     public interface IZarplataLogic
     {
-        List<ZarplataViewModel> Rascet(int? AgentId, DateTime date);
         void CreateOrUpdate(ZarplataBindingModel model);
     }
 }

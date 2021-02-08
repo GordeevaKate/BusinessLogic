@@ -83,8 +83,9 @@ namespace WebClient.Areas.Buhgalter.Controllers
 					_zarplata.CreateOrUpdate(new ZarplataBindingModel 
 					{
 						UserId = i,
-						Summa = ResultZp(Month, i, false)
-					});
+						Summa = ResultZp(Month, i, false),
+						data = AgentController.PeriodDate(Month[0])
+				});
 				}
 			}
 			

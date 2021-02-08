@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseImplement.Migrations
 {
     [DbContext(typeof(KursachDatabase))]
-    [Migration("20201222165234_1")]
+    [Migration("20210208142039_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,6 +204,30 @@ namespace DatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DatabaseImplement.Models.Zarplata", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Period")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Summa")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("data")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Zarplatas");
                 });
 
             modelBuilder.Entity("DatabaseImplement.Models.Dogovor_Reis", b =>
