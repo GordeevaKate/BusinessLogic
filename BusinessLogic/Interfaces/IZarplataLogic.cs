@@ -9,5 +9,6 @@ namespace BusinessLogic.Interfaces
     public interface IZarplataLogic
     {
         void CreateOrUpdate(ZarplataBindingModel model);
+        List<ZarplataViewModel> Read(ZarplataBindingModel model);
     }
 }

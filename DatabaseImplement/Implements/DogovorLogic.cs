@@ -39,7 +39,7 @@ namespace DatabaseImplement.Implements
                 context.SaveChanges();
             }
         }
-             public void DeleteReisDogovor(Dogovor_ReisBM model)
+        public void DeleteReisDogovor(Dogovor_ReisBM model)
         {
             using (var context = new KursachDatabase())
             {

@@ -2,6 +2,7 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.ViewModel;
 using DatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,24 @@ namespace DatabaseImplement.Implements
                 element.Summa = model.Summa;
                 element.data = model.data;
                 context.SaveChanges();
+            }
+        }
+        public List<ZarplataViewModel> Read(ZarplataBindingModel model)
+        {
+            using (var context = new KursachDatabase())
+            {
+                return context.Zarplatas
+                 .Where(rec => model == null || (rec.Id == model.Id) || (rec.data == model.data) 
+                 || (rec.UserId == model.UserId)
+                 ).ToList()
+               .Select(rec => new ZarplataViewModel
+               {
+                   Id = rec.Id,
+                   Summa = rec.Summa,
+                   data = rec.data,
+                   UserId = rec.UserId
+               })
+                .ToList();
             }
         }
     }
