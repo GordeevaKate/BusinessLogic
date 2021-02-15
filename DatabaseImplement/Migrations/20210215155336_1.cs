@@ -108,6 +108,7 @@ namespace DatabaseImplement.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Summa = table.Column<double>(nullable: false),
                     data = table.Column<DateTime>(nullable: false),
                     Period = table.Column<int>(nullable: false)

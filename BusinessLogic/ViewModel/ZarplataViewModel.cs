@@ -16,6 +16,9 @@ namespace BusinessLogic.ViewModel
         [DisplayName("Сумма")]
         public double Summa { get; set; }
         [DataMember]
+        [DisplayName("Имя")]
+        public string Name { get; set; }
+        [DataMember]
         [DisplayName("Дата")]
         public DateTime data { get; set; }
         [DataMember]

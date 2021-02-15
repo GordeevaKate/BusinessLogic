@@ -15,6 +15,8 @@ namespace BusinessLogic.BindingModel
         [DataMember]
         public double Summa { get; set; }
         [DataMember]
+        public string Name { get; set; }
+        [DataMember]
         public DateTime data { get; set; }
         [DataMember]
         public int Period { get; set; }

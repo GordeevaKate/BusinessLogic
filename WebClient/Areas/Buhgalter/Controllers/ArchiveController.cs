@@ -35,7 +35,7 @@ namespace WebClient.Areas.Buhgalter.Controllers
             ViewBag.Zp = old;
             return View();
         }
-        public ActionResult Archivation(ReportModel model)
+        public ActionResult Archivation(ReportModel  model)
         {
             DateTime date1 = DateTime.Now;
             string fileName = model.puth + $"\\ArchiveOf{date1.Year}";

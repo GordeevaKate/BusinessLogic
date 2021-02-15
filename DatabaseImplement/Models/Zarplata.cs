@@ -10,6 +10,8 @@ namespace DatabaseImplement.Models
         public int? Id { get; set; }
         public int UserId { get; set; }
         [Required]
+        public string Name { get; set; }
+        [Required]
         public double Summa { get; set; }
         [Required]
         public DateTime data { get; set; }

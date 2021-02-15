@@ -86,7 +86,7 @@ namespace WebClient.Areas.Agent.Controllers
                 raion = _raions.Read(null),
                 reiss = _reis.Read(null)
             });
-                Mail.SendMail(model.SendMail, model.puth + $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc", $"Диаграмма");
+            Mail.SendMail(model.SendMail, model.puth + $"ReportDiapdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.doc", $"Диаграмма");
             return RedirectToAction("Report");
         }
         [HttpGet]

@@ -44,6 +44,11 @@ namespace WebClient.Areas.Buhgalter.Controllers
 		}
 		private double ResultZp(string[] Month, int id, bool check)
 		{
+			if (Month.Length == 0)
+			{
+				TempData["ErrorLack"] = "Вы не выбрали месяц";
+				return 0;
+			}
 			double dogovor = 0;
 			if (check)
 			{
@@ -62,7 +67,10 @@ namespace WebClient.Areas.Buhgalter.Controllers
 		{
 			List<ZarplataModel> inf = new List<ZarplataModel>();
 			if (Month.Length == 0)
+			{
 				return View();
+
+			}
 			var agent = _agent.Read(null).Last();
 			for (int i = 1; i <= agent.Id; i++)
 			{
@@ -87,7 +95,6 @@ namespace WebClient.Areas.Buhgalter.Controllers
 				});
 				}
 			}
-			
 			ViewBag.inf = inf;
 			return View();
 		}
