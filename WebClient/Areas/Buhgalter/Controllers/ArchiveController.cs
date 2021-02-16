@@ -42,28 +42,21 @@ namespace WebClient.Areas.Buhgalter.Controllers
             Directory.CreateDirectory(fileName);
             if (Directory.Exists(fileName))
             {
-                var dogovors = dogovorLogic.Read(null);//все договоры
-                var olddogovors = dogovorLogic.Read(new DogovorBindingModel { Id = 0 });//
-                var oldreis = dogovorLogic.ReadReis(new Dogovor_ReisBM { Id = 0 });//устаревшие рейсы по договору
+                var zarplatas = _zarplata.Read(null);//все договоры
                 bool proverca = false;
-                
+                var old = zarplatas.Where(rec => (rec.data <= DateTime.Now.AddYears(-1)));
                 DataContractJsonSerializer jsonFormatter = new
-               DataContractJsonSerializer(typeof(List<DogovorViewModel>));
+               DataContractJsonSerializer(typeof(List<ZarplataViewModel>));
                 using (FileStream fs = new FileStream(string.Format("{0}/{1}.json",
-               fileName, "Dogovors"), FileMode.OpenOrCreate))
+               fileName, "Zarplatas"), FileMode.OpenOrCreate))
                 {
-                    jsonFormatter.WriteObject(fs, olddogovors);
-                }
-                jsonFormatter = new
-             DataContractJsonSerializer(typeof(List<Dogovor_ReisVM>));
-                using (FileStream fs = new FileStream(string.Format("{0}/{1}.json",
-             fileName, "OldDogovorReis"), FileMode.OpenOrCreate))
-                {
-                    jsonFormatter.WriteObject(fs, oldreis);
+                    jsonFormatter.WriteObject(fs, old);
                 }
                 ZipFile.CreateFromDirectory(fileName, $"{fileName}.zip");
                 Directory.Delete(fileName, true);
                 Mail.SendMail(model.SendMail, $"{fileName}.zip", $"Archive");
+                foreach (var delzp in old)
+                    _zarplata.Delete(new ZarplataBindingModel { Id = delzp.Id});
                 return RedirectToAction("Archive");
             }
             else

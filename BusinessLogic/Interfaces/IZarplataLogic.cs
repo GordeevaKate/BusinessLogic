@@ -10,5 +10,6 @@ namespace BusinessLogic.Interfaces
     {
         void CreateOrUpdate(ZarplataBindingModel model);
         List<ZarplataViewModel> Read(ZarplataBindingModel model);
+        void Delete(ZarplataBindingModel model);
     }
 }

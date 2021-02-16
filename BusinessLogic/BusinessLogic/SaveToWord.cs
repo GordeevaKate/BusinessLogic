@@ -16,7 +16,7 @@ namespace BusinessLogic.BusinessLogic
     {
         public static void Diagramma(Info info)
         {
-            string pathDocument =info.FileName;
+            string pathDocument = info.FileName;
             DocX document = DocX.Create(pathDocument);
             document.InsertChart(CreatePieChart(info));
             document.InsertChart(CreateBarChart(info));
@@ -74,7 +74,11 @@ namespace BusinessLogic.BusinessLogic
         public static Series GetSeriesFirst(Info info)
         {
             Series seriesFirst = new Series($"Диаграмма {DateTime.Now}");
-            seriesFirst.Bind(GetTestDataFirst(info), "cityName", "PopulationYear2020");
+            if (info.raion != null)
+            {
+                seriesFirst.Bind(GetTestDataFirst(info), "cityName", "PopulationYear2020");
+            }
+            seriesFirst.Bind(GetDataDiagramm(info), "cityName", "summ");
             return seriesFirst;
         }
     }

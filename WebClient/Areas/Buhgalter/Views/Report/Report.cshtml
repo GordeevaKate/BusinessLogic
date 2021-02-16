@@ -67,7 +67,18 @@
 <p>
     <a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=5 asp-action="SendPuth">Сохранение диаграммы</a>
 </p>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="get">
+    <div class="form-inline">
+        @Html.ListBox("Month",
+                                    new MultiSelectList(new string[] { "Январь", "Февраль", "Март", "Апрель"
+                , "Май", "Июнь", "Июль"
+                , "Август", "Сентябрь", "Октябрь"
+                , "Ноябрь", "Декабрь"}))
 
+        <input type="submit" asp-controller="Report" asp-route-id=3 asp-action="SendPuth" value="Ведомость зп за месяц" class="btn btn-default" />
+    </div>
+</form>
 <form asp-action="Dogovors">
     <div class="form-inline">
         <input type="submit" asp-controller="Report" asp-action="Dogovors" value="Договора" class="btn btn-info" />

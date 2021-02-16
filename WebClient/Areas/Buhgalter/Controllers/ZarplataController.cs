@@ -68,6 +68,7 @@ namespace WebClient.Areas.Buhgalter.Controllers
 			List<ZarplataModel> inf = new List<ZarplataModel>();
 			if (Month.Length == 0)
 			{
+				ViewBag.inf = _zarplata.Read(null);
 				return View();
 
 			}
@@ -85,11 +86,12 @@ namespace WebClient.Areas.Buhgalter.Controllers
 					{
 						Id = i,
 						Name = ag.Name,
-						Summ = ResultZp(Month, i, false)
+						Summa = ResultZp(Month, i, false)
 					});	
 					_zarplata.CreateOrUpdate(new ZarplataBindingModel 
 					{
 						UserId = i,
+						Name = ag.Name,
 						Summa = ResultZp(Month, i, false),
 						data = AgentController.PeriodDate(Month[0])
 				});

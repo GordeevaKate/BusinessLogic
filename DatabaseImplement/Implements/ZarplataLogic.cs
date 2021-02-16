@@ -31,6 +31,7 @@ namespace DatabaseImplement.Implements
                     context.Zarplatas.Add(element);
                 }
                 element.UserId = model.UserId;
+                element.Name = model.Name;
                 element.Summa = model.Summa;
                 element.data = model.data;
                 context.SaveChanges();
@@ -48,10 +49,28 @@ namespace DatabaseImplement.Implements
                {
                    Id = rec.Id,
                    Summa = rec.Summa,
+                   Name = rec.Name,
                    data = rec.data,
                    UserId = rec.UserId
                })
                 .ToList();
+            }
+        }
+        public void Delete(ZarplataBindingModel model)
+        {
+            using (var context = new KursachDatabase())
+            {
+                Zarplata element = context.Zarplatas.FirstOrDefault(rec => rec.Id == model.Id);
+
+                if (element != null)
+                {
+                    context.Zarplatas.Remove(element);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Элемент не найден");
+                }
             }
         }
     }

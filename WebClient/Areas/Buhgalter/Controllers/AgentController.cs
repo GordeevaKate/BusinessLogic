@@ -53,43 +53,43 @@ namespace WebClient.Areas.Buhgalter.Controllers
             switch (Month)
             {
                 case "Январь":
-                    date = new DateTime(2020, 1, 1);
+                    date = new DateTime(2021, 1, 1);
                     break;
                 case "Февраль":
-                    date = new DateTime(2020, 2, 1);
+                    date = new DateTime(2021, 2, 1);
                     break;
                 case "Март":
-                    date = new DateTime(2020, 3, 1);
+                    date = new DateTime(2021, 3, 1);
                     break;
                 case "Май":
-                    date = new DateTime(2020, 4, 1);
+                    date = new DateTime(2021, 4, 1);
                     break;
                 case "Апрель":
-                    date = new DateTime(2020, 5, 1);
+                    date = new DateTime(2021, 5, 1);
                     break;
                 case "Июнь":
-                    date = new DateTime(2020, 6, 1);
+                    date = new DateTime(2021, 6, 1);
                     break;
                 case "Июль":
-                    date = new DateTime(2020, 7, 1);
+                    date = new DateTime(2021, 7, 1);
                     break;
                 case "Август":
-                    date = new DateTime(2020, 8, 1);
+                    date = new DateTime(2021, 8, 1);
                     break;
                 case "Сентябрь":
-                    date = new DateTime(2020, 9, 1);
+                    date = new DateTime(2021, 9, 1);
                     break;
                 case "Октябрь":
-                    date = new DateTime(2020, 10, 1);
+                    date = new DateTime(2021, 10, 1);
                     break;
                 case "Ноябрь":
-                    date = new DateTime(2020, 11, 1);
+                    date = new DateTime(2021, 11, 1);
                     break;
                 case "Декабрь":
-                    date = new DateTime(2020, 12, 1);
+                    date = new DateTime(2021, 12, 1);
                     break;
                 default:
-                    date = new DateTime(2020, 2, 1);
+                    date = new DateTime(2021, 2, 1);
                     break;
             }
             return date;

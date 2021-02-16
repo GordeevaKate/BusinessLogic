@@ -9,7 +9,7 @@ namespace WebClient.Areas.Buhgalter.Models
 	{
 		public int? Id { get; set; }
 		public string Name { get; set; }
-		public double Summ { get; set; }
+		public double Summa { get; set; }
 		public DateTime Date { get; set; }
 	}
 }

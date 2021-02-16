@@ -14,7 +14,8 @@ namespace BusinessLogic.HelperModels
         public string Agent { get; set; }
         public DogovorViewModel dogovor { get; set; }
         public List<AgentViewModel> agents { get; set; }
-        public List< DogovorViewModel> dogovors{ get; set; }
+        public List<DogovorViewModel> dogovors{ get; set; }
+        public List<ZarplataViewModel> zarplatas { get; set; }
         public List<Dogovor_ReisVM> dogovor_Reis { get; set; }
         public List<ReisViewModel> reiss { get; set; }
         public List<RaionViewModel> raion { get; set; }
