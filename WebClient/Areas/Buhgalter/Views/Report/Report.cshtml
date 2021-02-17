@@ -67,6 +67,36 @@
 <p>
     <a class="btn btn-primary btn-sm" asp-controller="Report" asp-route-id=5 asp-action="SendPuth">Сохранение диаграммы</a>
 </p>
+<div>
+    <table class="table">
+        <tr>
+            <td>Агент</td>
+            <td>01</td>
+            <td>02</td>
+            <td>03</td>
+            <td>04</td>
+            <td>05</td>
+            <td>06</td>
+            <td>07</td>
+            <td>08</td>
+            <td>09</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+        </tr>
+        @foreach (var dogovor in ViewBag.list)
+        {
+            <tr>
+                @for (int i = 0; i < 12; i++) 
+                {
+                    <td>@dogovor[i]</td>
+                }
+
+            </tr>
+        }
+    </table>
+
+</div>
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <form method="get">
     <div class="form-inline">

@@ -28,6 +28,7 @@ namespace WebClient.Areas.Buhgalter.Controllers
         }
         public IActionResult Report(int id)
         {
+            
             return View();
         }
         public IActionResult Dogovors()
