@@ -218,6 +218,57 @@ namespace BusinessLogic.Report
 			renderer.PdfDocument.Save(info.FileName);
 		}
 
+		public static void CreateDocAllDogovor(Info info)
+		{
+
+			Document document = new Document();
+			DefineStyles(document);
+			Section section = document.AddSection();
+			Paragraph paragraph = section.AddParagraph(info.Title);
+			paragraph.Format.SpaceAfter = "1cm";
+			paragraph.Format.Alignment = ParagraphAlignment.Left;
+			paragraph.Style = "NormalTitle";
+			paragraph.Style = "Normal";
+			var table = document.LastSection.AddTable();
+			List<string> columns = new List<string> { "2cm", "2cm", "2cm", "4cm"};
+
+			foreach (var elem in columns)
+			{
+				table.AddColumn(elem);
+			}
+			CreateRow(new PdfRowParameters
+			{
+				Table = table,
+				Texts = info.Colon,
+				Style = "NormalTitle",
+				ParagraphAlignment = ParagraphAlignment.Center
+			});
+			foreach (var dr in info.dogovors)
+			{
+				CreateRow(new PdfRowParameters
+				{
+					Table = table,
+					Texts = new List<string>
+										  {
+											dr.Id.ToString(),
+											dr.AgentId.ToString(),
+											dr.data.ToString(),
+											dr.Summa.ToString()
+										 },
+					Style = "Normal",
+					ParagraphAlignment = ParagraphAlignment.Left
+				});
+			}
+
+
+			PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
+			{
+				Document = document
+			};
+			renderer.RenderDocument();
+			renderer.PdfDocument.Save(info.FileName);
+		}
+
 		public static void ReportMonth(Info info, DateTime date)
 		{
 			Document document = new Document();
@@ -308,56 +359,39 @@ namespace BusinessLogic.Report
 			paragraph.Format.Alignment = ParagraphAlignment.Center;
 			paragraph.Style = "NormalTitle";
 			paragraph.Style = "Normal";
-			double itog = 0;
-			foreach (var dogovor in info.dogovors)
+
+			var table = document.LastSection.AddTable();
+			List<string> columns = new List<string> { "4cm", "4cm", "4cm", "4cm" };
+
+			foreach (var elem in columns)
 			{
-				if (dogovor.data >= date && dogovor.data <= date.AddMonths(1).AddDays(-1))
-				{
-					itog += dogovor.Summa;
-				}
+				table.AddColumn(elem);
 			}
-			paragraph = section.AddParagraph($"Были заключены договора на общую сумму: {itog}");
-
-			paragraph.Format.SpaceAfter = "1cm";
-			paragraph.Format.Alignment = ParagraphAlignment.Center;
-			paragraph.Style = "NormalTitle";
-			paragraph.Style = "Normal";
-			if (itog != 0)
+			CreateRow(new PdfRowParameters
 			{
-				var table = document.LastSection.AddTable();
-				List<string> columns = new List<string> { "3cm", "3cm", "3cm", "3cm" };
-
-				foreach (var elem in columns)
-				{
-					table.AddColumn(elem);
-				}
+				Table = table,
+				Texts = info.Colon,
+				Style = "NormalTitle",
+				ParagraphAlignment = ParagraphAlignment.Center
+			});
+			foreach (var zp in info.zarplatas)
+			{
 				CreateRow(new PdfRowParameters
 				{
 					Table = table,
-					Texts = info.Colon,
-					Style = "NormalTitle",
-					ParagraphAlignment = ParagraphAlignment.Center
-				});
-				foreach (var zp in info.zarplatas)
-				{
-
-					
-							CreateRow(new PdfRowParameters
-							{
-								Table = table,
-								Texts = new List<string>
+					Texts = new List<string>
 						{
 							Convert.ToString(zp.Id),
-							Convert.ToString(   zp.data),
+							Convert.ToString(zp.data),
 							zp.Name,
-							Convert.ToString(  zp.Summa)
+							Convert.ToString(zp.Summa)
 
 						 },
-								Style = "Normal",
-								ParagraphAlignment = ParagraphAlignment.Left
-							});
-						}
-					
+					Style = "Normal",
+					ParagraphAlignment = ParagraphAlignment.Left
+				});
+
+
 			}
 
 			PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)

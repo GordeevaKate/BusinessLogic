@@ -70,7 +70,6 @@ namespace WebClient.Areas.Buhgalter.Controllers
 			{
 				ViewBag.inf = _zarplata.Read(null);
 				return View();
-
 			}
 			var agent = _agent.Read(null).Last();
 			for (int i = 1; i <= agent.Id; i++)
@@ -78,6 +77,12 @@ namespace WebClient.Areas.Buhgalter.Controllers
 				var ag = _agent.Read(new AgentBindingModel { Id = i }).FirstOrDefault();
 				if (ag != null)
 				{
+					bool check = false;
+					foreach (var zp in _zarplata.Read(null))
+					{
+						if (zp.data == AgentController.PeriodDate(Month[0]) && zp.UserId == ag.Id)
+							check = true;
+					}
 					var summ = _agent.Read(new AgentBindingModel { Id = i }).FirstOrDefault();
 					zp = summ.Oklad;
 					var com = _agent.Read(new AgentBindingModel { Id = i }).FirstOrDefault();
@@ -87,14 +92,17 @@ namespace WebClient.Areas.Buhgalter.Controllers
 						Id = i,
 						Name = ag.Name,
 						Summa = ResultZp(Month, i, false)
-					});	
-					_zarplata.CreateOrUpdate(new ZarplataBindingModel 
+					});
+					if (!check)
 					{
-						UserId = i,
-						Name = ag.Name,
-						Summa = ResultZp(Month, i, false),
-						data = AgentController.PeriodDate(Month[0])
-				});
+						_zarplata.CreateOrUpdate(new ZarplataBindingModel
+						{
+							UserId = i,
+							Name = ag.Name,
+							Summa = ResultZp(Month, i, false),
+							data = AgentController.PeriodDate(Month[0])
+						});
+					}
 				}
 			}
 			ViewBag.inf = inf;

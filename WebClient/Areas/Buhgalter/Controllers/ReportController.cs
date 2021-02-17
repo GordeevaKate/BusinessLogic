@@ -70,7 +70,7 @@ namespace WebClient.Areas.Buhgalter.Controllers
                 return RedirectToAction("Report");
             }
             var FileName = m.puth + $"ReportMonth{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf";
-            List<string> list = new List<string> { "Номер", "дата", "Клиент", "Сумма" };
+            List<string> list = new List<string> { "Номер", "Дата", "Агент", "Сумма" };
             DateTime date = AgentController.PeriodDate(Month[0]);
             SaveToPdf.ZpMonth(new Info
             {
@@ -79,7 +79,22 @@ namespace WebClient.Areas.Buhgalter.Controllers
                 Colon = list,
                 zarplatas = _zarplata.Read(null).Where(rec => rec.data.Month == date.Month).ToList()
             }, date); ;
-            Mail.SendMail(m.SendMail, FileName, $"Отчет о работе Агента {Program.Agent.Id} за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
+            Mail.SendMail(m.SendMail, FileName, $"Отчет за месяц {DateTime.Now.Month} года {DateTime.Now.Year}");
+            return RedirectToAction("Report");
+        }
+        [HttpGet]
+        public IActionResult ReadOfDogovors(ReportModel model)
+        {
+            List<string> list = new List<string> { "Номер", "Номер агента", "Дата", "Сумма" };
+
+            SaveToPdf.CreateDocAllDogovor(new Info
+            {
+                FileName = model.puth + $"ReportDogovorpdf{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}.pdf",
+                Colon = list,
+                Title = $" Договорa",
+                dogovors = _dogovor.Read(null),
+                agents = _agent.Read(null)
+            });
             return RedirectToAction("Report");
         }
         public IActionResult SendPuth(ReportModel model, int id, int did, string[] Month)
@@ -124,6 +139,15 @@ namespace WebClient.Areas.Buhgalter.Controllers
                     puth = model1.puth,
 
                     dogovorid = did
+                });
+            }
+            if (id == 10)
+            {
+                return RedirectToAction("ReadOfDogovors", new
+                {
+                    SendMail = model1.SendMail,
+                    puth = model1.puth,
+                    Month
                 });
             }
             if (id == 3)
